@@ -12,3 +12,7 @@
 |Eddie Wong Chung Pheng|A20EC0031|
 
 ## How to run
+1. Download project folder (roomRental(AlphaZero) + database (by visual studio code or command prompt: git clone https://github.com/Leejxx/AlphaZero.git)
+2. Import database
+3. Change the connection string according to your SQL server name:
+   For example: data source=DESKTOP-AQ5SJ1E\SQLEXPRESS
