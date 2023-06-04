@@ -20,8 +20,8 @@ namespace roomRental.Models
             this.tenants = new HashSet<tenant>();
         }
     
-        public int room_id { get; set; }
-        public int floor_id { get; set; }
+        public string room_id { get; set; }
+        public string floor_id { get; set; }
         public double room_price { get; set; }
         public string room_status { get; set; }
     

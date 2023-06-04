@@ -15,7 +15,7 @@ namespace roomRental.Models
     public partial class cleanerAtt
     {
         public int cleanerAtt_id { get; set; }
-        public int floor_id { get; set; }
+        public string floor_id { get; set; }
         public System.DateTime cleaner_date { get; set; }
     
         public virtual floor floor { get; set; }

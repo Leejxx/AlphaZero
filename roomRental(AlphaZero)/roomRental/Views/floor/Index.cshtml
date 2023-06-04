@@ -4,48 +4,71 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Floor</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+
+    @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-info" })
 </p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.floor_modemIP)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.floor_cctvQr)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.floor_layout)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.landlord.landlord_name)
-        </th>
-        <th></th>
-    </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.floor_modemIP)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.floor_cctvQr)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.floor_layout)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.landlord.landlord_name)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.floor_id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.floor_id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.floor_id })
-        </td>
-    </tr>
-}
 
-</table>
+<div class="col-md-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <p class="card-title mb-0">Floor list</p>
+            <div class="table-responsive">
+                <table class="table table-striped table-borderless">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.floor_id)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.floor_modemIP)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.floor_cctvQr)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.floor_layout)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.landlord.landlord_name)
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.floor_id)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.floor_modemIP)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.floor_cctvQr)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.floor_layout)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.landlord.landlord_name)
+                                </td>
+                                <td>
+                                    @Html.ActionLink("Edit", "Edit", new { id = item.floor_id }) |
+                                    @Html.ActionLink("Details", "Details", new { id = item.floor_id }) |
+                                    @Html.ActionLink(" Delete", "Delete", new { id = item.floor_id }, new { @class = "ti-alert btn btn-danger btn-icon-text" })
+                                </td>
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+

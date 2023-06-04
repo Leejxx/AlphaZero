@@ -27,7 +27,7 @@ namespace roomRental.Models
         public Nullable<System.DateTime> tenant_outTime { get; set; }
         public double tenant_outstanding { get; set; }
         public string tenant_paymentStatus { get; set; }
-        public int room_id { get; set; }
+        public string room_id { get; set; }
     
         public virtual room room { get; set; }
     }

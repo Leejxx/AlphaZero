@@ -26,8 +26,10 @@
         <!-- partial:partials/_navbar.html -->
         <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
             <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-                <a class="navbar-brand brand-logo mr-5" href="index.html"><img src="~/Content/images/logo.svg" class="mr-2" alt="logo" /></a>
-                <a class="navbar-brand brand-logo-mini" href="index.html"><img src="~/Content/images/logo-mini.svg" alt="logo" /></a>
+                <a class="navbar-brand brand-logo mr-5" href="/Home/Index">
+                    <img src="~/Content/images/akmal_logo.jpg" class="mr-5" alt="logo" style="width: 70px; height: 50px;" />
+                </a>
+                <a class="navbar-brand brand-logo-mini" href="/Home/Index"><img src="~/Content/images/akmal_logo.jpg" alt="logo" /></a>
             </div>
             <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
                 <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
@@ -296,15 +298,24 @@
             <nav class="sidebar sidebar-offcanvas" id="sidebar">
                 <ul class="nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="index.html">
+                        <a class="nav-link" href="">
                             <i class="icon-grid menu-icon"></i>
                             <span class="menu-title">Dashboard</span>
                         </a>
+
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Floor/Index">
+                            <i class="icon-grid menu-icon"></i>
+                            <span class="menu-title">Floor</span>
+                        </a>
+
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+                        <a class="nav-link" data-toggle="collapse" href="" aria-expanded="false" aria-controls="ui-basic">
                             <i class="icon-layout menu-icon"></i>
-                            <span class="menu-title">UI Elements</span>
+                            <span class="menu-title">Test</span>
                             <i class="menu-arrow"></i>
                         </a>
                         <div class="collapse" id="ui-basic">
@@ -438,6 +449,10 @@
     <script src="~/Content/js/dashboard.js"></script>
     <script src="~/Content/js/Chart.roundedBarCharts.js"></script>
     <!-- End custom js for this page-->
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
 </body>
 
 </html>

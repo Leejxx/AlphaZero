@@ -1,0 +1,42 @@
+﻿@model roomRental.Models.room
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>room</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.room_price)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.room_price)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.room_status)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.room_status)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.floor.floor_cctvQr)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.floor.floor_cctvQr)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.room_id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

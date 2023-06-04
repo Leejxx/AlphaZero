@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="16bb40de2d9f406cbdff4c0e4b9587d4" Name="Diagram1" ZoomLevel="74">
+      <Diagram DiagramId="82235652d1e54d2db2591c3a38984b92" Name="Diagram1">
         <EntityTypeShape EntityType="db_roomrentalModel.cleanerAtt" Width="1.5" PointX="5.25" PointY="4.375" IsExpanded="true" />
         <EntityTypeShape EntityType="db_roomrentalModel.finance" Width="1.5" PointX="8.25" PointY="7.375" IsExpanded="true" />
         <EntityTypeShape EntityType="db_roomrentalModel.floor" Width="1.5" PointX="3" PointY="7.5" IsExpanded="true" />

@@ -15,7 +15,7 @@ namespace roomRental.Models
     public partial class finance
     {
         public int finance_id { get; set; }
-        public Nullable<int> floor_id { get; set; }
+        public string floor_id { get; set; }
         public double finance_transaction { get; set; }
         public string finance_desc { get; set; }
         public string finance_pMethod { get; set; }

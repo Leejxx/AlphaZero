@@ -23,7 +23,7 @@ namespace roomRental.Models
             this.rooms = new HashSet<room>();
         }
     
-        public int floor_id { get; set; }
+        public string floor_id { get; set; }
         public Nullable<int> floor_modemIP { get; set; }
         public string floor_cctvQr { get; set; }
         public string floor_layout { get; set; }

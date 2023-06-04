@@ -15,7 +15,7 @@ namespace roomRental.Models
     public partial class inventory
     {
         public int Inventory_id { get; set; }
-        public int floor_id { get; set; }
+        public string floor_id { get; set; }
         public string inventory_name { get; set; }
         public int inventory_count { get; set; }
     

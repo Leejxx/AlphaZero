@@ -1,0 +1,128 @@
+﻿@model roomRental.Models.tenant
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>tenant</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.tenant_ic)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tenant_ic)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tenant_uploadIC)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tenant_uploadIC)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tenant_name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tenant_name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tenant_contract)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tenant_contract)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tenant_phoneNo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tenant_phoneNo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tenant_emergencyNo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tenant_emergencyNo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tenant_noSiri)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tenant_noSiri)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tenant_inDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tenant_inDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tenant_outDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tenant_outDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tenant_outTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tenant_outTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tenant_outstanding)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tenant_outstanding)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tenant_paymentStatus)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tenant_paymentStatus)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.room.room_status)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.room.room_status)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

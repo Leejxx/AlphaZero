@@ -22,7 +22,7 @@ namespace roomRental.Models
     
         public int landlord_id { get; set; }
         public string landlord_name { get; set; }
-        public byte[] landlord_phoneNo { get; set; }
+        public string landlord_phoneNo { get; set; }
         public double landlord_fee { get; set; }
         public System.DateTime landlord_due { get; set; }
     

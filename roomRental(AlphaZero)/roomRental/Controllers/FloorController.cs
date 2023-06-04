@@ -14,15 +14,15 @@ namespace roomRental.Controllers
     {
         private db_roomrentalEntities db = new db_roomrentalEntities();
 
-        // GET: floor
+        // GET: Floor
         public ActionResult Index()
         {
             var floors = db.floors.Include(f => f.landlord);
             return View(floors.ToList());
         }
 
-        // GET: floor/Details/5
-        public ActionResult Details(int? id)
+        // GET: Floor/Details/5
+        public ActionResult Details(string id)
         {
             if (id == null)
             {
@@ -36,14 +36,14 @@ namespace roomRental.Controllers
             return View(floor);
         }
 
-        // GET: floor/Create
+        // GET: Floor/Create
         public ActionResult Create()
         {
             ViewBag.landlord_id = new SelectList(db.landlords, "landlord_id", "landlord_name");
             return View();
         }
 
-        // POST: floor/Create
+        // POST: Floor/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -61,8 +61,8 @@ namespace roomRental.Controllers
             return View(floor);
         }
 
-        // GET: floor/Edit/5
-        public ActionResult Edit(int? id)
+        // GET: Floor/Edit/5
+        public ActionResult Edit(string id)
         {
             if (id == null)
             {
@@ -77,7 +77,7 @@ namespace roomRental.Controllers
             return View(floor);
         }
 
-        // POST: floor/Edit/5
+        // POST: Floor/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -94,8 +94,8 @@ namespace roomRental.Controllers
             return View(floor);
         }
 
-        // GET: floor/Delete/5
-        public ActionResult Delete(int? id)
+        // GET: Floor/Delete/5
+        public ActionResult Delete(string id)
         {
             if (id == null)
             {
@@ -109,10 +109,10 @@ namespace roomRental.Controllers
             return View(floor);
         }
 
-        // POST: floor/Delete/5
+        // POST: Floor/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(string id)
         {
             floor floor = db.floors.Find(id);
             db.floors.Remove(floor);
