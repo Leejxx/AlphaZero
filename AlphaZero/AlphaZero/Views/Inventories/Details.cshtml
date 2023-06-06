@@ -4,14 +4,13 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+<h2>Details of Item</h2>
 
 <div>
-    <h4>inventory</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.inventory_name)
+            Inventory Name
         </dt>
 
         <dd>
@@ -19,7 +18,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.inventory_count)
+            Inventory Count
         </dt>
 
         <dd>
@@ -27,16 +26,16 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.floor.floor_cctvQr)
+            FLoor Level
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.floor.floor_cctvQr)
+            @Html.DisplayFor(model => model.floor.floor_id)
         </dd>
 
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Inventory_id }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Inventory_id }, new { @class = "btn btn-warning" }) |
+    <button onclick="location.href='@Url.Action("Index")'" class="btn ">Back to List</button>
 </p>

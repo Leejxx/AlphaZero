@@ -1,0 +1,34 @@
+﻿@model AlphaZero.Models.cleanerAtt
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>cleanerAtt</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.cleaner_date)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.cleaner_date)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.floor.floor_cctvQr)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.floor.floor_cctvQr)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.cleanerAtt_id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
