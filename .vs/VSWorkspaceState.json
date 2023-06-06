@@ -3,8 +3,10 @@
     "",
     "\\AlphaZero",
     "\\AlphaZero\\AlphaZero",
-    "\\AlphaZero\\AlphaZero\\Controllers"
+    "\\AlphaZero\\AlphaZero\\Controllers",
+    "\\AlphaZero\\AlphaZero\\Views",
+    "\\AlphaZero\\AlphaZero\\Views\\Login"
   ],
-  "SelectedNode": "\\AlphaZero\\AlphaZero\\Controllers\\TenantController.cs",
+  "SelectedNode": "\\AlphaZero\\AlphaZero\\Views\\Login\\Index.cshtml",
   "PreviewInSolutionExplorer": false
 }

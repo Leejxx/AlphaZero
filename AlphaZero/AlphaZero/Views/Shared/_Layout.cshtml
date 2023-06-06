@@ -159,7 +159,7 @@
                 </div>
             </div>
             <div class="github-link">
-                <a href="https://github.com/dropways/deskapp" target="_blank"><img src="~/Content/assets/vendors/images/github.svg" alt=""></a>
+
             </div>
         </div>
     </div>
@@ -266,18 +266,19 @@
                             <span class="micon dw dw-edit2"></span><span class="mtext">Floor</span>
                         </a>
                         <ul class="submenu">
+                            <li><a href="@Url.Action("Index", "Floor")">Floor</a></li>
+                            <li><a href="@Url.Action("Index", "Room")">Room</a></li>
                             <li><a href="@Url.Action("Index", "landlords")">Landlord</a></li>
                             <li><a href="@Url.Action("Index", "Inventories")">Inventory</a></li>
-                            <li>
-                                <a href="form-wizard.html">Room</a>
-                                <ul class="submenu">
-                                    <li><a href="#">Tenant</a></li>
-                                    <li><a href="#">Status</a></li>
-                                </ul>
-                            </li>
+
                         </ul>
                     </li>
 
+                    <li>
+                        <a href="@Url.Action("Index", "Tenant")" class="dropdown-toggle no-arrow">
+                            <span class="micon dw dw-calendar1"></span><span class="mtext">Tenant</span>
+                        </a>
+                    </li>
 
                     <li>
                         <a href="@Url.Action("Index", "cleanerAtts")" class="dropdown-toggle no-arrow">
@@ -326,11 +327,18 @@
     </div>
     <div class="mobile-menu-overlay"></div>
 
+    <div class="mobile-menu-overlay"></div>
     <div class="main-container">
-        <div class="pd-ltr-20">
+        <div class="pd-ltr-20 xs-pd-20-10">
+            <div class="min-height-200px">
+                <div class="card-box mb-30">
+                    <div class="pd-20">
 
-            @RenderBody()
+                        @RenderBody()
 
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     @Scripts.Render("~/bundles/jquery")

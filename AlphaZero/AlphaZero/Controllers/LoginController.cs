@@ -20,43 +20,44 @@ namespace AlphaZero.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-		public ActionResult Index(user objchk)
-		{
-			if (ModelState.IsValid)
-			{
-				using (db_roomrentalEntities db = new db_roomrentalEntities()) ;
-				{
-					var obj = db.users.Where(a => a.user_name.Equals(objchk.user_name) && a.user_password.Equals(objchk.user_password)).FirstOrDefault();
+        public ActionResult Index(user objchk)
+        {
+            if (ModelState.IsValid)
+            {
+                using (db_roomrentalEntities db = new db_roomrentalEntities());
+                {
+                    var obj = db.users.Where(a => a.user_name.Equals(objchk.user_name) && a.user_password.Equals(objchk.user_password)).FirstOrDefault();
 
-					if (obj != null)
-					{
-						Session["UserID"] = obj.user_id.ToString();
-						Session["UserName"] = obj.user_name.ToString();
+                    if (obj != null)
+                    {
+                        Session["UserID"] = obj.user_id.ToString();
+                        Session["UserName"] = obj.user_name.ToString();
 
-						return RedirectToAction("Index", "Home");
-					}
+                        return RedirectToAction("Index", "Home");
+                    }
 
-					else
-					{
-						ModelState.AddModelError("", "The Username or Password Incorrect");
-
-
-					}
-				}
-			}
+                    else
+                    {
+                        ModelState.AddModelError("", "The Username or Password Incorrect");
 
 
+                    }
+                }
+            }
 
 
-			return View();
-		}
-		public ActionResult Logout()
-		{
-			Session.Clear();
-			return RedirectToAction("Index", "Login");
-		}
 
-	}
+
+            return View();
+        }
+        public ActionResult Logout()
+        {
+            Session.Clear();
+            return RedirectToAction("Index", "Login");
+        }
+
+    }
 
 
 }
+
