@@ -1,0 +1,171 @@
+﻿@model IEnumerable<AlphaZero.Models.tenant>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+
+
+
+<h2>Tenant List</h2>
+<p>
+    @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary" })
+</p>
+<div class="table-responsive">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>No.</th>
+                <th>
+                    @Html.DisplayNameFor(model => model.tenant_ic)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.tenant_uploadIC)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.tenant_name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.tenant_contract)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.tenant_phoneNo)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.tenant_emergencyNo)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.tenant_noSiri)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.tenant_inDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.tenant_outDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.tenant_outSession)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.tenant_outstanding)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.tenant_paymentStatus)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.room.room_number)
+                </th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                int index = 1;
+            }
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @index
+                    </td>
+                    @{
+                        index++;
+                    }
+                    <td>
+                        @Html.DisplayFor(modelItem => item.tenant_ic)
+                    </td>
+                    <td>
+
+                        <a href="@Url.Action("GetFile", "Floor", new { floorLayoutFileName = item.tenant_uploadIC })" target="_blank" style="color: blue; font-weight: bold;">
+                            @item.tenant_uploadIC (Click to see)
+                        </a>
+
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.tenant_name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.tenant_contract)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.tenant_phoneNo)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.tenant_emergencyNo)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.tenant_noSiri)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.tenant_inDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.tenant_outDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.tenant_outSession)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.tenant_outstanding)
+                    </td>
+                    <td>
+                        @{
+                            string paymentStatusColor = "";
+                            switch (item.tenant_paymentStatus)
+                            {
+                                case "Fully Paid":
+                                    paymentStatusColor = "green";
+                                    break;
+                                case "Partially Paid":
+                                    paymentStatusColor = "orange";
+                                    break;
+                                case "Unpaid":
+                                    paymentStatusColor = "red";
+                                    break;
+                                default:
+                                    paymentStatusColor = "black";
+                                    break;
+                            }
+                        }
+
+                        <span style="color: @paymentStatusColor">
+                            @Html.DisplayFor(modelItem => item.tenant_paymentStatus)
+                        </span>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.room.floor_id)
+                        No @Html.DisplayFor(modelItem => item.room.room_number)
+                    </td>
+                    <td>
+                        <div class="btn-group">
+                            @Html.ActionLink("Edit", "Edit", new { id = item.tenant_id }, new { @class = "btn btn-warning", style = "margin-right: 5px;" })
+                            @Html.ActionLink("Details", "Details", new { id = item.tenant_id }, new { @class = "btn btn-info", style = "margin-right: 5px;" })
+                            @Html.ActionLink("Delete", "Delete", new { id = item.tenant_id }, new { @class = "btn btn-danger", style = "margin-right: 5px;" })
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    </div>
+
+    <!-- Simple Datatable End -->
+    <!-- js -->
+    <script src="~/Content/assets/vendors/scripts/core.js"></script>
+    <script src="~/Content/assets/vendors/scripts/script.min.js"></script>
+    <script src="~/Content/assets/vendors/scripts/process.js"></script>
+    <script src="~/Content/assets/vendors/scripts/layout-settings.js"></script>
+    <script src="~/Content/assets/src/plugins/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="~/Content/assets/src/plugins/datatables/js/dataTables.bootstrap4.min.js"></script>
+    <script src="~/Content/assets/src/plugins/datatables/js/dataTables.responsive.min.js"></script>
+    <script src="~/Content/assets/src/plugins/datatables/js/responsive.bootstrap4.min.js"></script>
+    <!-- buttons for Export datatable -->
+    <script src="~/Content/assets/src/plugins/datatables/js/dataTables.buttons.min.js"></script>
+    <script src="~/Content/assets/src/plugins/datatables/js/buttons.bootstrap4.min.js"></script>
+    <script src="~/Content/assets/src/plugins/datatables/js/buttons.print.min.js"></script>
+    <script src="~/Content/assets/src/plugins/datatables/js/buttons.html5.min.js"></script>
+    <script src="~/Content/assets/src/plugins/datatables/js/buttons.flash.min.js"></script>
+    <script src="~/Content/assets/src/plugins/datatables/js/pdfmake.min.js"></script>
+    <script src="~/Content/assets/src/plugins/datatables/js/vfs_fonts.js"></script>
+    <!-- Datatable Setting js -->
+    <script src="~/Content/assets/vendors/scripts/datatable-setting.js"></script>

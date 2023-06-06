@@ -89,6 +89,7 @@
     <EntitySetMapping Name="rooms">
       <EntityTypeMapping TypeName="db_roomrentalModel.room">
         <MappingFragment StoreEntitySet="room">
+          <ScalarProperty Name="room_number" ColumnName="room_number" />
           <ScalarProperty Name="room_id" ColumnName="room_id" />
           <ScalarProperty Name="floor_id" ColumnName="floor_id" />
           <ScalarProperty Name="room_price" ColumnName="room_price" />
@@ -110,6 +111,7 @@
     <EntitySetMapping Name="tenants">
       <EntityTypeMapping TypeName="db_roomrentalModel.tenant">
         <MappingFragment StoreEntitySet="tenant">
+          <ScalarProperty Name="tenant_outSession" ColumnName="tenant_outSession" />
           <ScalarProperty Name="tenant_id" ColumnName="tenant_id" />
           <ScalarProperty Name="tenant_ic" ColumnName="tenant_ic" />
           <ScalarProperty Name="tenant_uploadIC" ColumnName="tenant_uploadIC" />
@@ -120,7 +122,6 @@
           <ScalarProperty Name="tenant_noSiri" ColumnName="tenant_noSiri" />
           <ScalarProperty Name="tenant_inDate" ColumnName="tenant_inDate" />
           <ScalarProperty Name="tenant_outDate" ColumnName="tenant_outDate" />
-          <ScalarProperty Name="tenant_outTime" ColumnName="tenant_outTime" />
           <ScalarProperty Name="tenant_outstanding" ColumnName="tenant_outstanding" />
           <ScalarProperty Name="tenant_paymentStatus" ColumnName="tenant_paymentStatus" />
           <ScalarProperty Name="room_id" ColumnName="room_id" />

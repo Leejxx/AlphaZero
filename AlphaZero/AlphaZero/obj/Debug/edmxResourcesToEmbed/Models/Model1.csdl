@@ -94,12 +94,13 @@
     <Key>
       <PropertyRef Name="room_id" />
     </Key>
-    <Property Name="room_id" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="room_id" Type="Int32" Nullable="false" />
     <Property Name="floor_id" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="room_price" Type="Double" Nullable="false" />
     <Property Name="room_status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
     <NavigationProperty Name="floor" Relationship="Self.FK_room_floor" FromRole="room" ToRole="floor" />
     <NavigationProperty Name="tenants" Relationship="Self.FK_tenant_room" FromRole="room" ToRole="tenant" />
+    <Property Name="room_number" Type="Int32" Nullable="false" />
   </EntityType>
   <EntityType Name="sysdiagram">
     <Key>
@@ -125,11 +126,11 @@
     <Property Name="tenant_noSiri" Type="Int32" Nullable="false" />
     <Property Name="tenant_inDate" Type="DateTime" Nullable="false" Precision="0" />
     <Property Name="tenant_outDate" Type="DateTime" Nullable="false" Precision="0" />
-    <Property Name="tenant_outTime" Type="DateTime" Precision="3" />
     <Property Name="tenant_outstanding" Type="Double" Nullable="false" />
     <Property Name="tenant_paymentStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="room_id" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="room_id" Type="Int32" Nullable="false" />
     <NavigationProperty Name="room" Relationship="Self.FK_tenant_room" FromRole="tenant" ToRole="room" />
+    <Property Name="tenant_outSession" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityType Name="user">
     <Key>

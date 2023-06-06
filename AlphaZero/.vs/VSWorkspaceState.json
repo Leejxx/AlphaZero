@@ -1,0 +1,12 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\AlphaZero",
+    "\\AlphaZero\\Controllers",
+    "\\AlphaZero\\Models",
+    "\\AlphaZero\\Views",
+    "\\AlphaZero\\Views\\Tenant"
+  ],
+  "SelectedNode": "\\AlphaZero\\Models\\Model1.edmx",
+  "PreviewInSolutionExplorer": false
+}

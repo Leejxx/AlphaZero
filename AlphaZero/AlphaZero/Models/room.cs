@@ -20,10 +20,11 @@ namespace AlphaZero.Models
             this.tenants = new HashSet<tenant>();
         }
     
-        public string room_id { get; set; }
+        public int room_id { get; set; }
         public string floor_id { get; set; }
         public double room_price { get; set; }
         public string room_status { get; set; }
+        public int room_number { get; set; }
     
         public virtual floor floor { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

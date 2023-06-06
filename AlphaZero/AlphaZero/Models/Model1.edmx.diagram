@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="85a96d43291445dbb27dadac6c1a9759" Name="Diagram1" ZoomLevel="86">
+      <Diagram DiagramId="85a96d43291445dbb27dadac6c1a9759" Name="Diagram1" ZoomLevel="74">
         <EntityTypeShape EntityType="db_roomrentalModel.cleanerAtt" Width="1.5" PointX="5.25" PointY="4.375" IsExpanded="true" />
         <EntityTypeShape EntityType="db_roomrentalModel.finance" Width="1.5" PointX="8.25" PointY="7.375" IsExpanded="true" />
         <EntityTypeShape EntityType="db_roomrentalModel.floor" Width="1.5" PointX="3" PointY="7.5" IsExpanded="true" />
@@ -12,7 +12,7 @@
         <EntityTypeShape EntityType="db_roomrentalModel.Investor" Width="1.5" PointX="8.25" PointY="4" IsExpanded="true" />
         <EntityTypeShape EntityType="db_roomrentalModel.landlord" Width="1.5" PointX="0.75" PointY="7.875" IsExpanded="true" />
         <EntityTypeShape EntityType="db_roomrentalModel.profit" Width="1.5" PointX="10.5" PointY="4.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="db_roomrentalModel.reminder" Width="1.5" PointX="0.75" PointY="1.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_roomrentalModel.reminder" Width="1.5" PointX="2.125" PointY="1.375" IsExpanded="true" />
         <EntityTypeShape EntityType="db_roomrentalModel.room" Width="1.5" PointX="5.25" PointY="14.375" IsExpanded="true" />
         <EntityTypeShape EntityType="db_roomrentalModel.sysdiagram" Width="1.5" PointX="0.75" PointY="4.625" IsExpanded="true" />
         <EntityTypeShape EntityType="db_roomrentalModel.tenant" Width="1.5" PointX="7.5" PointY="13.5" IsExpanded="true" />

@@ -1,0 +1,66 @@
+﻿@model AlphaZero.Models.floor
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div class="card">
+    <div class="card-header">
+        <h4 class="card-title">Floor Details</h4>
+    </div>
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.floor_modemIP)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.floor_modemIP)
+            </dd>
+
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.floor_cctvQr)
+            </dt>
+            <dd class="col-sm-9">
+                @{
+                    string floorCctvQrFileName = Model.floor_cctvQr;
+                    string floorCctvQrFilePath = Url.Content("~/Content/assets/vendors/images/" + floorCctvQrFileName);
+                }
+                @if (!string.IsNullOrEmpty(floorCctvQrFileName))
+                {
+                    <img src="@floorCctvQrFilePath" alt="CCTV QR" style="max-height: 200px; margin-bottom: 10px;" />
+                }
+                <br />
+                @Html.DisplayFor(model => model.floor_cctvQr)
+            </dd>
+
+            <dt class="col-sm-3">
+                Floor Layout
+            </dt>
+            <dd class="col-sm-9">
+                @{
+                    string floorLayoutFileName = Model.floor_layout;
+                    string floorLayoutFilePath = Url.Content("~/Content/assets/vendors/images/" + floorLayoutFileName);
+                }
+                @if (!string.IsNullOrEmpty(floorLayoutFileName))
+                {
+                    <img src="@floorLayoutFilePath" alt="Floor Layout" style="max-height: 200px; margin-bottom: 10px;" />
+                }
+                <br />
+                @Html.DisplayFor(model => model.floor_layout)
+            </dd>
+
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.landlord.landlord_name)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.landlord.landlord_name)
+            </dd>
+        </dl>
+    </div>
+    <div class="card-footer">
+        @Html.ActionLink("Edit", "Edit", new { id = Model.floor_id }, new { @class = "btn btn-primary" })
+        @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-secondary" })
+    </div>
+</div>

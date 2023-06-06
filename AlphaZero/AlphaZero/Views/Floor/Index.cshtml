@@ -1,0 +1,100 @@
+﻿@model IEnumerable<AlphaZero.Models.floor>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+
+    
+                    <h2>Floor List</h2><br>
+                    <p>
+                        @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary" })
+                    </p>
+                  
+                
+                <div class="pb-20">
+                    <table class="data-table table stripe hover nowrap" ,id ="DataTables_Table_0 ">
+                        <thead>
+                            <tr>
+                                <th>No.</th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.floor_id)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.floor_modemIP)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.floor_cctvQr)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.floor_layout)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.landlord.landlord_name)
+                                </th>
+                                <th class="datatable-nosort">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Select((value, index) => new { Index = index + 1, Value = value }))
+                            {
+                                <tr>
+                                    <td>
+                                        @item.Index
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Value.floor_id)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Value.floor_modemIP)
+                                    </td>
+                                    <td>
+                                        <a href="@Url.Action("GetFile", "Floor", new { floorLayoutFileName = item.Value.floor_cctvQr })" target="_blank" style="color: blue; font-weight: bold;">
+                                             @item.Value.floor_cctvQr (Click to see)
+                                        </a>
+                                        
+                                    </td>
+                                    <td>
+                                        <a href="@Url.Action("GetFile", "Floor", new { floorLayoutFileName = item.Value.floor_layout })" target="_blank" style="color: blue; font-weight: bold;">
+                                             @item.Value.floor_layout (Click to see)
+                                        </a>
+
+
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Value.landlord.landlord_name)
+                                    </td>
+                                    <td>
+                                        @Html.ActionLink("Room List", "Index","Room", new { id = item.Value.floor_id }, new { @class = "btn btn-warning" }) |
+                                        @Html.ActionLink("Edit", "Edit", new { id = item.Value.floor_id }, new { @class = "btn btn-warning" }) |
+                                        @Html.ActionLink("Details", "Details", new { id = item.Value.floor_id }, new { @class = "btn btn-info" }) |
+                                        @Html.ActionLink("Delete", "Delete", new { id = item.Value.floor_id }, new { @class = "btn btn-danger" })
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+         
+
+
+<!-- Simple Datatable End -->
+<!-- js -->
+<script src="~/Content/assets/vendors/scripts/core.js"></script>
+<script src="~/Content/assets/vendors/scripts/script.min.js"></script>
+<script src="~/Content/assets/vendors/scripts/process.js"></script>
+<script src="~/Content/assets/vendors/scripts/layout-settings.js"></script>
+<script src="~/Content/assets/src/plugins/datatables/js/jquery.dataTables.min.js"></script>
+<script src="~/Content/assets/src/plugins/datatables/js/dataTables.bootstrap4.min.js"></script>
+<script src="~/Content/assets/src/plugins/datatables/js/dataTables.responsive.min.js"></script>
+<script src="~/Content/assets/src/plugins/datatables/js/responsive.bootstrap4.min.js"></script>
+<!-- buttons for Export datatable -->
+<script src="~/Content/assets/src/plugins/datatables/js/dataTables.buttons.min.js"></script>
+<script src="~/Content/assets/src/plugins/datatables/js/buttons.bootstrap4.min.js"></script>
+<script src="~/Content/assets/src/plugins/datatables/js/buttons.print.min.js"></script>
+<script src="~/Content/assets/src/plugins/datatables/js/buttons.html5.min.js"></script>
+<script src="~/Content/assets/src/plugins/datatables/js/buttons.flash.min.js"></script>
+<script src="~/Content/assets/src/plugins/datatables/js/pdfmake.min.js"></script>
+<script src="~/Content/assets/src/plugins/datatables/js/vfs_fonts.js"></script>
+<!-- Datatable Setting js -->
+<script src="~/Content/assets/vendors/scripts/datatable-setting.js"></script>

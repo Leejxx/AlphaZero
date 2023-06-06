@@ -81,7 +81,8 @@
     <Key>
       <PropertyRef Name="room_id" />
     </Key>
-    <Property Name="room_id" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="room_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="room_number" Type="int" Nullable="false" />
     <Property Name="floor_id" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="room_price" Type="float" Nullable="false" />
     <Property Name="room_status" Type="varchar" MaxLength="50" Nullable="false" />
@@ -110,10 +111,10 @@
     <Property Name="tenant_noSiri" Type="int" Nullable="false" />
     <Property Name="tenant_inDate" Type="date" Nullable="false" />
     <Property Name="tenant_outDate" Type="date" Nullable="false" />
-    <Property Name="tenant_outTime" Type="datetime" />
+    <Property Name="tenant_outSession" Type="varchar" MaxLength="50" />
     <Property Name="tenant_outstanding" Type="float" Nullable="false" />
     <Property Name="tenant_paymentStatus" Type="varchar" MaxLength="50" Nullable="false" />
-    <Property Name="room_id" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="room_id" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="user">
     <Key>

@@ -1,0 +1,154 @@
+﻿@model AlphaZero.Models.tenant
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>tenant</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.tenant_ic)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tenant_ic)
+        </dd>
+
+        <dt>
+          IC Photo
+        </dt>
+
+        <dd>
+         
+            @{
+                string floorLayoutFileName = Model.tenant_uploadIC;
+                string floorLayoutFilePath = Url.Content("~/Content/assets/vendors/images/" + floorLayoutFileName);
+            }
+            @if (!string.IsNullOrEmpty(floorLayoutFileName))
+            {
+                <img src="@floorLayoutFilePath" alt="Floor Layout" style="max-height: 200px; margin-bottom: 10px;" />
+            }
+            <br />
+            @Html.DisplayFor(model => model.tenant_uploadIC)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tenant_name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tenant_name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tenant_contract)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tenant_contract)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tenant_phoneNo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tenant_phoneNo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tenant_emergencyNo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tenant_emergencyNo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tenant_noSiri)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tenant_noSiri)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tenant_inDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tenant_inDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tenant_outDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tenant_outDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tenant_outSession)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tenant_outSession)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tenant_outstanding)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tenant_outstanding)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tenant_paymentStatus)
+        </dt>
+
+        <dd>
+            @{
+                string paymentStatusColor = "";
+                switch (Model.tenant_paymentStatus)
+                {
+                    case "Fully Paid":
+                        paymentStatusColor = "green";
+                        break;
+                    case "Partially Paid":
+                        paymentStatusColor = "orange";
+                        break;
+                    case "Unpaid":
+                        paymentStatusColor = "red";
+                        break;
+                    default:
+                        paymentStatusColor = "black";
+                        break;
+                }
+            }
+
+            <span style="color: @paymentStatusColor">
+                @Html.DisplayFor(modelItem => Model.tenant_paymentStatus)
+            </span>
+        </dd>
+
+        <dt>
+            Room
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(modelItem => Model.room.floor_id)
+            No @Html.DisplayFor(modelItem => Model.room.room_number)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.tenant_id }, new { @class = "btn btn-primary" })
+    @Html.ActionLink("Back to List", "Index",null, new { @class = "btn btn-secondary" })
+</p>

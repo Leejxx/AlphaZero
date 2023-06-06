@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="db_roomrentalModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="db_roomrentalModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="cleanerAtt">
           <Key>
             <PropertyRef Name="cleanerAtt_id" />
@@ -86,7 +86,8 @@
           <Key>
             <PropertyRef Name="room_id" />
           </Key>
-          <Property Name="room_id" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="room_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="room_number" Type="int" Nullable="false" />
           <Property Name="floor_id" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="room_price" Type="float" Nullable="false" />
           <Property Name="room_status" Type="varchar" MaxLength="50" Nullable="false" />
@@ -115,10 +116,10 @@
           <Property Name="tenant_noSiri" Type="int" Nullable="false" />
           <Property Name="tenant_inDate" Type="date" Nullable="false" />
           <Property Name="tenant_outDate" Type="date" Nullable="false" />
-          <Property Name="tenant_outTime" Type="datetime" />
+          <Property Name="tenant_outSession" Type="varchar" MaxLength="50" />
           <Property Name="tenant_outstanding" Type="float" Nullable="false" />
           <Property Name="tenant_paymentStatus" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="room_id" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="room_id" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="user">
           <Key>
@@ -288,8 +289,7 @@
             <End Role="tenant" EntitySet="tenant" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="db_roomrentalModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -387,12 +387,13 @@
           <Key>
             <PropertyRef Name="room_id" />
           </Key>
-          <Property Name="room_id" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="room_id" Type="Int32" Nullable="false" />
           <Property Name="floor_id" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="room_price" Type="Double" Nullable="false" />
           <Property Name="room_status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="floor" Relationship="Self.FK_room_floor" FromRole="room" ToRole="floor" />
           <NavigationProperty Name="tenants" Relationship="Self.FK_tenant_room" FromRole="room" ToRole="tenant" />
+          <Property Name="room_number" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="sysdiagram">
           <Key>
@@ -418,11 +419,11 @@
           <Property Name="tenant_noSiri" Type="Int32" Nullable="false" />
           <Property Name="tenant_inDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="tenant_outDate" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="tenant_outTime" Type="DateTime" Precision="3" />
           <Property Name="tenant_outstanding" Type="Double" Nullable="false" />
           <Property Name="tenant_paymentStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="room_id" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="room_id" Type="Int32" Nullable="false" />
           <NavigationProperty Name="room" Relationship="Self.FK_tenant_room" FromRole="tenant" ToRole="room" />
+          <Property Name="tenant_outSession" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="user">
           <Key>
@@ -688,6 +689,7 @@
           <EntitySetMapping Name="rooms">
             <EntityTypeMapping TypeName="db_roomrentalModel.room">
               <MappingFragment StoreEntitySet="room">
+                <ScalarProperty Name="room_number" ColumnName="room_number" />
                 <ScalarProperty Name="room_id" ColumnName="room_id" />
                 <ScalarProperty Name="floor_id" ColumnName="floor_id" />
                 <ScalarProperty Name="room_price" ColumnName="room_price" />
@@ -709,6 +711,7 @@
           <EntitySetMapping Name="tenants">
             <EntityTypeMapping TypeName="db_roomrentalModel.tenant">
               <MappingFragment StoreEntitySet="tenant">
+                <ScalarProperty Name="tenant_outSession" ColumnName="tenant_outSession" />
                 <ScalarProperty Name="tenant_id" ColumnName="tenant_id" />
                 <ScalarProperty Name="tenant_ic" ColumnName="tenant_ic" />
                 <ScalarProperty Name="tenant_uploadIC" ColumnName="tenant_uploadIC" />
@@ -719,7 +722,6 @@
                 <ScalarProperty Name="tenant_noSiri" ColumnName="tenant_noSiri" />
                 <ScalarProperty Name="tenant_inDate" ColumnName="tenant_inDate" />
                 <ScalarProperty Name="tenant_outDate" ColumnName="tenant_outDate" />
-                <ScalarProperty Name="tenant_outTime" ColumnName="tenant_outTime" />
                 <ScalarProperty Name="tenant_outstanding" ColumnName="tenant_outstanding" />
                 <ScalarProperty Name="tenant_paymentStatus" ColumnName="tenant_paymentStatus" />
                 <ScalarProperty Name="room_id" ColumnName="room_id" />
