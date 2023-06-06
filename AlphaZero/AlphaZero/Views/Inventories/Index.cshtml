@@ -1,0 +1,46 @@
+﻿@model IEnumerable<AlphaZero.Models.inventory>
+
+@{
+    ViewBag.Title = "Manage Inventory";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Manage Inventory</h2>
+<p> @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary" }) </p>
+<br/>
+
+<table class="table">
+    <tr>
+        <th>
+            Inventory Name
+        </th>
+        <th>
+            Number of Item
+        </th>
+        <th>
+            Floor Level
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.inventory_name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.inventory_count)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.floor.floor_id)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Inventory_id }, new { @class = "btn btn-warning" }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Inventory_id }, new { @class = "btn btn-info" }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Inventory_id }, new { @class = "btn btn-danger" })
+            </td>
+        </tr>
+    }
+
+</table>
