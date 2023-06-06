@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using AlphaZero.Models;
+using System.Data.Entity.SqlServer;
 
 namespace AlphaZero.Controllers
 {
@@ -15,11 +16,28 @@ namespace AlphaZero.Controllers
         private db_roomrentalEntities db = new db_roomrentalEntities();
 
         // GET: Inventories
-        public ActionResult Index()
+        public ActionResult Index(string floorLevel)
         {
-            var inventories = db.inventories.Include(i => i.floor);
+            var floorLevels = db.floors.Select(f => new SelectListItem
+            {
+                Value = f.floor_id.ToString(),
+                Text = f.floor_id.ToString()
+            }).ToList();
+
+            ViewBag.FloorLevels = new SelectList(floorLevels, "Value", "Text", floorLevel);
+
+            // Retrieve the filtered inventory based on the selected floor level
+            var inventories = db.inventories.Include(i => i.floor).AsQueryable();
+
+            if (!string.IsNullOrEmpty(floorLevel) && floorLevel != "All")
+            {
+                inventories = inventories.Where(i => i.floor.floor_id == floorLevel);
+            }
+
             return View(inventories.ToList());
         }
+
+
 
         // GET: Inventories/Details/5
         public ActionResult Details(int? id)
@@ -119,6 +137,7 @@ namespace AlphaZero.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+
 
         protected override void Dispose(bool disposing)
         {
