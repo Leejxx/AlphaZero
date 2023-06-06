@@ -152,7 +152,9 @@
                         <a class="dropdown-item" href="profile.html"><i class="dw dw-user1"></i> Profile</a>
                         <a class="dropdown-item" href="profile.html"><i class="dw dw-settings2"></i> Setting</a>
                         <a class="dropdown-item" href="faq.html"><i class="dw dw-help"></i> Help</a>
-                        <a class="dropdown-item" href="login.html"><i class="dw dw-logout"></i> Log Out</a>
+                        <a class="dropdown-item" href="@Url.Action("Logout", "Login")">
+                            <i class="dw dw-logout"></i> Log Out
+                        </a>
                     </div>
                 </div>
             </div>
@@ -283,8 +285,9 @@
                         </a>
                     </li>
                     <li class="dropdown">
-                        <a href="javascript:;" class="dropdown-toggle no-arrow">
-                            <span class="micon dw dw-apartment"></span><span class="mtext">Manage User</span>
+                        <a href="@Url.Action("Index", "users")" class="dropdown-toggle no-arrow">
+                            <span class="micon dw dw-calendar1"></span>
+                            <span class="mtext">Manage User</span>
                         </a>
                     </li>
                     <li class="dropdown">
