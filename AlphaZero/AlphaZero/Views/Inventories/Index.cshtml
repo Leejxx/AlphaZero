@@ -6,8 +6,9 @@
 }
 
 <h2>Manage Inventory</h2>
-<p> @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary" }) </p>
-<br/>
+<p>
+    @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary" })
+</p>
 
 <table class="table">
     <tr>
@@ -18,7 +19,13 @@
             Number of Item
         </th>
         <th>
-            Floor Level
+            @using (Html.BeginForm("Index", "Inventories", FormMethod.Get))
+            {
+                <div class="form-inline">
+                    <label class="mr-2">Floor Level:</label>
+                    @Html.DropDownList("floorLevel", ViewBag.FloorLevels as SelectList, "All", new { @class = "form-control", onchange = "this.form.submit()" })
+                </div>
+            }
         </th>
         <th></th>
     </tr>
@@ -42,5 +49,4 @@
             </td>
         </tr>
     }
-
 </table>
