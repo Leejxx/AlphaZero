@@ -172,6 +172,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CleanerController.cs" />
+    <Compile Include="Controllers\fController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InventoriesController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -910,6 +911,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\f\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />
