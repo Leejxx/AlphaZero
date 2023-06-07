@@ -175,6 +175,12 @@
     <Compile Include="Controllers\InventoriesController.cs" />
     <Compile Include="Controllers\landlordsController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+<<<<<<< Updated upstream
+=======
+    <Compile Include="Controllers\RoomController.cs" />
+    <Compile Include="Controllers\TenantController.cs" />
+    <Compile Include="Controllers\usersController.cs" />
+>>>>>>> Stashed changes
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -959,6 +965,30 @@
     <Content Include="Views\landlords\Details.cshtml" />
     <Content Include="Views\landlords\Edit.cshtml" />
     <Content Include="Views\landlords\Index.cshtml" />
+<<<<<<< Updated upstream
+=======
+    <Content Include="Views\Floor\Create.cshtml" />
+    <Content Include="Views\Floor\Delete.cshtml" />
+    <Content Include="Views\Floor\Details.cshtml" />
+    <Content Include="Views\Floor\Edit.cshtml" />
+    <Content Include="Views\Floor\Index.cshtml" />
+    <Content Include="Views\Room\Create.cshtml" />
+    <Content Include="Views\Room\Delete.cshtml" />
+    <Content Include="Views\Room\Details.cshtml" />
+    <Content Include="Views\Room\Edit.cshtml" />
+    <Content Include="Views\Room\Index.cshtml" />
+    <Content Include="Views\Tenant\Create.cshtml" />
+    <Content Include="Views\Tenant\Delete.cshtml" />
+    <Content Include="Views\Tenant\Details.cshtml" />
+    <Content Include="Views\Tenant\Edit.cshtml" />
+    <Content Include="Views\Tenant\Index.cshtml" />
+    <Content Include="Views\Login\index.cshtml" />
+    <Content Include="Views\users\Create.cshtml" />
+    <Content Include="Views\users\Delete.cshtml" />
+    <Content Include="Views\users\Details.cshtml" />
+    <Content Include="Views\users\Edit.cshtml" />
+    <Content Include="Views\users\Index.cshtml" />
+>>>>>>> Stashed changes
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

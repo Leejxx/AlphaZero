@@ -8,22 +8,28 @@ using System.Web.Mvc;
 
 namespace AlphaZero.Controllers
 {
-    public class LoginController : Controller
-    {
+	public class LoginController : Controller
+	{
+		private readonly db_roomrentalEntities db = new db_roomrentalEntities();
 
-        db_roomrentalEntities db = new db_roomrentalEntities();
-        // GET: Login
-        public ActionResult Index()
-        {
-            return View();
-        }
+		// GET: Login
+		public ActionResult Index()
+		{
+			return View();
+		}
 
+<<<<<<< Updated upstream
         [HttpPost]
         [ValidateAntiForgeryToken]
+=======
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+>>>>>>> Stashed changes
 		public ActionResult Index(user objchk)
 		{
 			if (ModelState.IsValid)
 			{
+<<<<<<< Updated upstream
 				using (db_roomrentalEntities db = new db_roomrentalEntities()) ;
 				{
 					var obj = db.users.Where(a => a.user_name.Equals(objchk.user_name) && a.user_password.Equals(objchk.user_password)).FirstOrDefault();
@@ -57,6 +63,30 @@ namespace AlphaZero.Controllers
 		}
 
 	}
+=======
+				var obj = db.users.FirstOrDefault(a => a.user_name == objchk.user_name && a.user_password == objchk.user_password);
 
+				if (obj != null)
+				{
+					Session["UserID"] = obj.user_id.ToString();
+					Session["UserName"] = obj.user_name.ToString();
 
+					return RedirectToAction("Index", "Home");
+				}
+				else
+				{
+					TempData["InvalidCredentials"] = "Invalid username or password";
+				}
+			}
+>>>>>>> Stashed changes
+
+			return View(objchk);
+		}
+
+		public ActionResult Logout()
+		{
+			Session.Clear();
+			return RedirectToAction("Index", "Login");
+		}
+	}
 }

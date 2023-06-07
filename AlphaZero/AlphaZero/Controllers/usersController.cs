@@ -123,39 +123,5 @@ namespace AlphaZero.Controllers
             }
             base.Dispose(disposing);
         }
-
-		public class UserController : Controller
-		{
-			public ActionResult UserList()
-			{
-				// Logic to retrieve the list of users
-
-				return View();
-			}
-
-			[Authorize(Roles = "admin")]
-			public ActionResult DeleteUser(int userId)
-			{
-				// Logic for deleting the user
-
-				return RedirectToAction("UserList");
-			}
-
-			[Authorize(Roles = "admin")]
-			public ActionResult UpdateUser(int userId)
-			{
-				// Logic for updating the user
-
-				return RedirectToAction("UserList");
-			}
-
-			[Authorize(Roles = "admin")]
-			public ActionResult CreateUser()
-			{
-				// Logic for creating a new user
-
-				return RedirectToAction("UserList");
-			}
-		}
-	}
+    }
 }
