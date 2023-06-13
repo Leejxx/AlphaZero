@@ -50,7 +50,7 @@ namespace AlphaZero.Controllers
                 var bankAccountConfig = await db.sysConfigs.FirstOrDefaultAsync(c => c.category == "bankAcc");
                 var bankAccountConfig1 = await db.sysConfigs.FirstOrDefaultAsync(c => c.category == "bankName");
                 var tenantName = reminds.tenant.tenant_name;
-                var tenantRoom = reminds.tenant.room.room_name;
+                var tenantRoom = reminds.tenant.room.room_number;
                 var tenantFloor = reminds.tenant.room.floor.floor_id;
                 var link = "https://www.facebook.com/AkmalBilikSewa";
 

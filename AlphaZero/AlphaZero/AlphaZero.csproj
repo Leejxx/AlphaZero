@@ -213,8 +213,10 @@
     <Compile Include="Controllers\NotificationController.cs" />
     <Compile Include="Controllers\profitsController.cs" />
     <Compile Include="Controllers\RoomController.cs" />
+    <Compile Include="Controllers\sysConfigsController.cs" />
     <Compile Include="Controllers\TenantController.cs" />
     <Compile Include="Controllers\usersController.cs" />
+    <Compile Include="Controllers\WhatsAppController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -1049,6 +1051,7 @@
     <Content Include="Views\users\ViewProfile.cshtml" />
     <Content Include="Views\Login\EditProfile.cshtml" />
     <Content Include="Views\Login\ForgotPassword.cshtml" />
+    <Content Include="Views\sysConfigs\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
