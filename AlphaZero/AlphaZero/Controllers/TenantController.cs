@@ -224,9 +224,9 @@ namespace AlphaZero.Controllers
             }
             return View(tenant);
         }
-
-        // POST: Tenant/Delete/5
-        [HttpPost, ActionName("Delete")]
+      
+    // POST: Tenant/Delete/5
+    [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
@@ -256,7 +256,73 @@ namespace AlphaZero.Controllers
             }
         }
 
-    
+        [HttpPost]
+        public ActionResult Pay(int id, double amount, string method, DateTime date, HttpPostedFileBase ReceiptFile)
+        {
+            // Retrieve the tenant from the database
+            var tenant = db.tenants.Find(id);
+
+            if (tenant == null)
+            {
+                // Tenant not found, handle the error accordingly
+                return HttpNotFound();
+            }
+       
+            var userId = Convert.ToInt32(Session["UserID"]);
+            var room = db.rooms.Find(tenant.room_id);
+            string fileName = "";
+            if (ReceiptFile != null && ReceiptFile.ContentLength > 0)
+            {
+                fileName = Path.GetFileName(ReceiptFile.FileName);
+                string path = Path.Combine(Server.MapPath("~/Content/assets/vendors/images/Receipts/"), fileName);
+                ReceiptFile.SaveAs(path);
+
+
+            }
+
+            var financeTransaction = new finance
+            {
+
+                floor_id = room.floor_id, // Modify as per your requirement
+                finance_date = date, // Set the finance transaction date to current date
+                finance_inflow = amount, // Set the transaction amount as per your requirement
+                finance_flowtype = "Inflow", // Set the transaction type as per your requirement
+               finance_pMethod = method,
+              finance_type="Partial",
+               user_id= userId,
+                finance_receipt = fileName,
+            finance_desc = "Rent " + tenant.tenant_name + " " + room.room_number
+            };
+
+         
+            db.finances.Add(financeTransaction);
+            db.SaveChanges();
+
+           
+
+            // Update the outstanding amount based on the payment amount
+            if (tenant.tenant_outstanding != amount && amount != 0)
+            {
+                tenant.tenant_paymentStatus = "Partially Paid";
+            }
+            else if (tenant.tenant_outstanding == amount)
+            {
+                tenant.tenant_paymentStatus = "Fully Paid";
+            }
+            tenant.tenant_outstanding -= amount;
+
+            // Save the changes to the database
+            db.Entry(tenant).State = EntityState.Modified;
+            db.SaveChanges();
+
+            // Set a success message to be displayed on the index page
+            TempData["success"] = "Payment processed successfully!";
+
+            // Redirect back to the index page
+            return RedirectToAction("Index");
+        }
+
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

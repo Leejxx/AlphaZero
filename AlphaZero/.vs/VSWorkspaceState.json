@@ -7,8 +7,9 @@
     "\\AlphaZero\\Views",
     "\\AlphaZero\\Views\\Floor",
     "\\AlphaZero\\Views\\Home",
+    "\\AlphaZero\\Views\\Shared",
     "\\AlphaZero\\Views\\Tenant"
   ],
-  "SelectedNode": "\\AlphaZero\\Controllers\\LoginController.cs",
+  "SelectedNode": "\\AlphaZero\\Views\\Shared\\_Layout.cshtml",
   "PreviewInSolutionExplorer": false
 }
