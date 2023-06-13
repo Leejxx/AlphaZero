@@ -224,9 +224,9 @@ namespace AlphaZero.Controllers
             }
             return View(tenant);
         }
-
-        // POST: Tenant/Delete/5
-        [HttpPost, ActionName("Delete")]
+      
+    // POST: Tenant/Delete/5
+    [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
@@ -270,9 +270,15 @@ namespace AlphaZero.Controllers
        
             var userId = Convert.ToInt32(Session["UserID"]);
             var room = db.rooms.Find(tenant.room_id);
-            string fileName = Path.GetFileName(ReceiptFile.FileName);
-            string path = Path.Combine(Server.MapPath("~/Content/assets/vendors/images/Receipts/"), fileName);
-            ReceiptFile.SaveAs(path);
+            string fileName = "";
+            if (ReceiptFile != null && ReceiptFile.ContentLength > 0)
+            {
+                fileName = Path.GetFileName(ReceiptFile.FileName);
+                string path = Path.Combine(Server.MapPath("~/Content/assets/vendors/images/Receipts/"), fileName);
+                ReceiptFile.SaveAs(path);
+
+
+            }
 
             var financeTransaction = new finance
             {
