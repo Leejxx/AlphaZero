@@ -174,6 +174,15 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InventoriesController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+<<<<<<< Updated upstream
+=======
+    <Compile Include="Controllers\NotificationController.cs" />
+    <Compile Include="Controllers\profitsController.cs" />
+    <Compile Include="Controllers\RoomController.cs" />
+    <Compile Include="Controllers\sysConfigsController.cs" />
+    <Compile Include="Controllers\TenantController.cs" />
+    <Compile Include="Controllers\usersController.cs" />
+>>>>>>> Stashed changes
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -905,6 +914,66 @@
     <Content Include="Views\Inventories\Details.cshtml" />
     <Content Include="Views\Inventories\Edit.cshtml" />
     <Content Include="Views\Inventories\Index.cshtml" />
+<<<<<<< Updated upstream
+=======
+    <Content Include="Views\cleanerAtts\Create.cshtml" />
+    <Content Include="Views\cleanerAtts\Delete.cshtml" />
+    <Content Include="Views\cleanerAtts\Details.cshtml" />
+    <Content Include="Views\cleanerAtts\Edit.cshtml" />
+    <Content Include="Views\cleanerAtts\Index.cshtml" />
+    <Content Include="Views\landlords\Create.cshtml" />
+    <Content Include="Views\landlords\Delete.cshtml" />
+    <Content Include="Views\landlords\Details.cshtml" />
+    <Content Include="Views\landlords\Edit.cshtml" />
+    <Content Include="Views\landlords\Index.cshtml" />
+    <Content Include="Views\Floor\Create.cshtml" />
+    <Content Include="Views\Floor\Delete.cshtml" />
+    <Content Include="Views\Floor\Details.cshtml" />
+    <Content Include="Views\Floor\Edit.cshtml" />
+    <Content Include="Views\Floor\Index.cshtml" />
+    <Content Include="Views\Room\Create.cshtml" />
+    <Content Include="Views\Room\Delete.cshtml" />
+    <Content Include="Views\Room\Details.cshtml" />
+    <Content Include="Views\Room\Edit.cshtml" />
+    <Content Include="Views\Room\Index.cshtml" />
+    <Content Include="Views\Tenant\Create.cshtml" />
+    <Content Include="Views\Tenant\Delete.cshtml" />
+    <Content Include="Views\Tenant\Details.cshtml" />
+    <Content Include="Views\Tenant\Edit.cshtml" />
+    <Content Include="Views\Tenant\Index.cshtml" />
+    <Content Include="Views\Login\index.cshtml" />
+    <Content Include="Views\Notification\Create.cshtml" />
+    <Content Include="Views\Notification\Delete.cshtml" />
+    <Content Include="Views\Notification\Details.cshtml" />
+    <Content Include="Views\Notification\Edit.cshtml" />
+    <Content Include="Views\Notification\Index.cshtml" />
+    <Content Include="Views\Investor\Create.cshtml" />
+    <Content Include="Views\Investor\Delete.cshtml" />
+    <Content Include="Views\Investor\Details.cshtml" />
+    <Content Include="Views\Investor\Edit.cshtml" />
+    <Content Include="Views\Investor\Index.cshtml" />
+    <Content Include="Views\Shared\_Notifications.cshtml" />
+    <Content Include="Views\finances\Create.cshtml" />
+    <Content Include="Views\finances\Delete.cshtml" />
+    <Content Include="Views\finances\Details.cshtml" />
+    <Content Include="Views\finances\Edit.cshtml" />
+    <Content Include="Views\finances\Index.cshtml" />
+    <Content Include="Views\profits\Create.cshtml" />
+    <Content Include="Views\profits\Delete.cshtml" />
+    <Content Include="Views\profits\Details.cshtml" />
+    <Content Include="Views\profits\Edit.cshtml" />
+    <Content Include="Views\profits\Index.cshtml" />
+    <Content Include="Views\users\Create.cshtml" />
+    <Content Include="Views\users\Delete.cshtml" />
+    <Content Include="Views\users\Details.cshtml" />
+    <Content Include="Views\users\Edit.cshtml" />
+    <Content Include="Views\users\Index.cshtml" />
+    <Content Include="Views\users\EditProfile.cshtml" />
+    <Content Include="Views\users\ViewProfile.cshtml" />
+    <Content Include="Views\Login\EditProfile.cshtml" />
+    <Content Include="Views\Login\ForgotPassword.cshtml" />
+    <Content Include="Views\sysConfigs\Index.cshtml" />
+>>>>>>> Stashed changes
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
