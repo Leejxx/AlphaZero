@@ -57,7 +57,7 @@ namespace AlphaZero.Controllers
         // GET: Inventories/Create
         public ActionResult Create()
         {
-            ViewBag.floor_id = new SelectList(db.floors, "floor_id", "floor_cctvQr");
+            ViewBag.floor_id = new SelectList(db.floors, "floor_id", "floor_id");
             return View();
         }
 
@@ -75,7 +75,7 @@ namespace AlphaZero.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.floor_id = new SelectList(db.floors, "floor_id", "floor_cctvQr", inventory.floor_id);
+            ViewBag.floor_id = new SelectList(db.floors, "floor_id", "floor_id", inventory.floor_id);
             return View(inventory);
         }
 
@@ -91,7 +91,7 @@ namespace AlphaZero.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.floor_id = new SelectList(db.floors, "floor_id", "floor_cctvQr", inventory.floor_id);
+            ViewBag.floor_id = new SelectList(db.floors, "floor_id", "floor_id", inventory.floor_id);
             return View(inventory);
         }
 
@@ -108,7 +108,7 @@ namespace AlphaZero.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.floor_id = new SelectList(db.floors, "floor_id", "floor_cctvQr", inventory.floor_id);
+            ViewBag.floor_id = new SelectList(db.floors, "floor_id", "floor_id", inventory.floor_id);
             return View(inventory);
         }
 

@@ -1,0 +1,80 @@
+﻿@model IEnumerable<AlphaZero.Models.sysConfig>
+
+@{
+    ViewBag.Title = "System Configuration";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="page-header">
+    <div class="row">
+        <div class="col-md-6 col-sm-12">
+            <div class="title">
+                <h4>System Configuration</h4>
+            </div>
+            <nav aria-label="breadcrumb" role="navigation">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="@Url.Action("Index", "Home")">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">System Configuration</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+</div>
+
+<!-- basic table  Start -->
+<div class="pd-20 card-box mb-30">
+    <div class="clearfix mb-20">
+        <div class="pull-left">
+            <h4 class="text-blue h4">System Settings</h4>
+        </div>
+    </div>
+
+    @using (Html.BeginForm("UpdateConfig", "sysConfigs", FormMethod.Post))
+    {
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Category</th>
+                    <th scope="col">Value</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <th scope="row">
+
+                            @if (item.category == "bankAcc")
+                            {
+                                <text>Bank Account</text>
+                            }
+                            else if (item.category == "bankName")
+                            {
+                                <text>Bank Name</text>
+                            }
+
+                        </th>
+
+                        <td>
+                            @if (item.category == "bankAcc")
+                            {
+                                @Html.TextBox("bankAcc", item.value, new { type = "number", @class = "form-control", @placeholder = "Bank Account Number Goes Here" })
+                            }
+                            else if (item.category == "bankName")
+                            {
+                                @Html.TextBox("bankName", item.value, new { type = "text", @class = "form-control", @placeholder = "Bank Account Name Goes Here" })
+                            }
+
+                        </td>
+                        <td>
+                            <input type="submit" value="Update" class="btn btn-primary"/>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>

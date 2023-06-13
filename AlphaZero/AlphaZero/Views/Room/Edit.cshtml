@@ -3,78 +3,231 @@
 @{
     ViewBag.Title = "Edit";
 }
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/interactjs@1.10.11/dist/interact.min.js"></script>
+<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 
 <h2>Edit</h2>
 
+<div class="row">
+    <div class="col-md-5">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-    
-<div class="form-horizontal">
-    <h4>room</h4>
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    @Html.HiddenFor(model => model.room_id)
+        <div class="form-horizontal">
+            <h4>room</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.room_id)
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.floor_id, "Floor ID", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownList("floor_id", null, htmlAttributes: new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.floor_id, "", new { @class = "text-danger" })
-        </div>
-    </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.floor_id, "floor_id", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("floor_id", null, "-- Please select a floor --", htmlAttributes: new { @class = "form-control", @required = "required" })
+                    @Html.ValidationMessageFor(model => model.floor_id, "", new { @class = "text-danger" })
+                </div>
+            </div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.room_number, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.room_number, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.room_number, "", new { @class = "text-danger" })
-        </div>
-    </div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.room_price, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.room_price, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.room_price, "", new { @class = "text-danger" })
-        </div>
-    </div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.room_status, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownList("room_status", new List<SelectListItem>
-             {
-                 new SelectListItem { Text = "-- Room Status --", Selected = true, Disabled = true },
-                 new SelectListItem { Text = "Available", Value = "Available" },
-                 new SelectListItem { Text = "Booked", Value = "Booked" },
-                 new SelectListItem { Text = "Maintenance", Value = "Maintenance" }
-             }, new { @class = "form-control", @required = true })
-            @Html.ValidationMessageFor(model => model.room_status, "", new { @class = "text-danger" })
-        </div>
-    </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.room_number, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.room_number, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.room_number, "", new { @class = "text-danger" })
+                </div>
+            </div>
 
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Save" class="btn btn-warning" />
-            @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-secondary" })
-        </div>
+            @Html.HiddenFor(model => model.room_coordinate, new { id = "roomCoordinate", @value = Model.room_coordinate })
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <!-- Adjusted col-md-10 to take up the remaining space -->
-                <label class="text-danger">@ViewBag.Message</label>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.room_price, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.room_price, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.room_price, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.room_status, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("room_status", new List<SelectListItem>
+                     {
+                         new SelectListItem { Text = "-- Room Status --", Selected = true, Disabled = true },
+                         new SelectListItem { Text = "Available", Value = "Available" },
+                         new SelectListItem { Text = "Booked", Value = "Booked" },
+                         new SelectListItem { Text = "Maintenance", Value = "Maintenance" }
+                     }, new { @class = "form-control", @required = true })
+                    @Html.ValidationMessageFor(model => model.room_status, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="save" class="btn btn-warning" />
+                </div>
+                <br />
+                <div>
+                    @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-secondary" })
+                </div>
             </div>
         </div>
 
-        
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <!-- Adjusted col-md-10 to take up the remaining space -->
+                    <label class="text-danger">@ViewBag.Message</label>
+                </div>
+            </div>
+        }
+    </div>
+
+    <div class="col-md-7">
+        <div class="card">
+            <div class="card-body">
+                <dl class="row">
+                    <div class="form-group">
+                        <dt class="col-sm-5">
+                            Snipped Area
+                        </dt>
+                        <dd class="col-sm-20">
+                            <div id="snippedAreaContainer" style="position: relative;">
+                                <div id="snippedAreaBox" style="position: absolute; border: 2px dashed #f00; width: 100px; height: 100px;"></div>
+                                <img id="floorLayoutImage" src="" alt="Floor Layout" style="max-height: 8000px; margin-bottom: 10px;" />
+
+                            </div>
+                            <br />
+                            <input id="snippedAreaInput" type="text" class="form-control" readonly />
+                        </dd>
+                    </div>
+
+                </dl>
+            </div>
+        </div>
     </div>
 </div>
-}
+
+
 
 
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            // Change event listener for floor_id select list
+            $('#floor_id').change(function () {
+                var floorId = $(this).val(); // Get the selected floor_id value
+
+                // Send an AJAX request to retrieve the floor layout image path
+                $.ajax({
+                    url: '@Url.Action("GetFloorLayoutImage", "Room")',
+                    type: 'GET',
+                    data: { floorId: floorId },
+                    success: function (result) {
+                        if (result && result.floorLayoutFilePath) {
+                            $('#floorLayoutImage').attr('src', result.floorLayoutFilePath); // Set the image source
+                        } else {
+                            $('#floorLayoutImage').attr('src', ''); // Clear the image source if no image found
+                        }
+                    },
+                    error: function () {
+                        // Handle error if necessary
+                    }
+                });
+            }).trigger('change'); // Trigger change event on page load
+
+            // Image load event handler
+            $('#floorLayoutImage').on('load', function () {
+                interact('#snippedAreaBox')
+                    .draggable({
+                        onmove: function (event) {
+                            var target = event.target;
+                            var x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx;
+                            var y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
+
+                            target.style.transform = 'translate(' + x + 'px, ' + y + 'px)';
+                            target.setAttribute('data-x', x);
+                            target.setAttribute('data-y', y);
+
+                            updateSnippedArea();
+                        }
+                    })
+                    .resizable({
+                        edges: { left: true, right: true, bottom: true, top: true },
+                        onmove: function (event) {
+                            var target = event.target;
+                            var x = (parseFloat(target.getAttribute('data-x')) || 0);
+                            var y = (parseFloat(target.getAttribute('data-y')) || 0);
+
+                            target.style.width = event.rect.width + 'px';
+                            target.style.height = event.rect.height + 'px';
+
+                            target.setAttribute('data-x', x);
+                            target.setAttribute('data-y', y);
+
+                            updateSnippedArea();
+                        }
+                    });
+
+                // Initialize the snipped area box position and size
+                var snippedAreaBox = document.getElementById('snippedAreaBox');
+                var roomCoordinate = $('#roomCoordinate').val();
+
+                if (roomCoordinate) {
+                    var coordinates = roomCoordinate.split(',');
+                    var x = parseFloat(coordinates[0].trim().substring(2));
+                    var y = parseFloat(coordinates[1].trim().substring(2));
+                    var width = parseFloat(coordinates[2].trim().substring(7));
+                    var height = parseFloat(coordinates[3].trim().substring(8));
+
+                    // Set the initial position and size of the snipped area box
+                    snippedAreaBox.style.left = x + '%';
+                    snippedAreaBox.style.top = y + '%';
+
+                    snippedAreaBox.style.width = width + '%';
+                    snippedAreaBox.style.height = height + '%';
+
+                    // Set the initial snipped area input value
+                    var snippedAreaInput = document.getElementById('snippedAreaInput');
+                    snippedAreaInput.value = 'x: ' + x.toFixed(2) + '%, y: ' + y.toFixed(2) + '%, width: ' + width.toFixed(2) + '%, height: ' + height.toFixed(2) + '%';
+                }
+
+            });
+
+            // Update the snipped area input field and save the snipped coordinates
+            function updateSnippedArea() {
+                var snippedAreaBox = document.getElementById('snippedAreaBox');
+                var floorLayoutImage = document.getElementById('floorLayoutImage');
+                var snippedAreaInput = document.getElementById('snippedAreaInput');
+
+                var boxRect = snippedAreaBox.getBoundingClientRect();
+                var imageRect = floorLayoutImage.getBoundingClientRect();
+
+                var x = boxRect.left - imageRect.left;
+                var y = boxRect.top - imageRect.top;
+                var width = boxRect.width;
+                var height = boxRect.height;
+
+                // Calculate the coordinates relative to the floor layout image
+                var imageWidth = imageRect.width;
+                var imageHeight = imageRect.height;
+
+                var relativeX = (x / imageWidth) * 100;
+                var relativeY = (y / imageHeight) * 100;
+                var relativeWidth = (width / imageWidth) * 100;
+                var relativeHeight = (height / imageHeight) * 100;
+
+                snippedAreaInput.value = 'x: ' + relativeX.toFixed(2) + '%, y: ' + relativeY.toFixed(2) + '%, width: ' + relativeWidth.toFixed(2) + '%, height: ' + relativeHeight.toFixed(2) + '%';
+
+                // Save the snipped coordinates to the hidden field for form submission
+                document.getElementById('roomCoordinate').value = snippedAreaInput.value;
+            }
+        });
+    </script>
 }

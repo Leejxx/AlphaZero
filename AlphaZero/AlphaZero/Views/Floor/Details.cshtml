@@ -4,63 +4,239 @@
     ViewBag.Title = "Details";
 }
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/interactjs@1.10.11/dist/interact.min.js"></script>
+<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+
+<style>
+    .status-available {
+        color: green;
+    }
+
+    .status-booked {
+        color: red;
+    }
+
+    .status-maintenance {
+        color: orange;
+    }
+</style>
+
+<style>
+    .status-available {
+        color: green;
+    }
+
+    .status-booked {
+        color: red;
+    }
+
+    .status-maintenance {
+        color: orange;
+    }
+
+    .colored-box {
+        position: absolute;
+        border: 2px solid black;
+        opacity: 0.5;
+        
+    }
+</style>
+
+
 <h2>Details</h2>
 
-<div class="card">
-    <div class="card-header">
-        <h4 class="card-title">Floor Details</h4>
-    </div>
-    <div class="card-body">
-        <dl class="row">
-            <dt class="col-sm-3">
-                @Html.DisplayNameFor(model => model.floor_modemIP)
-            </dt>
-            <dd class="col-sm-9">
-                @Html.DisplayFor(model => model.floor_modemIP)
-            </dd>
+<div class="row">
+    <div class="col-md-5">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Floor Details</h4>
+            </div>
+            <div class="card-body">
+                <dl class="row">
+                    <dt class="col-sm-5">
+                        @Html.DisplayNameFor(model => model.floor_id)
+                    </dt>
+                    <dd class="col-sm-5">
+                        @Html.DisplayFor(model => model.floor_id)
+                    </dd>
+                    <dt class="col-sm-5">
+                        @Html.DisplayNameFor(model => model.floor_modemIP)
+                    </dt>
+                    <dd class="col-sm-5">
+                        @Html.DisplayFor(model => model.floor_modemIP)
+                    </dd>
+                    <dt class="col-sm-5">
+                        @Html.DisplayNameFor(model => model.landlord.landlord_name)
+                    </dt>
+                    <dd class="col-sm-5">
+                        @Html.DisplayFor(model => model.landlord.landlord_name)
+                    </dd>
 
-            <dt class="col-sm-3">
-                @Html.DisplayNameFor(model => model.floor_cctvQr)
-            </dt>
-            <dd class="col-sm-9">
-                @{
-                    string floorCctvQrFileName = Model.floor_cctvQr;
-                    string floorCctvQrFilePath = Url.Content("~/Content/assets/vendors/images/" + floorCctvQrFileName);
-                }
-                @if (!string.IsNullOrEmpty(floorCctvQrFileName))
-                {
-                    <img src="@floorCctvQrFilePath" alt="CCTV QR" style="max-height: 200px; margin-bottom: 10px;" />
-                }
-                <br />
-                @Html.DisplayFor(model => model.floor_cctvQr)
-            </dd>
+                </dl>
+            </div>
+            <div class="card-footer">
+                @Html.ActionLink("Edit", "Edit", new { id = Model.floor_id }, new { @class = "btn btn-primary" })
+                @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-secondary" })
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Rooms</h4>
+            </div>
+            <div class="card-body">
+                <table class="data-table table stripe hover nowrap">
+                    <thead>
+                        <tr>
+                            <th>No.</th>
+                            <th>Room Number</th>
+                            <th>Price</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            int index = 1;
+                            var rooms = Model.rooms; // Access the rooms associated with the floor
+                        }
+                        @foreach (var room in rooms)
+                        {
+                            <tr>
+                                <td>@index</td>
+                                @{
+                                    index++;
+                                }
+                                <td>No @Html.DisplayFor(modelItem => room.room_number)</td>
+                             
+                                <td>@Html.DisplayFor(modelItem => room.room_price)</td>
+                                <td>
+                                    @{
+                                        string statusClass = "";
 
-            <dt class="col-sm-3">
-                Floor Layout
-            </dt>
-            <dd class="col-sm-9">
-                @{
-                    string floorLayoutFileName = Model.floor_layout;
-                    string floorLayoutFilePath = Url.Content("~/Content/assets/vendors/images/" + floorLayoutFileName);
-                }
-                @if (!string.IsNullOrEmpty(floorLayoutFileName))
-                {
-                    <img src="@floorLayoutFilePath" alt="Floor Layout" style="max-height: 200px; margin-bottom: 10px;" />
-                }
-                <br />
-                @Html.DisplayFor(model => model.floor_layout)
-            </dd>
+                                        switch (room.room_status)
+                                        {
+                                            case "Available":
+                                                statusClass = "status-available";
+                                                break;
+                                            case "Booked":
+                                                statusClass = "status-booked";
+                                                break;
+                                            case "Maintenance":
+                                                statusClass = "status-maintenance";
+                                                break;
+                                            default:
+                                                break;
+                                        }
+                                    }
+                                    <span class="@statusClass">@Html.DisplayFor(modelItem => room.room_status)</span>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 
-            <dt class="col-sm-3">
-                @Html.DisplayNameFor(model => model.landlord.landlord_name)
-            </dt>
-            <dd class="col-sm-9">
-                @Html.DisplayFor(model => model.landlord.landlord_name)
-            </dd>
-        </dl>
+
+    <div class="col-md-7">
+        <div class="card">
+            <div class="card-body">
+                <dl class="row">
+                    <dt class="col-sm-5">
+                        Floor Layout
+                    </dt>
+                    <dd class="col-sm-20">
+                        <div id="snippedAreaContainer" style="position: relative;">
+                            <div id="snippedAreaBox"></div>
+                            @{
+                                string floorLayoutFileName = Model.floor_layout;
+                                string floorLayoutFilePath = Url.Content("~/Content/assets/vendors/images/" + floorLayoutFileName);
+                            }
+                            @if (!string.IsNullOrEmpty(floorLayoutFileName))
+                            {
+
+                                <img id="floorLayoutImage" src="@floorLayoutFilePath" alt="Floor Layout" style="max-height: 8000px; margin-bottom: 10px;" />
+                            }
+                            </div>
+                            <br />
+
+                    </dd>
+
+                    <dd class="col-sm-20">
+                        <pre>@Html.DisplayFor(model => model.floor_description)</pre>
+
+                    </dd>
+                    <dt class="col-sm-5">
+                        @Html.DisplayNameFor(model => model.floor_cctvQr)
+                    </dt>
+                    <dd class="col-sm-9">
+                        @{
+                            string floorCctvQrFileName = Model.floor_cctvQr;
+                            string floorCctvQrFilePath = Url.Content("~/Content/assets/vendors/images/" + floorCctvQrFileName);
+                        }
+                        @if (!string.IsNullOrEmpty(floorCctvQrFileName))
+                        {
+                            <img src="@floorCctvQrFilePath" alt="CCTV QR" style="max-height: 200px; margin-bottom: 10px;" />
+                        }
+                        <br />
+                        @Html.DisplayFor(model => model.floor_cctvQr)
+                    </dd>
+                </dl>
+            </div>
+
+        </div>
     </div>
-    <div class="card-footer">
-        @Html.ActionLink("Edit", "Edit", new { id = Model.floor_id }, new { @class = "btn btn-primary" })
-        @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-secondary" })
-    </div>
+
 </div>
+<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+<script>
+    $(document).ready(function() {
+        // Get the snipped area box element
+        var snippedAreaBox = document.getElementById('snippedAreaBox');
+
+        // Iterate over each room and draw the colored box
+        var rooms = @Html.Raw(Json.Encode(Model.rooms.Select(r => new { r.room_number, r.room_price, r.room_status, r.room_coordinate })));
+     
+        for (var i = 0; i < rooms.length; i++) {
+            var room = rooms[i];
+            var roomCoordinate = room.room_coordinate;
+
+            if (roomCoordinate) {
+                var coordinates = roomCoordinate.split(',');
+                var x = parseFloat(coordinates[0].trim().substring(2));
+                var y = parseFloat(coordinates[1].trim().substring(2));
+                var width = parseFloat(coordinates[2].trim().substring(7));
+                var height = parseFloat(coordinates[3].trim().substring(8));
+
+
+                // Create a colored box for the room
+                var coloredBox = document.createElement('div');
+                coloredBox.className = 'colored-box';
+                coloredBox.style.left = x + '%';
+                coloredBox.style.top = y + '%';
+                coloredBox.style.width = width + '%';
+                coloredBox.style.height = height+ '%';
+
+                // Set the color based on the room status
+                switch (room.room_status) {
+                    case 'Available':
+                        coloredBox.style.backgroundColor = 'green';
+                        break;
+                    case 'Booked':
+                        coloredBox.style.backgroundColor = 'red';
+                        break;
+                    case 'Maintenance':
+                        coloredBox.style.backgroundColor = 'orange';
+                        break;
+                    default:
+                        coloredBox.style.backgroundColor = 'gray';
+                        break;
+                }
+
+                // Append the colored box to the snipped area box
+                snippedAreaBox.appendChild(coloredBox);
+            }
+        }
+    });
+</script>

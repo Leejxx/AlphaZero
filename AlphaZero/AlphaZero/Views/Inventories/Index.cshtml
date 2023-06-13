@@ -2,7 +2,6 @@
 
 @{
     ViewBag.Title = "Manage Inventory";
-    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>Manage Inventory</h2>
@@ -10,43 +9,51 @@
     @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary" })
 </p>
 
-<table class="table">
-    <tr>
-        <th>
-            Inventory Name
-        </th>
-        <th>
-            Number of Item
-        </th>
-        <th>
-            @using (Html.BeginForm("Index", "Inventories", FormMethod.Get))
-            {
-                <div class="form-inline">
-                    <label class="mr-2">Floor Level:</label>
-                    @Html.DropDownList("floorLevel", ViewBag.FloorLevels as SelectList, "All", new { @class = "form-control", onchange = "this.form.submit()" })
-                </div>
-            }
-        </th>
-        <th></th>
-    </tr>
+<div class="pb-20">
+    <table class="data-table table stripe hover nowrap">
+        <thead>
+            <tr>
+                <th>
+                    Inventory Name
+                </th>
+                <th>
+                    Number of Item
+                </th>
+                <th>
+                    @using (Html.BeginForm("Index", "Inventories", FormMethod.Get))
+                    {
+                        <div class="form-inline">
+                            <label class="mr-2">Floor Level:</label>
+                            @Html.DropDownList("floorLevel", ViewBag.FloorLevels as SelectList, "All", new { @class = "form-control", onchange = "this.form.submit()" })
+                        </div>
+                    }
+                </th>
+                <th></th>
+            </tr>
+        </thead>
 
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.inventory_name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.inventory_count)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.floor.floor_id)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.Inventory_id }, new { @class = "btn btn-warning" }) |
-                @Html.ActionLink("Details", "Details", new { id = item.Inventory_id }, new { @class = "btn btn-info" }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.Inventory_id }, new { @class = "btn btn-danger" })
-            </td>
-        </tr>
-    }
-</table>
+        <tbody>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.inventory_name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.inventory_count)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.floor.floor_id)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.Inventory_id }, new { @class = "btn btn-warning" }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.Inventory_id }, new { @class = "btn btn-info" }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.Inventory_id }, new { @class = "btn btn-danger" })
+                    </td>
+                </tr>
+
+            }
+        </tbody>
+    </table>
+    </div>

@@ -14,14 +14,20 @@ namespace AlphaZero.Models
     
     public partial class tenant
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public tenant()
+        {
+            this.reminds = new HashSet<reminds>();
+        }
+    
         public int tenant_id { get; set; }
-        public int tenant_ic { get; set; }
+        public string tenant_ic { get; set; }
         public string tenant_uploadIC { get; set; }
         public string tenant_name { get; set; }
-        public int tenant_contract { get; set; }
+        public string tenant_contract { get; set; }
         public string tenant_phoneNo { get; set; }
         public string tenant_emergencyNo { get; set; }
-        public int tenant_noSiri { get; set; }
+        public string tenant_noSiri { get; set; }
         public System.DateTime tenant_inDate { get; set; }
         public System.DateTime tenant_outDate { get; set; }
         public double tenant_outstanding { get; set; }
@@ -30,5 +36,7 @@ namespace AlphaZero.Models
         public string tenant_outSession { get; set; }
     
         public virtual room room { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<reminds> reminds { get; set; }
     }
 }

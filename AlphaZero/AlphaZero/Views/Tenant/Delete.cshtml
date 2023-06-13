@@ -46,10 +46,20 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.tenant_contract)
+            Contract Photo
         </dt>
 
         <dd>
+
+            @{
+                floorLayoutFileName = Model.tenant_contract;
+                floorLayoutFilePath = Url.Content("~/Content/assets/vendors/images/" + floorLayoutFileName);
+            }
+            @if (!string.IsNullOrEmpty(floorLayoutFileName))
+            {
+                <img src="@floorLayoutFilePath" alt="Contract" style="max-height: 200px; margin-bottom: 10px;" />
+            }
+            <br />
             @Html.DisplayFor(model => model.tenant_contract)
         </dd>
 

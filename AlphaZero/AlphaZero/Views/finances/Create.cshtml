@@ -1,0 +1,132 @@
+﻿@model AlphaZero.Models.finance
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+@using (Html.BeginForm("Create", "finances", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Finance</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.floor_id, "Floor ID", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+
+                @Html.DropDownList("floor_id", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.floor_id, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-10">
+                Amount
+                @Html.EditorFor(model => model.finance_flowtype, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.finance_flowtype, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-10">
+                Amount
+                @Html.EditorFor(model => model.finance_inflow, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.finance_inflow, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-10">
+                Amount
+                @Html.EditorFor(model => model.finance_outflow, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.finance_outflow, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-10">
+                Notes
+                @Html.EditorFor(model => model.finance_desc, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.finance_desc, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.finance_pMethod, "Payment Method", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.finance_pMethod, GetPaymentMethodOptions(), new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.finance_pMethod, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.finance_type, "Payment", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.finance_type, GetPaymentOptions(), new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.finance_type, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-10">
+                Date
+                @Html.EditorFor(model => model.finance_date, "Date", new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.finance_date, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Receipt", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input type="file" name="ReceiptFile" id="ReceiptFile" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.user_id, "User ID", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("user_id", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.user_id, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+
+@functions {
+    private SelectList GetPaymentMethodOptions()
+    {
+        var paymentMethods = new List<SelectListItem>
+{
+            new SelectListItem { Text = "Cash", Value = "Cash" },
+            new SelectListItem { Text = "Credit card/Debit card", Value = "CreditCardDebitCard" },
+            new SelectListItem { Text = "E-wallet", Value = "EWallet" }
+        };
+
+        return new SelectList(paymentMethods, "Value", "Text");
+    }
+
+    private SelectList GetPaymentOptions()
+    {
+        var paymentOptions = new List<SelectListItem>
+{
+            new SelectListItem { Text = "Full Payment", Value = "FullPayment" },
+            new SelectListItem { Text = "Partial Payment", Value = "PartialPayment" }
+        };
+
+        return new SelectList(paymentOptions, "Value", "Text");
+    }
+}

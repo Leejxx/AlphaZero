@@ -12,6 +12,8 @@
           <Property Name="cleanerAtt_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="floor_id" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="cleaner_date" Type="date" Nullable="false" />
+          <Property Name="cleaner_salary" Type="float" />
+          <Property Name="cleanerAtt_count" Type="int" />
         </EntityType>
         <EntityType Name="finance">
           <Key>
@@ -19,22 +21,25 @@
           </Key>
           <Property Name="finance_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="floor_id" Type="varchar" MaxLength="50" />
-          <Property Name="finance_transaction" Type="float" Nullable="false" />
           <Property Name="finance_desc" Type="varchar" MaxLength="50" />
           <Property Name="finance_pMethod" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="finance_type" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="finance_date" Type="date" Nullable="false" />
           <Property Name="finance_receipt" Type="varchar" MaxLength="50" />
           <Property Name="user_id" Type="int" Nullable="false" />
+          <Property Name="finance_outflow" Type="float" />
+          <Property Name="finance_inflow" Type="float" />
+          <Property Name="finance_flowtype" Type="varchar" MaxLength="10" Nullable="false" />
         </EntityType>
         <EntityType Name="floor">
           <Key>
             <PropertyRef Name="floor_id" />
           </Key>
           <Property Name="floor_id" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="floor_modemIP" Type="int" />
+          <Property Name="floor_modemIP" Type="varchar" MaxLength="50" />
           <Property Name="floor_cctvQr" Type="varchar" MaxLength="50" />
           <Property Name="floor_layout" Type="varchar" MaxLength="50" />
+          <Property Name="floor_description" Type="nvarchar(max)" />
           <Property Name="landlord_id" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="inventory">
@@ -75,12 +80,17 @@
           <Property Name="profit_month" Type="date" Nullable="false" />
           <Property Name="profit_value" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
-        <EntityType Name="reminder">
+        <EntityType Name="reminds">
           <Key>
             <PropertyRef Name="reminder_id" />
           </Key>
           <Property Name="reminder_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="reminder_bankNo" Type="int" Nullable="false" />
+          <Property Name="landlord_id" Type="int" />
+          <Property Name="tenant_id" Type="int" />
+          <Property Name="reminder_status" Type="int" Nullable="false" />
+          <Property Name="reminder_desc" Type="varchar" MaxLength="500" />
+          <Property Name="reminder_title" Type="nchar" MaxLength="100" />
+          <Property Name="reminder_date" Type="date" />
         </EntityType>
         <EntityType Name="room">
           <Key>
@@ -91,6 +101,14 @@
           <Property Name="floor_id" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="room_price" Type="float" Nullable="false" />
           <Property Name="room_status" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="room_coordinate" Type="varchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="sysConfig">
+          <Key>
+            <PropertyRef Name="category" />
+          </Key>
+          <Property Name="category" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="value" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -107,13 +125,13 @@
             <PropertyRef Name="tenant_id" />
           </Key>
           <Property Name="tenant_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="tenant_ic" Type="int" Nullable="false" />
+          <Property Name="tenant_ic" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="tenant_uploadIC" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="tenant_name" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="tenant_contract" Type="int" Nullable="false" />
+          <Property Name="tenant_contract" Type="varchar" MaxLength="50" />
           <Property Name="tenant_phoneNo" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="tenant_emergencyNo" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="tenant_noSiri" Type="int" Nullable="false" />
+          <Property Name="tenant_noSiri" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="tenant_inDate" Type="date" Nullable="false" />
           <Property Name="tenant_outDate" Type="date" Nullable="false" />
           <Property Name="tenant_outSession" Type="varchar" MaxLength="50" />
@@ -215,6 +233,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_reminds_landlord">
+          <End Role="landlord" Type="Self.landlord" Multiplicity="0..1" />
+          <End Role="reminds" Type="Self.reminds" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="landlord">
+              <PropertyRef Name="landlord_id" />
+            </Principal>
+            <Dependent Role="reminds">
+              <PropertyRef Name="landlord_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_reminds_tenant">
+          <End Role="tenant" Type="Self.tenant" Multiplicity="0..1" />
+          <End Role="reminds" Type="Self.reminds" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tenant">
+              <PropertyRef Name="tenant_id" />
+            </Principal>
+            <Dependent Role="reminds">
+              <PropertyRef Name="tenant_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_room_floor">
           <End Role="floor" Type="Self.floor" Multiplicity="1" />
           <End Role="room" Type="Self.room" Multiplicity="*" />
@@ -247,8 +289,9 @@
           <EntitySet Name="Investor" EntityType="Self.Investor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="landlord" EntityType="Self.landlord" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="profit" EntityType="Self.profit" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="reminder" EntityType="Self.reminder" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="reminds" EntityType="Self.reminds" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="room" EntityType="Self.room" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysConfig" EntityType="Self.sysConfig" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tenant" EntityType="Self.tenant" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="user" EntityType="Self.user" Schema="dbo" store:Type="Tables" />
@@ -280,6 +323,14 @@
             <End Role="Investor" EntitySet="Investor" />
             <End Role="profit" EntitySet="profit" />
           </AssociationSet>
+          <AssociationSet Name="FK_reminds_landlord" Association="Self.FK_reminds_landlord">
+            <End Role="landlord" EntitySet="landlord" />
+            <End Role="reminds" EntitySet="reminds" />
+          </AssociationSet>
+          <AssociationSet Name="FK_reminds_tenant" Association="Self.FK_reminds_tenant">
+            <End Role="tenant" EntitySet="tenant" />
+            <End Role="reminds" EntitySet="reminds" />
+          </AssociationSet>
           <AssociationSet Name="FK_room_floor" Association="Self.FK_room_floor">
             <End Role="floor" EntitySet="floor" />
             <End Role="room" EntitySet="room" />
@@ -301,6 +352,8 @@
           <Property Name="floor_id" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="cleaner_date" Type="DateTime" Nullable="false" Precision="0" />
           <NavigationProperty Name="floor" Relationship="Self.FK_cleanerAtt_floor" FromRole="cleanerAtt" ToRole="floor" />
+          <Property Name="cleaner_salary" Type="Double" />
+          <Property Name="cleanerAtt_count" Type="Int32" />
         </EntityType>
         <EntityType Name="finance">
           <Key>
@@ -308,7 +361,6 @@
           </Key>
           <Property Name="finance_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="floor_id" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="finance_transaction" Type="Double" Nullable="false" />
           <Property Name="finance_desc" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="finance_pMethod" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="finance_type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
@@ -317,13 +369,16 @@
           <Property Name="user_id" Type="Int32" Nullable="false" />
           <NavigationProperty Name="floor" Relationship="Self.FK_finance_floor" FromRole="finance" ToRole="floor" />
           <NavigationProperty Name="user" Relationship="Self.FK_finance_user" FromRole="finance" ToRole="user" />
+          <Property Name="finance_outflow" Type="Double" />
+          <Property Name="finance_inflow" Type="Double" />
+          <Property Name="finance_flowtype" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="floor">
           <Key>
             <PropertyRef Name="floor_id" />
           </Key>
           <Property Name="floor_id" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="floor_modemIP" Type="Int32" />
+          <Property Name="floor_modemIP" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
           <Property Name="floor_cctvQr" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="floor_layout" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="landlord_id" Type="Int32" Nullable="false" />
@@ -332,6 +387,7 @@
           <NavigationProperty Name="landlord" Relationship="Self.FK_floor_landlord" FromRole="floor" ToRole="landlord" />
           <NavigationProperty Name="inventories" Relationship="Self.FK_inventory_floor" FromRole="floor" ToRole="inventory" />
           <NavigationProperty Name="rooms" Relationship="Self.FK_room_floor" FromRole="floor" ToRole="room" />
+          <Property Name="floor_description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="inventory">
           <Key>
@@ -365,6 +421,7 @@
           <Property Name="landlord_fee" Type="Double" Nullable="false" />
           <Property Name="landlord_due" Type="DateTime" Nullable="false" Precision="0" />
           <NavigationProperty Name="floors" Relationship="Self.FK_floor_landlord" FromRole="landlord" ToRole="floor" />
+          <NavigationProperty Name="reminds" Relationship="db_roomrentalModel.FK_reminds_landlord" FromRole="landlord" ToRole="remind" />
         </EntityType>
         <EntityType Name="profit">
           <Key>
@@ -375,13 +432,6 @@
           <Property Name="profit_month" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="profit_value" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Investor" Relationship="Self.FK_profit_Investor" FromRole="profit" ToRole="Investor" />
-        </EntityType>
-        <EntityType Name="reminder">
-          <Key>
-            <PropertyRef Name="reminder_id" />
-          </Key>
-          <Property Name="reminder_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="reminder_bankNo" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="room">
           <Key>
@@ -394,6 +444,7 @@
           <NavigationProperty Name="floor" Relationship="Self.FK_room_floor" FromRole="room" ToRole="floor" />
           <NavigationProperty Name="tenants" Relationship="Self.FK_tenant_room" FromRole="room" ToRole="tenant" />
           <Property Name="room_number" Type="Int32" Nullable="false" />
+          <Property Name="room_coordinate" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="sysdiagram">
           <Key>
@@ -410,13 +461,13 @@
             <PropertyRef Name="tenant_id" />
           </Key>
           <Property Name="tenant_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="tenant_ic" Type="Int32" Nullable="false" />
+          <Property Name="tenant_ic" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
           <Property Name="tenant_uploadIC" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="tenant_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="tenant_contract" Type="Int32" Nullable="false" />
+          <Property Name="tenant_contract" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
           <Property Name="tenant_phoneNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="tenant_emergencyNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="tenant_noSiri" Type="Int32" Nullable="false" />
+          <Property Name="tenant_noSiri" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
           <Property Name="tenant_inDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="tenant_outDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="tenant_outstanding" Type="Double" Nullable="false" />
@@ -424,6 +475,7 @@
           <Property Name="room_id" Type="Int32" Nullable="false" />
           <NavigationProperty Name="room" Relationship="Self.FK_tenant_room" FromRole="tenant" ToRole="room" />
           <Property Name="tenant_outSession" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="reminds" Relationship="db_roomrentalModel.FK_reminds_tenant" FromRole="tenant" ToRole="remind" />
         </EntityType>
         <EntityType Name="user">
           <Key>
@@ -553,7 +605,6 @@
           <EntitySet Name="Investors" EntityType="Self.Investor" />
           <EntitySet Name="landlords" EntityType="Self.landlord" />
           <EntitySet Name="profits" EntityType="Self.profit" />
-          <EntitySet Name="reminders" EntityType="Self.reminder" />
           <EntitySet Name="rooms" EntityType="Self.room" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
           <EntitySet Name="tenants" EntityType="Self.tenant" />
@@ -594,7 +645,62 @@
             <End Role="room" EntitySet="rooms" />
             <End Role="tenant" EntitySet="tenants" />
           </AssociationSet>
+          <EntitySet Name="reminds" EntityType="db_roomrentalModel.reminds" />
+          <EntitySet Name="sysConfigs" EntityType="db_roomrentalModel.sysConfig" />
+          <AssociationSet Name="FK_reminds_landlord" Association="db_roomrentalModel.FK_reminds_landlord">
+            <End Role="landlord" EntitySet="landlords" />
+            <End Role="remind" EntitySet="reminds" />
+          </AssociationSet>
+          <AssociationSet Name="FK_reminds_tenant" Association="db_roomrentalModel.FK_reminds_tenant">
+            <End Role="tenant" EntitySet="tenants" />
+            <End Role="remind" EntitySet="reminds" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="reminds">
+          <Key>
+            <PropertyRef Name="reminder_id" />
+          </Key>
+          <Property Name="reminder_id" Type="Int32" Nullable="false" />
+          <Property Name="landlord_id" Type="Int32" />
+          <Property Name="tenant_id" Type="Int32" />
+          <Property Name="reminder_status" Type="Int32" Nullable="false" />
+          <Property Name="reminder_desc" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="reminder_title" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+          <Property Name="reminder_date" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="landlord" Relationship="db_roomrentalModel.FK_reminds_landlord" FromRole="remind" ToRole="landlord" />
+          <NavigationProperty Name="tenant" Relationship="db_roomrentalModel.FK_reminds_tenant" FromRole="remind" ToRole="tenant" />
+        </EntityType>
+        <EntityType Name="sysConfig">
+          <Key>
+            <PropertyRef Name="category" />
+          </Key>
+          <Property Name="category" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="value" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <Association Name="FK_reminds_landlord">
+          <End Type="db_roomrentalModel.landlord" Role="landlord" Multiplicity="0..1" />
+          <End Type="db_roomrentalModel.reminds" Role="remind" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="landlord">
+              <PropertyRef Name="landlord_id" />
+            </Principal>
+            <Dependent Role="remind">
+              <PropertyRef Name="landlord_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_reminds_tenant">
+          <End Type="db_roomrentalModel.tenant" Role="tenant" Multiplicity="0..1" />
+          <End Type="db_roomrentalModel.reminds" Role="remind" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tenant">
+              <PropertyRef Name="tenant_id" />
+            </Principal>
+            <Dependent Role="remind">
+              <PropertyRef Name="tenant_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -604,6 +710,8 @@
           <EntitySetMapping Name="cleanerAtts">
             <EntityTypeMapping TypeName="db_roomrentalModel.cleanerAtt">
               <MappingFragment StoreEntitySet="cleanerAtt">
+                <ScalarProperty Name="cleanerAtt_count" ColumnName="cleanerAtt_count" />
+                <ScalarProperty Name="cleaner_salary" ColumnName="cleaner_salary" />
                 <ScalarProperty Name="cleanerAtt_id" ColumnName="cleanerAtt_id" />
                 <ScalarProperty Name="floor_id" ColumnName="floor_id" />
                 <ScalarProperty Name="cleaner_date" ColumnName="cleaner_date" />
@@ -613,9 +721,11 @@
           <EntitySetMapping Name="finances">
             <EntityTypeMapping TypeName="db_roomrentalModel.finance">
               <MappingFragment StoreEntitySet="finance">
+                <ScalarProperty Name="finance_flowtype" ColumnName="finance_flowtype" />
+                <ScalarProperty Name="finance_inflow" ColumnName="finance_inflow" />
+                <ScalarProperty Name="finance_outflow" ColumnName="finance_outflow" />
                 <ScalarProperty Name="finance_id" ColumnName="finance_id" />
                 <ScalarProperty Name="floor_id" ColumnName="floor_id" />
-                <ScalarProperty Name="finance_transaction" ColumnName="finance_transaction" />
                 <ScalarProperty Name="finance_desc" ColumnName="finance_desc" />
                 <ScalarProperty Name="finance_pMethod" ColumnName="finance_pMethod" />
                 <ScalarProperty Name="finance_type" ColumnName="finance_type" />
@@ -628,6 +738,7 @@
           <EntitySetMapping Name="floors">
             <EntityTypeMapping TypeName="db_roomrentalModel.floor">
               <MappingFragment StoreEntitySet="floor">
+                <ScalarProperty Name="floor_description" ColumnName="floor_description" />
                 <ScalarProperty Name="floor_id" ColumnName="floor_id" />
                 <ScalarProperty Name="floor_modemIP" ColumnName="floor_modemIP" />
                 <ScalarProperty Name="floor_cctvQr" ColumnName="floor_cctvQr" />
@@ -678,17 +789,10 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="reminders">
-            <EntityTypeMapping TypeName="db_roomrentalModel.reminder">
-              <MappingFragment StoreEntitySet="reminder">
-                <ScalarProperty Name="reminder_id" ColumnName="reminder_id" />
-                <ScalarProperty Name="reminder_bankNo" ColumnName="reminder_bankNo" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="rooms">
             <EntityTypeMapping TypeName="db_roomrentalModel.room">
               <MappingFragment StoreEntitySet="room">
+                <ScalarProperty Name="room_coordinate" ColumnName="room_coordinate" />
                 <ScalarProperty Name="room_number" ColumnName="room_number" />
                 <ScalarProperty Name="room_id" ColumnName="room_id" />
                 <ScalarProperty Name="floor_id" ColumnName="floor_id" />
@@ -736,6 +840,27 @@
                 <ScalarProperty Name="user_name" ColumnName="user_name" />
                 <ScalarProperty Name="user_email" ColumnName="user_email" />
                 <ScalarProperty Name="user_type" ColumnName="user_type" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="reminds">
+            <EntityTypeMapping TypeName="db_roomrentalModel.reminds">
+              <MappingFragment StoreEntitySet="reminds">
+                <ScalarProperty Name="reminder_date" ColumnName="reminder_date" />
+                <ScalarProperty Name="reminder_title" ColumnName="reminder_title" />
+                <ScalarProperty Name="reminder_desc" ColumnName="reminder_desc" />
+                <ScalarProperty Name="reminder_status" ColumnName="reminder_status" />
+                <ScalarProperty Name="tenant_id" ColumnName="tenant_id" />
+                <ScalarProperty Name="landlord_id" ColumnName="landlord_id" />
+                <ScalarProperty Name="reminder_id" ColumnName="reminder_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysConfigs">
+            <EntityTypeMapping TypeName="db_roomrentalModel.sysConfig">
+              <MappingFragment StoreEntitySet="sysConfig">
+                <ScalarProperty Name="value" ColumnName="value" />
+                <ScalarProperty Name="category" ColumnName="category" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

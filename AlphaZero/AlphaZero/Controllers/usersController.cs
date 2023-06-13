@@ -17,6 +17,7 @@ namespace AlphaZero.Controllers
         // GET: users
         public ActionResult Index()
         {
+
             return View(db.users.ToList());
         }
 
@@ -124,38 +125,41 @@ namespace AlphaZero.Controllers
             base.Dispose(disposing);
         }
 
-		public class UserController : Controller
-		{
-			public ActionResult UserList()
-			{
-				// Logic to retrieve the list of users
 
-				return View();
-			}
+        // GET: User/ViewProfile
+        public ActionResult ViewProfile(int userId)
+        {
+            // Retrieve user data based on the userId
+            // You can replace this with your own logic to fetch user data from the database
+            user user = db.users.Find(userId);
 
-			[Authorize(Roles = "admin")]
-			public ActionResult DeleteUser(int userId)
-			{
-				// Logic for deleting the user
+            // Pass the user data to the view
+            return View(user);
+        }
 
-				return RedirectToAction("UserList");
-			}
 
-			[Authorize(Roles = "admin")]
-			public ActionResult UpdateUser(int userId)
-			{
-				// Logic for updating the user
+        public ActionResult EditProfile(int userId)
+        {
+            // Retrieve user data based on the userId
+            // You can replace this with your own logic to fetch user data from the database
+            user user = db.users.Find(userId);
 
-				return RedirectToAction("UserList");
-			}
+            // Pass the user data to the view
+            return View(user);
+        }
 
-			[Authorize(Roles = "admin")]
-			public ActionResult CreateUser()
-			{
-				// Logic for creating a new user
-
-				return RedirectToAction("UserList");
-			}
-		}
-	}
+        // POST: User/EditProfile
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditProfile([Bind(Include = "user_id,user_password,user_name,user_email,user_type")] user user)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(user).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View(user);
+        }
+    }
 }

@@ -18,6 +18,7 @@ namespace AlphaZero.Models
         public landlord()
         {
             this.floors = new HashSet<floor>();
+            this.reminds = new HashSet<reminds>();
         }
     
         public int landlord_id { get; set; }
@@ -28,5 +29,7 @@ namespace AlphaZero.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<floor> floors { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<reminds> reminds { get; set; }
     }
 }

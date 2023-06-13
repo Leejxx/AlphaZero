@@ -1,7 +1,8 @@
 ﻿@model IEnumerable<AlphaZero.Models.user>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Manage User";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>Index</h2>
@@ -26,26 +27,27 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.user_password)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.user_name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.user_email)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.user_type)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.user_id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.user_id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.user_id })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.user_password)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.user_name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.user_email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.user_type)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.user_id }, new { @class = "btn btn-warning", style = "margin-right: 5px;" })
+                @Html.ActionLink("Details", "Details", new { id = item.user_id }, new { @class = "btn btn-info", style = "margin-right: 5px;" })
+                @Html.ActionLink("Delete", "Delete", new { id = item.user_id }, new { @class = "btn btn-danger", style = "margin-right: 5px;" })
+            </td>
+        </tr>
+    }
 
 </table>

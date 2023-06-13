@@ -1,0 +1,46 @@
+﻿@model IEnumerable<AlphaZero.Models.profit>
+
+@{
+    ViewBag.Title = "Manage Profit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>Profit History</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary" })
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Profit Per Month
+        </th>
+        <th>
+            Total Profit
+        </th>
+        <th>
+            Investor Name
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.profit_month)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.profit_value)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Investor.investor_name)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.profit_id }, new { @class = "btn btn-warning" }) |
+                @Html.ActionLink("Details", "Details", new { id = item.profit_id }, new { @class = "btn btn-info" }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.profit_id }, new { @class = "btn btn-danger" })
+            </td>
+        </tr>
+    }
+
+</table>

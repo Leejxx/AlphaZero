@@ -16,13 +16,15 @@ namespace AlphaZero.Models
     {
         public int finance_id { get; set; }
         public string floor_id { get; set; }
-        public double finance_transaction { get; set; }
         public string finance_desc { get; set; }
         public string finance_pMethod { get; set; }
         public string finance_type { get; set; }
         public System.DateTime finance_date { get; set; }
         public string finance_receipt { get; set; }
         public int user_id { get; set; }
+        public Nullable<double> finance_outflow { get; set; }
+        public Nullable<double> finance_inflow { get; set; }
+        public string finance_flowtype { get; set; }
     
         public virtual floor floor { get; set; }
         public virtual user user { get; set; }

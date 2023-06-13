@@ -73,7 +73,7 @@ namespace AlphaZero.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "tenant_id,tenant_ic,tenant_uploadIC,tenant_name,tenant_contract,tenant_phoneNo,tenant_emergencyNo,tenant_noSiri,tenant_inDate,tenant_outDate,tenant_outSession,tenant_outstanding,tenant_paymentStatus,room_id")] tenant tenant, HttpPostedFileBase tenantIC)
+        public ActionResult Create([Bind(Include = "tenant_id,tenant_ic,tenant_uploadIC,tenant_name,tenant_contract,tenant_phoneNo,tenant_emergencyNo,tenant_noSiri,tenant_inDate,tenant_outDate,tenant_outSession,tenant_outstanding,tenant_paymentStatus,room_id")] tenant tenant, HttpPostedFileBase tenantIC, HttpPostedFileBase tenantContract)
         {
             if (ModelState.IsValid)
             {
@@ -83,6 +83,14 @@ namespace AlphaZero.Controllers
                     string filePath = Path.Combine(Server.MapPath("~/Content/assets/vendors/images"), fileName);
                     tenantIC.SaveAs(filePath);
                     tenant.tenant_uploadIC = fileName; // Save the unique file name in the database
+                }
+
+                if (tenantContract != null && tenantContract.ContentLength > 0)
+                {
+                    string fileName = Path.GetFileName(tenantContract.FileName);
+                    string filePath = Path.Combine(Server.MapPath("~/Content/assets/vendors/images"), fileName);
+                    tenantContract.SaveAs(filePath);
+                    tenant.tenant_contract = fileName; // Save the unique file name in the database
                 }
 
                 db.tenants.Add(tenant);
@@ -130,7 +138,7 @@ namespace AlphaZero.Controllers
      
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, tenant updatedTenant, HttpPostedFileBase tenantIC)
+        public ActionResult Edit(int id, tenant updatedTenant, HttpPostedFileBase tenantIC, HttpPostedFileBase tenantContract)
         {
             
 
@@ -142,7 +150,16 @@ namespace AlphaZero.Controllers
 
             if (ModelState.IsValid)
             {
+                var previousRoom = db.rooms.FirstOrDefault(r => r.room_id == tenant.room_id);
+                if (previousRoom != null)
+                {
+                    previousRoom.room_status = "Available";
+                    db.SaveChanges();
+                }
+
+
               
+
                 if (tenantIC != null && tenantIC.ContentLength > 0)
                 {
                     string fileName = Path.GetFileName(tenantIC.FileName);
@@ -150,15 +167,22 @@ namespace AlphaZero.Controllers
                     tenantIC.SaveAs(filePath);
                     tenant.tenant_uploadIC = fileName; // Save the unique file name in the database
                 }
+              
 
-
+                if (tenantContract != null && tenantContract.ContentLength > 0)
+                {
+                    string fileName = Path.GetFileName(tenantContract.FileName);
+                    string filePath = Path.Combine(Server.MapPath("~/Content/assets/vendors/images"), fileName);
+                    tenantContract.SaveAs(filePath);
+                    tenant.tenant_contract = fileName; // Save the unique file name in the database
+                }
 
                 // Update other fields if needed
                 tenant.tenant_id = updatedTenant.tenant_id;
               
                 tenant.tenant_ic = updatedTenant.tenant_ic;
                 tenant.tenant_name = updatedTenant.tenant_name;
-                tenant.tenant_contract = updatedTenant.tenant_contract;
+               
                 tenant.tenant_phoneNo = updatedTenant.tenant_phoneNo;
                 tenant.tenant_emergencyNo = updatedTenant.tenant_emergencyNo;
                 tenant.tenant_noSiri = updatedTenant.tenant_noSiri;
@@ -176,6 +200,8 @@ namespace AlphaZero.Controllers
                 }
                 db.Entry(tenant).State = EntityState.Modified;
                 db.SaveChanges();
+                TempData["SuccessMessage"] = "Information updated successfully.";
+
                 return RedirectToAction("Edit");
             }
 
@@ -205,6 +231,13 @@ namespace AlphaZero.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             tenant tenant = db.tenants.Find(id);
+
+            var room = db.rooms.FirstOrDefault(r => r.room_id == tenant.room_id);
+            if (room != null)
+            {
+                room.room_status = "Available";
+            }
+
             db.tenants.Remove(tenant);
             db.SaveChanges();
             return RedirectToAction("Index");

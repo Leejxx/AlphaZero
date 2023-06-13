@@ -4,6 +4,8 @@
     <EntitySetMapping Name="cleanerAtts">
       <EntityTypeMapping TypeName="db_roomrentalModel.cleanerAtt">
         <MappingFragment StoreEntitySet="cleanerAtt">
+          <ScalarProperty Name="cleanerAtt_count" ColumnName="cleanerAtt_count" />
+          <ScalarProperty Name="cleaner_salary" ColumnName="cleaner_salary" />
           <ScalarProperty Name="cleanerAtt_id" ColumnName="cleanerAtt_id" />
           <ScalarProperty Name="floor_id" ColumnName="floor_id" />
           <ScalarProperty Name="cleaner_date" ColumnName="cleaner_date" />
@@ -13,9 +15,11 @@
     <EntitySetMapping Name="finances">
       <EntityTypeMapping TypeName="db_roomrentalModel.finance">
         <MappingFragment StoreEntitySet="finance">
+          <ScalarProperty Name="finance_flowtype" ColumnName="finance_flowtype" />
+          <ScalarProperty Name="finance_inflow" ColumnName="finance_inflow" />
+          <ScalarProperty Name="finance_outflow" ColumnName="finance_outflow" />
           <ScalarProperty Name="finance_id" ColumnName="finance_id" />
           <ScalarProperty Name="floor_id" ColumnName="floor_id" />
-          <ScalarProperty Name="finance_transaction" ColumnName="finance_transaction" />
           <ScalarProperty Name="finance_desc" ColumnName="finance_desc" />
           <ScalarProperty Name="finance_pMethod" ColumnName="finance_pMethod" />
           <ScalarProperty Name="finance_type" ColumnName="finance_type" />
@@ -28,6 +32,7 @@
     <EntitySetMapping Name="floors">
       <EntityTypeMapping TypeName="db_roomrentalModel.floor">
         <MappingFragment StoreEntitySet="floor">
+          <ScalarProperty Name="floor_description" ColumnName="floor_description" />
           <ScalarProperty Name="floor_id" ColumnName="floor_id" />
           <ScalarProperty Name="floor_modemIP" ColumnName="floor_modemIP" />
           <ScalarProperty Name="floor_cctvQr" ColumnName="floor_cctvQr" />
@@ -78,17 +83,10 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="reminders">
-      <EntityTypeMapping TypeName="db_roomrentalModel.reminder">
-        <MappingFragment StoreEntitySet="reminder">
-          <ScalarProperty Name="reminder_id" ColumnName="reminder_id" />
-          <ScalarProperty Name="reminder_bankNo" ColumnName="reminder_bankNo" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="rooms">
       <EntityTypeMapping TypeName="db_roomrentalModel.room">
         <MappingFragment StoreEntitySet="room">
+          <ScalarProperty Name="room_coordinate" ColumnName="room_coordinate" />
           <ScalarProperty Name="room_number" ColumnName="room_number" />
           <ScalarProperty Name="room_id" ColumnName="room_id" />
           <ScalarProperty Name="floor_id" ColumnName="floor_id" />
@@ -136,6 +134,27 @@
           <ScalarProperty Name="user_name" ColumnName="user_name" />
           <ScalarProperty Name="user_email" ColumnName="user_email" />
           <ScalarProperty Name="user_type" ColumnName="user_type" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="reminds">
+      <EntityTypeMapping TypeName="db_roomrentalModel.reminds">
+        <MappingFragment StoreEntitySet="reminds">
+          <ScalarProperty Name="reminder_date" ColumnName="reminder_date" />
+          <ScalarProperty Name="reminder_title" ColumnName="reminder_title" />
+          <ScalarProperty Name="reminder_desc" ColumnName="reminder_desc" />
+          <ScalarProperty Name="reminder_status" ColumnName="reminder_status" />
+          <ScalarProperty Name="tenant_id" ColumnName="tenant_id" />
+          <ScalarProperty Name="landlord_id" ColumnName="landlord_id" />
+          <ScalarProperty Name="reminder_id" ColumnName="reminder_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="sysConfigs">
+      <EntityTypeMapping TypeName="db_roomrentalModel.sysConfig">
+        <MappingFragment StoreEntitySet="sysConfig">
+          <ScalarProperty Name="value" ColumnName="value" />
+          <ScalarProperty Name="category" ColumnName="category" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

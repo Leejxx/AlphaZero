@@ -24,7 +24,7 @@ namespace AlphaZero.Controllers
         {
             if (ModelState.IsValid)
             {
-                using (db_roomrentalEntities db = new db_roomrentalEntities());
+                using (db_roomrentalEntities db = new db_roomrentalEntities()) ;
                 {
                     var obj = db.users.Where(a => a.user_name.Equals(objchk.user_name) && a.user_password.Equals(objchk.user_password)).FirstOrDefault();
 
@@ -60,4 +60,3 @@ namespace AlphaZero.Controllers
 
 
 }
-

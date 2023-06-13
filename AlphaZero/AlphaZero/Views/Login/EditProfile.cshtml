@@ -1,0 +1,87 @@
+﻿@model AlphaZero.Models.user
+
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_MainPageLayout.cshtml";
+}
+
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Quixlab - Bootstrap Admin Dashboard Template by Themefisher.com</title>
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="/Content/images/favicon.png">
+    <!-- Pignose Calender -->
+    <link href=@Url.Content("/Content/plugins/pg-calendar/css/pignose.calendar.min.css") rel="stylesheet">
+    <!-- Chartist -->
+    <link rel="stylesheet" href=@Url.Content("/Content/plugins/chartist/css/chartist.min.css")>
+    <link rel="stylesheet" href=@Url.Content("/Content/plugins/chartist-plugin-tooltips/css/chartist-plugin-tooltip.css")>
+    <!-- Custom Stylesheet -->
+    <link href=@Url.Content("/Content/css/style.css") rel="stylesheet">
+
+</head>
+
+
+<body>
+    <div class="content-body">
+
+        <div class="row page-titles mx-0">
+            <div class="col p-md-0">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="javascript:void(0)">Manage</a></li>
+                    <li class="breadcrumb-item active"><a href="@Url.Action("Index","tb_user")">Users</a></li>
+                    <li class="breadcrumb-item active"><a href="javascript:void(0)">Edit User</a></li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+            <div class="row justify-content-center">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+                            @{
+                                if (ViewBag.SuccessMessage != null)
+                                {
+                                    <div class="alert alert-success">
+                                        <strong>Success!</strong>@ViewBag.SuccessMessage
+                                        <button type="button" class="close" data-dismiss="alert">
+                                            <span>x</span>
+                                        </button>
+                                    </div>
+                                }
+                            }
+                            @using (Html.BeginForm())
+                            {
+                                @Html.AntiForgeryToken()
+
+                                <div class="form-horizontal">
+                                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                    @Html.HiddenFor(model => model.user_id)
+                                    @Html.HiddenFor(model => model.user_password)
+                                    @Html.HiddenFor(model => model.user_name)
+                                    @Html.HiddenFor(model => model.user_type)
+
+                                    <div class="form-group row">
+                                        @Html.LabelFor(model => model.user_email, "Email", htmlAttributes: new { @class = "col-lg-4 col-form-label" })
+                                        <div class="col-lg-6">
+                                            @Html.EditorFor(model => model.user_email, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.user_email, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        <div class="col-md-offset-2 col-md-10">
+                                            <input type="submit" value="Save" class="btn btn-primary" />
+                                            <a href="@Url.Action("Index","Charts")" class="btn btn-danger">Return</a>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            }
+

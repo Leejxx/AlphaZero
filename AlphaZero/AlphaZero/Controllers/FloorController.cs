@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 using AlphaZero.Models;
 
 namespace AlphaZero.Controllers
@@ -49,7 +50,7 @@ namespace AlphaZero.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "floor_id,floor_modemIP,floor_cctvQr,landlord_id")] floor floor, HttpPostedFileBase floorLayoutFile, HttpPostedFileBase floorCctvQrFile)
+        public ActionResult Create([Bind(Include = "floor_id,floor_modemIP,floor_cctvQr,floor_description,landlord_id")] floor floor, HttpPostedFileBase floorLayoutFile, HttpPostedFileBase floorCctvQrFile)
         {
             if (ModelState.IsValid)
             {
@@ -75,6 +76,9 @@ namespace AlphaZero.Controllers
                     floorLayoutFile.SaveAs(filePath);
                     floor.floor_layout = fileName; // Save the unique file name in the database
                 }
+
+
+                floor.floor_description = Request.Form["floor_description"];
 
                 db.floors.Add(floor);
                 db.SaveChanges();
@@ -141,6 +145,7 @@ namespace AlphaZero.Controllers
                 floor.floor_id = updatedFloor.floor_id;
                 floor.floor_modemIP = updatedFloor.floor_modemIP;
                 floor.landlord_id = updatedFloor.landlord_id;
+                floor.floor_description = Request.Form["floor_description"];
 
                 db.Entry(floor).State = EntityState.Modified;
                 db.SaveChanges();
@@ -166,17 +171,28 @@ namespace AlphaZero.Controllers
             }
             return View(floor);
         }
-
         // POST: Floor/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
         {
             floor floor = db.floors.Find(id);
+
+            // Check if there are rooms associated with the floor
+            if (floor.rooms.Any())
+            {
+                // Display an error message to the user
+                ModelState.AddModelError("", "Cannot delete the floor because there are rooms associated with it.");
+                return View(floor); // Return to the delete view with the error message
+            }
+
             db.floors.Remove(floor);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+
+
+
 
         public ActionResult GetFile(string floorLayoutFileName)
         {

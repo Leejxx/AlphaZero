@@ -48,7 +48,7 @@ namespace AlphaZero.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "room_id,floor_id,room_number,room_price,room_status")] room room)
+        public ActionResult Create([Bind(Include = "room_id,floor_id,room_number,room_coordinate,room_price,room_status")] room room)
         {
             if (ModelState.IsValid)
             {
@@ -58,7 +58,7 @@ namespace AlphaZero.Controllers
                     ViewBag.floor_id = new SelectList(db.floors, "floor_id", "floor_id", room.floor_id);
                     return View(room);
                 }
-
+                room.room_coordinate = Request.Form["room_coordinate"];
                 db.rooms.Add(room);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -89,7 +89,7 @@ namespace AlphaZero.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "room_id,floor_id,room_number,room_price,room_status")] room room)
+        public ActionResult Edit([Bind(Include = "room_id,floor_id,room_number,room_coordinate, room_price,room_status")] room room)
         {
             if (ModelState.IsValid)
             {
@@ -99,6 +99,7 @@ namespace AlphaZero.Controllers
                     ViewBag.floor_id = new SelectList(db.floors, "floor_id", "floor_id", room.floor_id);
                     return View(room);
                 }
+         
                 db.Entry(room).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -132,6 +133,32 @@ namespace AlphaZero.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+
+        public ActionResult GetFloorLayoutImage(string floorId)
+        {
+            // Retrieve the floor layout image path based on the floorId
+            string floorLayoutFilePath = GetFloorLayoutFilePath(floorId);
+
+            // Return the floor layout image path as JSON
+            return Json(new { floorLayoutFilePath }, JsonRequestBehavior.AllowGet);
+        }
+
+        private string GetFloorLayoutFilePath(string floorId)
+        {
+            // Implement your logic to retrieve the floor layout image path based on the floorId
+            // This could involve querying your database or using any other data source
+
+            // Example implementation:
+            string floorLayoutFileName = db.floors.FirstOrDefault(f => f.floor_id == floorId)?.floor_layout;
+            if (!string.IsNullOrEmpty(floorLayoutFileName))
+            {
+                string floorLayoutFilePath = Url.Content("~/Content/assets/vendors/images/" + floorLayoutFileName);
+                return floorLayoutFilePath;
+            }
+
+            return null; // Return null if no floor layout image found
+        }
+
 
         protected override void Dispose(bool disposing)
         {

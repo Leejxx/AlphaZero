@@ -6,8 +6,14 @@
 }
 
 <h2>Record Cleaner Attendance</h2>
-<p> @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary" }) </p>
-<br />
+
+<div class="row">
+    <div class="col-md-6">
+        <p>
+            @Html.ActionLink("Create New", "Create", new { currentMonth = DateTime.Now.Month, currentYear = DateTime.Now.Year }, new { @class = "btn btn-primary" })
+        </p>
+    </div>
+</div>
 
 <table class="table">
     <tr>
@@ -19,18 +25,32 @@
             {
                 <div class="form-inline">
                     <label class="mr-2">Floor Level:</label>
-                    @Html.DropDownList("floorLevel", ViewBag.FloorLevels as SelectList, "All", new { @class = "form-control", onchange = "this.form.submit()" })
+                    @{
+                        var floorLevels = ViewBag.FloorLevels as SelectList;
+                        floorLevels = new SelectList(floorLevels.Items, "Value", "Text", "All");
+                    }
+                    @Html.DropDownList("floorLevel", floorLevels, new { @class = "form-control", onchange = "this.form.submit()" })
                 </div>
             }
         </th>
         <th>
-            Date of clean
+            @using (Html.BeginForm("Index", "cleanerAtts", FormMethod.Get))
+            {
+                <div class="form-inline">
+                    <label class="ml-4 mr-2">Month:</label>
+                    @Html.DropDownList("selectedMonth", ViewBag.Months as SelectList, "All", new { @class = "form-control", onchange = "this.form.submit()" })
+                </div>
+            }
         </th>
-        <th></th>
+        <th>
+            Salary
+        </th>
     </tr>
 
     @foreach (var item in Model)
     {
+
+
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.cleanerAtt_id)
@@ -42,11 +62,22 @@
                 @Html.DisplayFor(modelItem => item.cleaner_date)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.cleaner_salary)
+            </td>
+
+            <td>
                 @Html.ActionLink("Edit", "Edit", new { id = item.cleanerAtt_id }, new { @class = "btn btn-warning" }) |
                 @Html.ActionLink("Details", "Details", new { id = item.cleanerAtt_id }, new { @class = "btn btn-info" }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.cleanerAtt_id }, new { @class = "btn btn-danger" }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.cleanerAtt_id }, new { @class = "btn btn-danger" })
             </td>
         </tr>
     }
+
+
+    <tr>
+        <td colspan="3"></td>
+        <td>Total Salary:</td>
+        <td>@ViewBag.TotalSalary.ToString("0.00")</td>
+    </tr>
 
 </table>

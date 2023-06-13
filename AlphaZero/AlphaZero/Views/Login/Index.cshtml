@@ -52,7 +52,6 @@
             </div>
             <div class="login-menu">
                 <ul>
-                   
                 </ul>
             </div>
         </div>
@@ -67,7 +66,7 @@
                     <div class="login-box bg-white box-shadow border-radius-10">
                         <div class="login-title">
                             <div style="display: flex; justify-content: center;">
-                                <img src="~/Content/assets/vendors/images/Akmal-logo.png" alt="" style="width: 150px; height: 150px;">
+                                <img src="~/Content/assets/vendors/images/Akmal-logo.png" alt="" style="width: 150px; height: 180px;">
                             </div>
 
 
@@ -87,7 +86,7 @@
                             @Html.ValidationMessageFor(model => model.user_name, "", new { @class = "text-danger" })
 
                             <div class="input-group custom">
-                                @Html.EditorFor(model => model.user_password, new { htmlAttributes = new { @class = "form-control form-control-lg", placeholder = "**********", type = "password" } })
+                                @Html.EditorFor(model => model.user_password, new { htmlAttributes = new { @class = "form-control form-control-lg", placeholder = "****", type = "password" } })
                                 <div class="input-group-append custom">
                                     <span class="input-group-text"><i class="dw dw-padlock1"></i></span>
                                 </div>
@@ -97,14 +96,16 @@
                             <div class="row pb-30">
                                 <div class="col-6">
                                     <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input"  id="customCheck1">
+                                        <input type="checkbox" class="custom-control-input" id="customCheck1">
                                         <label class="custom-control-label" for="customCheck1">Remember</label>
                                     </div>
                                 </div>
                                 <div class="col-6">
                                     <div class="forgot-password"><a href="forgot-password.html">Forgot Password</a></div>
                                 </div>
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                             </div>
+
                             <div class="row">
                                 <div class="col-sm-12">
                                     <div class="input-group mb-0">
@@ -112,9 +113,9 @@
                                             use code for form submit
                                             <input class="btn btn-primary btn-lg btn-block" type="submit" value="Sign In">
                                         -->
-                                     
-                                        <input type="submit" value="Login" class="btn btn-primary btn-lg btn-block" style="background-color: orange; border-color: orange; color: white;" />
 
+
+                                        <input type="submit" value="Login" class="btn btn-primary btn-lg btn-block" style="background-color: orange; border-color: orange; color: white;" />
 
 
 
@@ -132,21 +133,22 @@
         </div>
     </div>
     <!-- js -->
-    <script src=~/Content/assets/vendors/scripts/core.js"></script>
+    <script src="~/Content/assets/vendors/scripts/core.js"></script>
     <script src="~/Content/assets/vendors/scripts/script.min.js"></script>
     <script src="~/Content/assets/vendors/scripts/process.js"></script>
     <script src="~/Content/assets/vendors/scripts/layout-settings.js"></script>
+
+
+    <script src="~/Content/assets/vendors/scripts/core.js"></script>
+    <script src="~/Content/assets/vendors/scripts/script.min.js"></script>
+    <script src="~/Content/assets/vendors/scripts/process.js"></script>
+    <script src="~/Content/assets/vendors/scripts/layout-settings.js"></script>
+    <script src="~/Content/assets/src/plugins/jQuery-Knob-master/jquery.knob.min.js"></script>
+    <script src="~/Content/assets/src/plugins/highcharts-6.0.7/code/highcharts.js"></script>
+    <script src="~/Content/assets/src/plugins/highcharts-6.0.7/code/highcharts-more.js"></script>
+    <script src="~/Content/assets/src/plugins/jvectormap/jquery-jvectormap-2.0.3.min.js"></script>
+    <script src="~/Content/assets/src/plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
+    <script src="~/Content/assets/vendors/scripts/dashboard2.js"></script>
+
 </body>
 </html>
-
-<script src="~/Content/assets/vendors/scripts/core.js"></script>
-<script src="~/Content/assets/vendors/scripts/script.min.js"></script>
-<script src="~/Content/assets/vendors/scripts/process.js"></script>
-<script src="~/Content/assets/vendors/scripts/layout-settings.js"></script>
-<script src="~/Content/assets/src/plugins/jQuery-Knob-master/jquery.knob.min.js"></script>
-<script src="~/Content/assets/src/plugins/highcharts-6.0.7/code/highcharts.js"></script>
-<script src="~/Content/assets/src/plugins/highcharts-6.0.7/code/highcharts-more.js"></script>
-<script src="~/Content/assets/src/plugins/jvectormap/jquery-jvectormap-2.0.3.min.js"></script>
-<script src="~/Content/assets/src/plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
-<script src="~/Content/assets/vendors/scripts/dashboard2.js"></script>
-

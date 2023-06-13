@@ -4,31 +4,45 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+<h2>Details of Record</h2>
 
 <div>
-    <h4>cleanerAtt</h4>
-    <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.cleaner_date)
+            No.
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.cleanerAtt_id)
+        </dd>
+
+        <dt>
+            Date
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.cleaner_date)
         </dd>
-
         <dt>
-            @Html.DisplayNameFor(model => model.floor.floor_cctvQr)
+            Floor Level
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.floor.floor_cctvQr)
+            @Html.DisplayFor(model => model.floor.floor_id)
+        </dd>
+        <dt>
+            Salary
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.cleaner_salary)
         </dd>
 
     </dl>
 </div>
+
+<br />
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.cleanerAtt_id }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Edit", "Edit", new { id = Model.cleanerAtt_id }, new { @class = "btn btn-warning" }) |
+    <button onclick="location.href='@Url.Action("Index")'" class="btn ">Back to List</button>
 </p>

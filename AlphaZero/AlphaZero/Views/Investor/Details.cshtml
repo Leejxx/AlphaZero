@@ -1,0 +1,86 @@
+﻿@model AlphaZero.Models.user
+
+@{
+    ViewBag.Title = "Details Investor";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="page-header">
+    <div class="row">
+
+        <div class="col-md-6 col-sm-12">
+            <div class="title">
+                <h4>Investor - View</h4>
+            </div>
+            <nav aria-label="breadcrumb" role="navigation">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="@Url.Action("Index", "Home")">Home</a></li>
+                    <li class="breadcrumb-item"><a href="@Url.Action("Index", "Investor")">Investor List</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">
+                        View Investor - <span>@Html.DisplayFor(model => model.Investors.First().investor_name)</span>
+
+                    </li>
+                </ol>
+            </nav>
+        </div>
+
+        <div class="col-md-6 col-sm-12 text-right">
+            <div class="dropdown">
+                <a class="btn btn-primary" href="@Url.Action("Create", "Investor")" role="button">
+                    Create Investor
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- basic table  Start -->
+<div class="pd-20 card-box mb-30">
+
+    <div class="clearfix mb-20">
+        <div class="pull-left">
+            <h4 class="text-blue h4">Investor Credentials</h4>
+        </div>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Variable</th>
+                <th scope="col">Content</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row">Investor Username</th>
+                <td>@Html.DisplayFor(model => model.user_name)</td>
+            </tr>
+            <tr>
+                <th scope="row">Investor Email</th>
+                <td>@Html.DisplayFor(model => model.user_email)</td>
+            </tr>
+            <tr>
+                <th scope="row">Investor Name</th>
+                <td>@Html.DisplayFor(model => model.Investors.First().investor_name)</td>
+            </tr>
+            <tr>
+                <th scope="row">Investor Hold Value</th>
+                <td>@Html.DisplayFor(model => model.Investors.First().investor_holdvalue)</td>
+            </tr>
+            <tr>
+                <th scope="row">Investor Lot Number</th>
+                <td>@Html.DisplayFor(model => model.Investors.First().investor_lotNo)</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="card card-box text-center">
+        <div class="card-body">
+            <h5 class="card-title">Actions :</h5>
+            <p class="card-text">Choose Carefully :P</p>
+            @Html.ActionLink("Edit this Investor", "Edit", "Investor", new { id = Model.user_id }, new { @class = "btn btn-warning" })
+            @Html.ActionLink("Back to List", "Index", new { id = Model.user_id }, new { @class = "btn btn-primary" })
+        </div>
+    </div>
+
+
+</div>

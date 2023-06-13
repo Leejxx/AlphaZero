@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Globalization;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using AlphaZero.Models;
 
@@ -15,26 +14,62 @@ namespace AlphaZero.Controllers
         private db_roomrentalEntities db = new db_roomrentalEntities();
 
         // GET: cleanerAtts
-        public ActionResult Index(string floorLevel)
+        public ActionResult Index(string floorLevel, int? selectedMonth)
         {
+            // Get the current month and year
+            DateTime currentDate = DateTime.Now;
+            int currentMonth = currentDate.Month;
+            int currentYear = currentDate.Year;
+
+            // Generate month dropdown items
+            ViewBag.Months = new SelectList(Enumerable.Range(1, 12).Select(i => new { Value = i, Text = DateTimeFormatInfo.CurrentInfo.GetMonthName(i) }), "Value", "Text", selectedMonth);
+            ViewBag.SelectedMonth = selectedMonth;
+            ViewBag.FloorLevel = floorLevel;
+
+            // Generate floor dropdown items
             var floorLevels = db.floors.Select(f => new SelectListItem
             {
                 Value = f.floor_id,
-                Text = f.floor_id
+                Text = f.floor_id,
+                Selected = f.floor_id == floorLevel
             }).ToList();
 
-            ViewBag.FloorLevels = new SelectList(floorLevels, "Value", "Text", floorLevel);
+            // Add "All" option at the beginning
+            floorLevels.Insert(0, new SelectListItem
+            {
+                Value = "All",
+                Text = "All",
+                Selected = floorLevel == "All"
+            });
 
-            var cleanerAtts = db.cleanerAtts.Include(c => c.floor).AsQueryable();
+            ViewBag.FloorLevels = new SelectList(floorLevels, "Value", "Text");
 
+
+            // Get all cleanerAtts
+            var cleanerAtts = db.cleanerAtts.Include(c => c.floor).ToList();
+
+            // Apply filters
             if (!string.IsNullOrEmpty(floorLevel) && floorLevel != "All")
             {
-                cleanerAtts = cleanerAtts.Where(c => c.floor.floor_id == floorLevel);
+                cleanerAtts = cleanerAtts.Where(c => c.floor.floor_id == floorLevel).ToList();
             }
 
-            return View(cleanerAtts.ToList());
-        }
+            if (selectedMonth.HasValue)
+            {
+                int selectedMonthValue = selectedMonth.Value;
+                cleanerAtts = cleanerAtts.Where(c => c.cleaner_date.Month == selectedMonthValue).ToList();
+            }
 
+            ViewBag.FloorLevels = new SelectList(floorLevels, "Value", "Text");
+
+            // Calculate the total salary
+            float totalSalary = (float)cleanerAtts.Sum(c => c.cleaner_salary);
+
+            // Store the total salary in ViewBag
+            ViewBag.TotalSalary = totalSalary;
+
+            return View(cleanerAtts);
+        }
 
         // GET: cleanerAtts/Details/5
         public ActionResult Details(int? id)
@@ -43,38 +78,69 @@ namespace AlphaZero.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             cleanerAtt cleanerAtt = db.cleanerAtts.Find(id);
+
             if (cleanerAtt == null)
             {
                 return HttpNotFound();
             }
+
             return View(cleanerAtt);
         }
 
         // GET: cleanerAtts/Create
         public ActionResult Create()
         {
-            ViewBag.floor_id = new SelectList(db.floors, "floor_id", "floor_cctvQr");
+            ViewBag.floor_id = new SelectList(db.floors, "floor_id", "floor_id");
+
+            // Get the current month and year
+            int currentMonth = DateTime.Now.Month;
+            int currentYear = DateTime.Now.Year;
+
+            // Generate dropdown items for months
+            ViewBag.Months = new SelectList(Enumerable.Range(1, 12).Select(i => new { Value = i, Text = DateTimeFormatInfo.CurrentInfo.GetMonthName(i) }), "Value", "Text", currentMonth);
+
             return View();
         }
 
         // POST: cleanerAtts/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "cleanerAtt_id,floor_id,cleaner_date")] cleanerAtt cleanerAtt)
+        public ActionResult Create([Bind(Include = "cleanerAtt_id,floor_id,cleaner_date,cleaner_salary")] cleanerAtt cleanerAtt, int currentMonth, int currentYear)
         {
             if (ModelState.IsValid)
             {
+                // Check if there are existing records for the current month and floor
+                var existingRecords = db.cleanerAtts
+                    .Where(c => c.floor_id == cleanerAtt.floor_id && c.cleaner_date.Month == currentMonth && c.cleaner_date.Year == currentYear)
+                    .ToList();
+
+                // Check if the attendance count exceeds 3
+                if (existingRecords.Count >= 3)
+                {
+                    ViewBag.ExceededAttendance = true;
+                    // Add an alert message indicating that the attendance count has exceeded the limit
+                    ModelState.AddModelError("", "The attendance count has exceeded the limit of 3 times for the selected month and floor.");
+                    ViewBag.floor_id = new SelectList(db.floors, "floor_id", "floor_id", cleanerAtt.floor_id);
+                    return View(cleanerAtt);
+                }
+
+                // Set cleanerAtt_count to the next available count
+                cleanerAtt.cleanerAtt_count = existingRecords.Count + 1;
+
                 db.cleanerAtts.Add(cleanerAtt);
                 db.SaveChanges();
+
                 return RedirectToAction("Index");
             }
 
-            ViewBag.floor_id = new SelectList(db.floors, "floor_id", "floor_cctvQr", cleanerAtt.floor_id);
+            ViewBag.floor_id = new SelectList(db.floors, "floor_id", "floor_id", cleanerAtt.floor_id);
+            ViewBag.ExceededAttendance = false; // Set default value
             return View(cleanerAtt);
         }
+
+
 
         // GET: cleanerAtts/Edit/5
         public ActionResult Edit(int? id)
@@ -83,12 +149,15 @@ namespace AlphaZero.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             cleanerAtt cleanerAtt = db.cleanerAtts.Find(id);
+
             if (cleanerAtt == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.floor_id = new SelectList(db.floors, "floor_id", "floor_cctvQr", cleanerAtt.floor_id);
+
+            ViewBag.floor_id = new SelectList(db.floors, "floor_id", "floor_id", cleanerAtt.floor_id);
             return View(cleanerAtt);
         }
 
@@ -97,7 +166,7 @@ namespace AlphaZero.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "cleanerAtt_id,floor_id,cleaner_date")] cleanerAtt cleanerAtt)
+        public ActionResult Edit([Bind(Include = "cleanerAtt_id,floor_id,cleaner_date,cleaner_salary")] cleanerAtt cleanerAtt)
         {
             if (ModelState.IsValid)
             {
@@ -105,7 +174,8 @@ namespace AlphaZero.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.floor_id = new SelectList(db.floors, "floor_id", "floor_cctvQr", cleanerAtt.floor_id);
+
+            ViewBag.floor_id = new SelectList(db.floors, "floor_id", "floor_id", cleanerAtt.floor_id);
             return View(cleanerAtt);
         }
 
@@ -116,32 +186,49 @@ namespace AlphaZero.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             cleanerAtt cleanerAtt = db.cleanerAtts.Find(id);
+
             if (cleanerAtt == null)
             {
                 return HttpNotFound();
             }
+
             return View(cleanerAtt);
         }
 
         // POST: cleanerAtts/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(int id, int? selectedMonth, string floorLevel)
         {
             cleanerAtt cleanerAtt = db.cleanerAtts.Find(id);
+
+            if (cleanerAtt == null)
+            {
+                return HttpNotFound();
+            }
+
+            // Delete the record
             db.cleanerAtts.Remove(cleanerAtt);
             db.SaveChanges();
-            return RedirectToAction("Index");
+
+            // Recalculate CleanerAttendanceCount based on floorLevel and selectedMonth filters
+            var filteredCleanerAtts = db.cleanerAtts.Include(c => c.floor);
+
+            if (!string.IsNullOrEmpty(floorLevel) && floorLevel != "All")
+            {
+                filteredCleanerAtts = filteredCleanerAtts.Where(c => c.floor.floor_id == floorLevel);
+            }
+
+            if (selectedMonth.HasValue)
+            {
+                int selectedMonthValue = selectedMonth.Value;
+                filteredCleanerAtts = filteredCleanerAtts.Where(c => c.cleaner_date.Month == selectedMonthValue);
+            }
+
+            return RedirectToAction("Index", new { selectedMonth = selectedMonth, floorLevel = floorLevel });
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
     }
 }

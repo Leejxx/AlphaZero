@@ -3,11 +3,51 @@
 @{
     ViewBag.Title = "Edit";
 }
-
-<!-- Add these CSS and JavaScript references to your layout or view file -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+<style>
+    .custom-footer {
+        background-color: #ffffff;
+    }
+</style>
+<!-- Add Bootstrap CSS and JavaScript -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-pzjw8Q+uaqZDhYL9+5qzV5ILEweJyGlxBKlkh/35IQfRZGGiXiKP4+qFqspi1EWE" crossorigin="anonymous">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-pzjw8Q+uaqZDhYL9+5qzV5ILEweJyGlxBKlkh/35IQfRZGGiXiKP4+qFqspi1EWE" crossorigin="anonymous"></script>
+
+@if (TempData["SuccessMessage"] != null)
+{
+
+    <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">Success</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <p>@TempData["SuccessMessage"]</p>
+                </div>
+
+            </div>
+            <div class="modal-footer custom-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+        </div>
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#successModal').modal('show');
+        });
+
+        $('#successModal').on('hidden.bs.modal', function (e) {
+            $(this).remove();
+        });
+    </script>
+}
+
+
 
 
 <!-- Modal -->
@@ -18,7 +58,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="myModalLabel">Pop-up Container</h4>
+                    <h4 class="modal-title" id="myModalLabel">Change Room?</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 </div>
                 <div class="modal-body">
@@ -40,7 +80,7 @@
                     <div class="form-group">
                         @Html.LabelFor(model => model.room_id, "Floor", htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.DropDownList("floor_id", null, htmlAttributes: new { @class = "form-control" })
+                            @Html.DropDownList("floor_id", null, "Please select a floor!", htmlAttributes: new { @class = "form-control" })
 
                             @Html.ValidationMessageFor(model => model.room_id, "", new { @class = "text-danger" })
                         </div>
@@ -52,14 +92,14 @@
                             @Html.DropDownList("room_id", null, htmlAttributes: new { @class = "form-control" })
                             @Html.ValidationMessageFor(model => model.room_id, "", new { @class = "text-danger" })
                         </div>
-                      
-                     
+
+
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     <input type="submit" value="Save" class="btn btn-warning" />
-                    @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-secondary" })
+
 
                 </div>
             </div>
@@ -67,7 +107,7 @@
     </div>
 }
 <div class="col-md-offset-2 col-md-10">
-    
+
 </div>
 <h2>Edit</h2>
 
@@ -113,10 +153,15 @@
         </div>
     </div>
 
-    <div class="form-group">
+    <div class="form-group row">
         @Html.LabelFor(model => model.tenant_contract, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.tenant_contract, new { htmlAttributes = new { @class = "form-control" } })
+        <div class="col-sm-12 col-md-10">
+            @if (!string.IsNullOrEmpty(Model.tenant_contract))
+            {
+                <img src="@Url.Action("GetFile", "Floor", new { floorLayoutFileName = Model.tenant_contract })" alt="Contract" style="max-height: 200px; margin-bottom: 10px;" />
+            }
+            <div> <input type="file" name="tenantContract" id="tenantContract" /></div>
+
             @Html.ValidationMessageFor(model => model.tenant_contract, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -256,7 +301,11 @@
                 });
             });
         });
+
+
     </script>
+
+
 
 
 }

@@ -1,0 +1,146 @@
+﻿@model AlphaZero.Models.user
+
+@{
+    ViewBag.Title = "Create Investor";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="page-header">
+    <div class="row">
+
+        <div class="col-md-6 col-sm-12">
+            <div class="title">
+                <h4>Investor - Create Investor</h4>
+            </div>
+            <nav aria-label="breadcrumb" role="navigation">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="@Url.Action("Index", "Home")">Home</a></li>
+                    <li class="breadcrumb-item"><a href="@Url.Action("Index", "Investor")">Investor List</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">
+                        Create Investor
+                    </li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- basic table  Start -->
+<div class="pd-20 card-box mb-30">
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="clearfix mb-20">
+            <div class="pull-left">
+                <h4 class="text-blue h4">Create Investor Form</h4>
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Variable</th>
+                    <th scope="col">Content</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <th scope="row">Username : Investor</th>
+                    <td>
+                        @Html.EditorFor(model => model.user_name, new { htmlAttributes = new { @class = "form-control", @placeholder = "Username of Investor Goes Here" } })
+                        @Html.ValidationMessageFor(model => model.user_name, "", new { @class = "text-danger" })
+                        <small>They will be using this to login into the system</small>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">Password : Investor</th>
+                    <td>
+                        @Html.EditorFor(model => model.user_password, new { htmlAttributes = new { @class = "form-control", @placeholder = "Password of Investor Goes Here" } })
+                        @Html.ValidationMessageFor(model => model.user_password, "", new { @class = "text-danger" })
+                        <small>They will be using this to login into the system</small>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">Email : Investor</th>
+                    <td>
+                        @Html.EditorFor(model => model.user_email, new { htmlAttributes = new { @class = "form-control", @placeholder = "Email of Investor Goes Here", @type = "email" } })
+                        @Html.ValidationMessageFor(model => model.user_email, "", new { @class = "text-danger" })
+                    </td>
+                </tr>
+
+                <tr>
+                    <th scope="row">Below is <code>.For Admin Use</code></th>
+                    <td></td>
+                </tr>
+
+                <tr>
+                    <th scope="row">Investor Name</th>
+                    <td>
+                        @Html.EditorFor(model => model.Investors.First().investor_name, new { htmlAttributes = new { @class = "form-control", @placeholder = "Investor Name Goes Here", @type = "text" } })
+                        @Html.ValidationMessageFor(model => model.Investors.First().investor_name, "", new { @class = "text-danger" })
+                    </td>
+                </tr>
+
+                <tr>
+                    <th scope="row">Investor Lot Number</th>
+                    <td>
+                        @Html.EditorFor(model => model.Investors.First().investor_lotNo, new { htmlAttributes = new { @class = "form-control", @placeholder = "Investor Lot Number Goes Here", @type = "number" } })
+                        @Html.ValidationMessageFor(model => model.Investors.First().investor_lotNo, "", new { @class = "text-danger" })
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">Investor Hold Value</th>
+                    <td>
+                        @Html.EditorFor(model => model.Investors.First().investor_holdvalue, new { htmlAttributes = new { @class = "form-control", @placeholder = "Investor Hold Value Goes Here", @type = "number", step = "0.01" } })
+                        @Html.ValidationMessageFor(model => model.Investors.First().investor_holdvalue, "", new { @class = "text-danger" })
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="card card-box text-center">
+            <div class="card-body">
+                <h5 class="card-title">Actions :</h5>
+                <p class="card-text">Choose Carefully :P</p>
+
+                <a class="btn btn-info" data-toggle="modal" data-target="#confirmation-modal" role="button">
+                    Submit
+                </a>
+
+                <a class="btn btn-outline-warning" href="@Url.Action("Index", "Investor")" role="button">
+                    Cancel
+                </a>
+            </div>
+        </div>
+
+        <div class="modal fade" id="confirmation-modal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-body text-center font-18">
+                        <h4 class="padding-top-30 mb-30 weight-500">Are you sure you want to create this Investor?</h4>
+                        <h5 class="mb-30 weight-500">An Email Will be Sent to this Investor</h5>
+                        <div class="padding-bottom-30 row" style="max-width: 170px; margin: 0 auto;">
+                            <div class="col-6">
+                                <button type="button" class="btn btn-secondary border-radius-100 btn-block confirmation-btn" data-dismiss="modal"><i class="fa fa-times"></i></button>
+                                NO
+                            </div>
+                            <div class="col-6">
+                                <button type="submit" class="btn btn-primary border-radius-100 btn-block confirmation-btn">
+                                    <i class="fa fa-check"></i>
+                                </button>
+                                YES
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    }
+
+</div>

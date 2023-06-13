@@ -5,8 +5,11 @@
     "\\AlphaZero\\AlphaZero",
     "\\AlphaZero\\AlphaZero\\Controllers",
     "\\AlphaZero\\AlphaZero\\Views",
-    "\\AlphaZero\\AlphaZero\\Views\\Login"
+    "\\AlphaZero\\AlphaZero\\Views\\Home",
+    "\\AlphaZero\\AlphaZero\\Views\\Login",
+    "\\AlphaZero\\AlphaZero\\Views\\Room",
+    "\\AlphaZero\\AlphaZero\\Views\\Tenant"
   ],
-  "SelectedNode": "\\AlphaZero\\AlphaZero\\Views\\Login\\Index.cshtml",
+  "SelectedNode": "\\AlphaZero\\AlphaZero\\Views\\Room\\Index.cshtml",
   "PreviewInSolutionExplorer": false
 }

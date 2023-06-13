@@ -1,0 +1,82 @@
+﻿@model AlphaZero.Models.finance
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>finance</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Flowtype
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.finance_flowtype)
+        </dd>
+        <dt>
+            Inflow
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.finance_inflow)
+        </dd>
+        <dt>
+            Outflow
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.finance_outflow)
+        </dd>
+
+        <dt>
+            Notes
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.finance_desc)
+        </dd>
+
+        <dt>
+            Payment Method
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.finance_pMethod)
+        </dd>
+
+        <dt>
+            Payment
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.finance_type)
+        </dd>
+
+        <dt>
+            Date
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.finance_date)
+        </dd>
+
+        <dt>
+            Receipt
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.finance_receipt)
+        </dd>
+
+
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.finance_id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

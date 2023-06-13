@@ -1,0 +1,88 @@
+﻿
+@model IEnumerable<AlphaZero.Models.finance>
+
+@{
+    ViewBag.Title = "Manage Finance";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Manage Finance</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary" })
+</p>
+
+<table class="table">
+    <tr>
+        <th>
+            Flowtype
+        </th>
+        <th>
+            Inflow
+        </th>
+        <th>
+            Outflow
+        </th>
+        <th>
+            Notes
+        </th>
+        <th>
+            Payment Method
+        </th>
+        <th>
+            Payment
+        </th>
+        <th>
+            Date
+        </th>
+        <th>
+            Receipt
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.finance_flowtype)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.finance_inflow)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.finance_outflow)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.finance_desc)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.finance_pMethod)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.finance_type)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.finance_date)
+            </td>
+            <td>
+                @if (!string.IsNullOrEmpty(item.finance_receipt))
+                {
+                    <a href="@Url.Content("~/Content/assets/vendors/images/Receipts/" + item.finance_receipt)" target="_blank">View Receipt</a>
+                }
+                else
+                {
+                    <span>No Receipt</span>
+                }
+            </td>
+
+
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.finance_id }, new { @class = "btn btn-warning" }) |
+                @Html.ActionLink("Details", "Details", new { id = item.finance_id }, new { @class = "btn btn-info" }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.finance_id }, new { @class = "btn btn-danger" })
+            </td>
+        </tr>
+    }
+
+</table>

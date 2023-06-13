@@ -1,0 +1,39 @@
+﻿
+@model IEnumerable<AlphaZero.Models.reminds>
+
+@foreach (var item in Model)
+{
+    if (item.landlord_id == null && item.tenant_id != null)
+    {
+        <li>
+            <a href="@Url.Action("Details", "Notification", new { id = item.reminder_id })">
+                <img src="~/Content/assets/vendors/images/tenant.jpg" alt="">
+                <h3>@Html.DisplayFor(modelItem => item.reminder_title)</h3>
+                <p>@Html.DisplayFor(modelItem => item.reminder_desc)</p>
+            </a>
+        </li>
+
+    }
+    else if (item.landlord_id != null && item.tenant_id == null)
+    {
+        <li>
+            <a href="@Url.Action("Details", "Notification", new { id = item.reminder_id })">
+                <img src="~/Content/assets/vendors/images/landlord.jpg" alt="">
+                <h3>@Html.DisplayFor(modelItem => item.reminder_title)</h3>
+                <p>@Html.DisplayFor(modelItem => item.reminder_desc)</p>
+            </a>
+        </li>
+
+    }
+    else if (item.landlord_id == null && item.tenant_id == null)
+    {
+        <li>
+            <a href="@Url.Action("Details", "Notification", new { id = item.reminder_id })">
+                <img src="~/Content/assets/vendors/images/custom.png" alt="">
+                <h3>@Html.DisplayFor(modelItem => item.reminder_title)</h3>
+                <p>@Html.DisplayFor(modelItem => item.reminder_desc)</p>
+            </a>
+        </li>
+
+    }
+}

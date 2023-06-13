@@ -17,6 +17,74 @@
         color: orange;
     }
 </style>
+
+
+<!-- Add modal -->
+<div class="modal" id="tenantModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Tenant Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <dl class="dl-horizontal">
+                    <dt>Tenant ID</dt>
+                    <dd id="tenantId"></dd>
+
+                    <dt>Tenant IC</dt>
+                    <dd id="tenantIC"></dd>
+
+                    <dt>
+                        IC Photo
+                    </dt>
+
+
+
+                    <dd><img id="tenantICImage" src="" alt="Tenant IC" /></dd>
+
+
+                    <dt>Tenant Name</dt>
+                    <dd id="tenantName"></dd>
+
+                    <dt>Tenant Phone No</dt>
+                    <dd id="tenantPhoneNo"></dd>
+
+                    <!-- Add more tenant details here -->
+                    <dt>Tenant Contract</dt>
+                    <dd id="tenantContract"></dd>
+
+                    <dt>Tenant Emergency No</dt>
+                    <dd id="tenantEmergencyNo"></dd>
+
+                    <dt>Tenant No Siri</dt>
+                    <dd id="tenantNoSiri"></dd>
+
+                    <dt>Tenant In Date</dt>
+                    <dd id="tenantInDate"></dd>
+
+                    <dt>Tenant Out Date</dt>
+                    <dd id="tenantOutDate"></dd>
+
+                    <dt>Tenant Outstanding</dt>
+                    <dd id="tenantOutstanding"></dd>
+
+                    <dt>Tenant Payment Status</dt>
+                    <dd id="tenantPaymentStatus"></dd>
+
+                    <dt>Tenant Out Session</dt>
+                    <dd id="tenantOutSession"></dd>
+                </dl>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <h2>Details</h2>
 
 <div>
@@ -26,7 +94,6 @@
         <dt>
             @Html.DisplayNameFor(model => model.room_id)
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.room_id)
         </dd>
@@ -34,7 +101,6 @@
         <dt>
             @Html.DisplayNameFor(model => model.room_number)
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.room_number)
         </dd>
@@ -42,7 +108,6 @@
         <dt>
             @Html.DisplayNameFor(model => model.room_price)
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.room_price)
         </dd>
@@ -50,7 +115,6 @@
         <dt>
             @Html.DisplayNameFor(model => model.room_status)
         </dt>
-
         <dd>
             @{
                 string statusClass = "";
@@ -74,21 +138,115 @@
             <span class="@statusClass">
                 @Html.DisplayFor(model => model.room_status)
             </span>
-
-
         </dd>
 
         <dt>
             @Html.DisplayNameFor(model => model.floor.floor_id)
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.floor.floor_id)
         </dd>
-
     </dl>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.room_id }, new { @class = "btn btn-warning" }) |
-    @Html.ActionLink("Back to List", "Index",null ,new { @class = "btn btn-secondary" })
-</p>
+
+@{
+    var tenants = Model.tenants; // Access the tenants associated with the room
+}  <h4>Tenants</h4>
+
+@if (tenants != null && tenants.Count > 0)
+{
+
+    <hr />
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>IC</th>
+                <th>Name</th>
+                <th>Phone No</th>
+                <th>Payment Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var tenant in tenants)
+            {
+                string paymentStatusColor = "";
+
+                switch (tenant.tenant_paymentStatus)
+                {
+                    case "Fully Paid":
+                        paymentStatusColor = "green";
+                        break;
+                    case "Partially Paid":
+                        paymentStatusColor = "orange";
+                        break;
+                    case "Unpaid":
+                        paymentStatusColor = "red";
+                        break;
+                    default:
+                        break;
+                }
+
+                <tr>
+                    <td>@tenant.tenant_id</td>
+                    <td>@tenant.tenant_ic</td>
+                    <td>@tenant.tenant_name</td>
+                    <td>@tenant.tenant_phoneNo</td>
+                    <td><span style="color: @paymentStatusColor">@tenant.tenant_paymentStatus</span></td>
+                    <td>
+                        <button class="btn btn-primary" onclick="showTenantDetails('@tenant.tenant_id', '@tenant.tenant_ic', '@tenant.tenant_name', '@tenant.tenant_phoneNo', '@tenant.tenant_contract', '@tenant.tenant_emergencyNo', '@tenant.tenant_noSiri', '@tenant.tenant_inDate', '@tenant.tenant_outDate', '@tenant.tenant_outstanding', '@tenant.tenant_paymentStatus', '@tenant.tenant_outSession', '@Url.Content("~/Content/assets/vendors/images/" + tenant.tenant_uploadIC)')" data-toggle="modal" data-target="#tenantModal">More Details</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{ <p>No tenant living in this room!</p>}
+
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.room_id }, new { @class = "btn btn-warning" }) |
+        @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-secondary" })
+    </p>
+
+    <script>
+        function getPaymentStatusColor(paymentStatus) {
+            var paymentStatusColor = "";
+
+            switch (paymentStatus) {
+                case "Fully Paid":
+                    paymentStatusColor = "green";
+                    break;
+                case "Partially Paid":
+                    paymentStatusColor = "orange";
+                    break;
+                case "Unpaid":
+                    paymentStatusColor = "red";
+                    break;
+                default:
+                    break;
+            }
+
+            return paymentStatusColor;
+        }
+
+        function showTenantDetails(tenantId, tenantIC, tenantName, tenantPhoneNo, tenantContract, tenantEmergencyNo, tenantNoSiri, tenantInDate, tenantOutDate, tenantOutstanding, tenantPaymentStatus, tenantOutSession, tenantUploadIC) {
+            document.getElementById("tenantId").textContent = tenantId;
+            document.getElementById("tenantIC").textContent = tenantIC;
+            document.getElementById("tenantName").textContent = tenantName;
+            document.getElementById("tenantPhoneNo").textContent = tenantPhoneNo;
+            document.getElementById("tenantContract").textContent = tenantContract;
+            document.getElementById("tenantEmergencyNo").textContent = tenantEmergencyNo;
+            document.getElementById("tenantNoSiri").textContent = tenantNoSiri;
+            document.getElementById("tenantInDate").textContent = tenantInDate;
+            document.getElementById("tenantOutDate").textContent = tenantOutDate;
+            document.getElementById("tenantOutstanding").textContent = tenantOutstanding;
+            document.getElementById("tenantPaymentStatus").textContent = tenantPaymentStatus;
+            document.getElementById("tenantPaymentStatus").style.color = getPaymentStatusColor(tenantPaymentStatus); // Set color dynamically
+
+            var tenantICImage = document.getElementById("tenantICImage");
+            tenantICImage.src = tenantUploadIC;
+            tenantICImage.alt = "Tenant IC";
+        }
+    </script>

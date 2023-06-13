@@ -7,6 +7,8 @@
     <Property Name="cleanerAtt_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="floor_id" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="cleaner_date" Type="date" Nullable="false" />
+    <Property Name="cleaner_salary" Type="float" />
+    <Property Name="cleanerAtt_count" Type="int" />
   </EntityType>
   <EntityType Name="finance">
     <Key>
@@ -14,22 +16,25 @@
     </Key>
     <Property Name="finance_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="floor_id" Type="varchar" MaxLength="50" />
-    <Property Name="finance_transaction" Type="float" Nullable="false" />
     <Property Name="finance_desc" Type="varchar" MaxLength="50" />
     <Property Name="finance_pMethod" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="finance_type" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="finance_date" Type="date" Nullable="false" />
     <Property Name="finance_receipt" Type="varchar" MaxLength="50" />
     <Property Name="user_id" Type="int" Nullable="false" />
+    <Property Name="finance_outflow" Type="float" />
+    <Property Name="finance_inflow" Type="float" />
+    <Property Name="finance_flowtype" Type="varchar" MaxLength="10" Nullable="false" />
   </EntityType>
   <EntityType Name="floor">
     <Key>
       <PropertyRef Name="floor_id" />
     </Key>
     <Property Name="floor_id" Type="varchar" MaxLength="50" Nullable="false" />
-    <Property Name="floor_modemIP" Type="int" />
+    <Property Name="floor_modemIP" Type="varchar" MaxLength="50" />
     <Property Name="floor_cctvQr" Type="varchar" MaxLength="50" />
     <Property Name="floor_layout" Type="varchar" MaxLength="50" />
+    <Property Name="floor_description" Type="nvarchar(max)" />
     <Property Name="landlord_id" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="inventory">
@@ -70,12 +75,17 @@
     <Property Name="profit_month" Type="date" Nullable="false" />
     <Property Name="profit_value" Type="varchar" MaxLength="50" Nullable="false" />
   </EntityType>
-  <EntityType Name="reminder">
+  <EntityType Name="reminds">
     <Key>
       <PropertyRef Name="reminder_id" />
     </Key>
     <Property Name="reminder_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="reminder_bankNo" Type="int" Nullable="false" />
+    <Property Name="landlord_id" Type="int" />
+    <Property Name="tenant_id" Type="int" />
+    <Property Name="reminder_status" Type="int" Nullable="false" />
+    <Property Name="reminder_desc" Type="varchar" MaxLength="500" />
+    <Property Name="reminder_title" Type="nchar" MaxLength="100" />
+    <Property Name="reminder_date" Type="date" />
   </EntityType>
   <EntityType Name="room">
     <Key>
@@ -86,6 +96,14 @@
     <Property Name="floor_id" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="room_price" Type="float" Nullable="false" />
     <Property Name="room_status" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="room_coordinate" Type="varchar" MaxLength="200" />
+  </EntityType>
+  <EntityType Name="sysConfig">
+    <Key>
+      <PropertyRef Name="category" />
+    </Key>
+    <Property Name="category" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="value" Type="varchar" MaxLength="50" />
   </EntityType>
   <EntityType Name="sysdiagrams">
     <Key>
@@ -102,13 +120,13 @@
       <PropertyRef Name="tenant_id" />
     </Key>
     <Property Name="tenant_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="tenant_ic" Type="int" Nullable="false" />
+    <Property Name="tenant_ic" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="tenant_uploadIC" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="tenant_name" Type="varchar" MaxLength="50" Nullable="false" />
-    <Property Name="tenant_contract" Type="int" Nullable="false" />
+    <Property Name="tenant_contract" Type="varchar" MaxLength="50" />
     <Property Name="tenant_phoneNo" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="tenant_emergencyNo" Type="varchar" MaxLength="50" Nullable="false" />
-    <Property Name="tenant_noSiri" Type="int" Nullable="false" />
+    <Property Name="tenant_noSiri" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="tenant_inDate" Type="date" Nullable="false" />
     <Property Name="tenant_outDate" Type="date" Nullable="false" />
     <Property Name="tenant_outSession" Type="varchar" MaxLength="50" />
@@ -210,6 +228,30 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_reminds_landlord">
+    <End Role="landlord" Type="Self.landlord" Multiplicity="0..1" />
+    <End Role="reminds" Type="Self.reminds" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="landlord">
+        <PropertyRef Name="landlord_id" />
+      </Principal>
+      <Dependent Role="reminds">
+        <PropertyRef Name="landlord_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_reminds_tenant">
+    <End Role="tenant" Type="Self.tenant" Multiplicity="0..1" />
+    <End Role="reminds" Type="Self.reminds" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tenant">
+        <PropertyRef Name="tenant_id" />
+      </Principal>
+      <Dependent Role="reminds">
+        <PropertyRef Name="tenant_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_room_floor">
     <End Role="floor" Type="Self.floor" Multiplicity="1" />
     <End Role="room" Type="Self.room" Multiplicity="*" />
@@ -242,8 +284,9 @@
     <EntitySet Name="Investor" EntityType="Self.Investor" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="landlord" EntityType="Self.landlord" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="profit" EntityType="Self.profit" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="reminder" EntityType="Self.reminder" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="reminds" EntityType="Self.reminds" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="room" EntityType="Self.room" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysConfig" EntityType="Self.sysConfig" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tenant" EntityType="Self.tenant" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="user" EntityType="Self.user" Schema="dbo" store:Type="Tables" />
@@ -274,6 +317,14 @@
     <AssociationSet Name="FK_profit_Investor" Association="Self.FK_profit_Investor">
       <End Role="Investor" EntitySet="Investor" />
       <End Role="profit" EntitySet="profit" />
+    </AssociationSet>
+    <AssociationSet Name="FK_reminds_landlord" Association="Self.FK_reminds_landlord">
+      <End Role="landlord" EntitySet="landlord" />
+      <End Role="reminds" EntitySet="reminds" />
+    </AssociationSet>
+    <AssociationSet Name="FK_reminds_tenant" Association="Self.FK_reminds_tenant">
+      <End Role="tenant" EntitySet="tenant" />
+      <End Role="reminds" EntitySet="reminds" />
     </AssociationSet>
     <AssociationSet Name="FK_room_floor" Association="Self.FK_room_floor">
       <End Role="floor" EntitySet="floor" />

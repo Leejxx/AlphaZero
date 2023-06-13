@@ -17,6 +17,8 @@ namespace AlphaZero.Models
         public int cleanerAtt_id { get; set; }
         public string floor_id { get; set; }
         public System.DateTime cleaner_date { get; set; }
+        public Nullable<double> cleaner_salary { get; set; }
+        public Nullable<int> cleanerAtt_count { get; set; }
     
         public virtual floor floor { get; set; }
     }

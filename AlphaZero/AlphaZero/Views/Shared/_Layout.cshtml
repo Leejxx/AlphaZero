@@ -93,48 +93,7 @@
                     <div class="dropdown-menu dropdown-menu-right">
                         <div class="notification-list mx-h-350 customscroll">
                             <ul>
-                                <li>
-                                    <a href="#">
-                                        <img src="~/Content/assets/vendors/images/img.jpg" alt="">
-                                        <h3>John Doe</h3>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed...</p>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <img src="~/Content/assets/vendors/images/photo1.jpg" alt="">
-                                        <h3>Lea R. Frith</h3>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed...</p>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <img src="~/Content/assets/vendors/images/photo2.jpg" alt="">
-                                        <h3>Erik L. Richards</h3>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed...</p>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <img src="~/Content/assets/vendors/images/photo3.jpg" alt="">
-                                        <h3>John Doe</h3>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed...</p>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <img src="~/Content/assets/vendors/images/photo4.jpg" alt="">
-                                        <h3>Renee I. Hansen</h3>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed...</p>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <img src="~/Content/assets/vendors/images/img.jpg" alt="">
-                                        <h3>Vicki M. Coleman</h3>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed...</p>
-                                    </a>
-                                </li>
+                                @Html.Action("GetReminders", "Notification")
                             </ul>
                         </div>
                     </div>
@@ -242,8 +201,12 @@
     <div class="left-side-bar">
         <div class="brand-logo">
             <a href="index.html">
-                <img src="~/Content/assets/vendors/images/deskapp-logo.svg" alt="" class="dark-logo">
-                <img src="~/Content/assets/vendors/images/deskapp-logo-white.svg" alt="" class="light-logo">
+
+                <img src="~/Content/assets/vendors/images/Akmal-logo.png" alt="" style="width: 130px; height: 110px;">
+
+
+                <p class="text-center text-orange-50 d-inline">AkmalRental</p>
+
             </a>
             <div class="close-sidebar" data-toggle="left-sidebar-close">
                 <i class="ion-close-round"></i>
@@ -254,7 +217,7 @@
                 <ul id="accordion-menu">
                     <li class="dropdown">
                         <a href="javascript:;" class="dropdown-toggle">
-                            <span class="micon dw dw-house-1"></span><span class="mtext">Home</span>
+                            <span class="micon dw dw-house-1"></span><span class="mtext">Dashboard</span>
                         </a>
                         <ul class="submenu">
                             <li><a href="index.html">Dashboard style 1</a></li>
@@ -268,7 +231,6 @@
                         <ul class="submenu">
                             <li><a href="@Url.Action("Index", "Floor")">Floor</a></li>
                             <li><a href="@Url.Action("Index", "Room")">Room</a></li>
-                            <li><a href="@Url.Action("Index", "landlords")">Landlord</a></li>
                             <li><a href="@Url.Action("Index", "Inventories")">Inventory</a></li>
 
                         </ul>
@@ -277,6 +239,12 @@
                     <li>
                         <a href="@Url.Action("Index", "Tenant")" class="dropdown-toggle no-arrow">
                             <span class="micon dw dw-calendar1"></span><span class="mtext">Tenant</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="@Url.Action("Index", "landlords")" class="dropdown-toggle no-arrow">
+                            <span class="micon dw dw-calendar1"></span><span class="mtext">Landlord</span>
                         </a>
                     </li>
 
@@ -356,6 +324,26 @@
     <script src="~/Content/assets/src/plugins/jvectormap/jquery-jvectormap-2.0.3.min.js"></script>
     <script src="~/Content/assets/src/plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
     <script src="~/Content/assets/vendors/scripts/dashboard2.js"></script>
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.4/css/jquery.dataTables.min.css">
+    <script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+
+    <!-- Simple Datatable End -->
+  
+    <script src="~/Content/assets/src/plugins/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="~/Content/assets/src/plugins/datatables/js/dataTables.bootstrap4.min.js"></script>
+    <script src="~/Content/assets/src/plugins/datatables/js/dataTables.responsive.min.js"></script>
+    <script src="~/Content/assets/src/plugins/datatables/js/responsive.bootstrap4.min.js"></script>
+    <!-- buttons for Export datatable -->
+    <script src="~/Content/assets/src/plugins/datatables/js/dataTables.buttons.min.js"></script>
+    <script src="~/Content/assets/src/plugins/datatables/js/buttons.bootstrap4.min.js"></script>
+    <script src="~/Content/assets/src/plugins/datatables/js/buttons.print.min.js"></script>
+    <script src="~/Content/assets/src/plugins/datatables/js/buttons.html5.min.js"></script>
+    <script src="~/Content/assets/src/plugins/datatables/js/buttons.flash.min.js"></script>
+    <script src="~/Content/assets/src/plugins/datatables/js/pdfmake.min.js"></script>
+    <script src="~/Content/assets/src/plugins/datatables/js/vfs_fonts.js"></script>
+    <!-- Datatable Setting js -->
+    <script src="~/Content/assets/vendors/scripts/datatable-setting.js"></script>
 
 </body>
 </html>
