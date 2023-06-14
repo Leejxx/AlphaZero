@@ -136,9 +136,10 @@
 
                                         @if (item.tenant != null)
                                         {
-                                            <a class="dropdown-item" href="@Url.Action("SendWhatsAppMessage", "WhatsApp", new { id = item.reminder_id })">
+                                            <a class="dropdown-item" href="@Url.Action("SendWhatsAppMessage", "WhatsApp", new { id = item.reminder_id })" onclick="return confirm('WhatsApp Message will be Sent, Confirm this')">
                                                 <i class="fa fa-whatsapp"></i> WhatsApp Message
                                             </a>
+
                                         }
 
                                         <a class="dropdown-item" href="@Url.Action("Edit", "Notification", new { id = item.reminder_id })">
@@ -157,6 +158,8 @@
             </tbody>
         </table>
     </div>
+
+
     <div class="pd-20">
         <p>For anything <code>.landlord</code></p>
     </div>

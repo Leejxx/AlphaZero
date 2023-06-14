@@ -51,9 +51,18 @@ namespace AlphaZero.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.users.Add(user);
+				// Set the default user_type
+				user.user_type = "2";
+
+
+				db.users.Add(user);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+
+				// Call the SendCredentials method of EmailController to send the credentials
+				EmailController emailController = new EmailController();
+				emailController.SendCredentialsAdmin(user.user_name, user.user_password, user.user_email);
+
+				return RedirectToAction("Index");
             }
 
             return View(user);
@@ -131,6 +140,7 @@ namespace AlphaZero.Controllers
         {
             // Retrieve user data based on the userId
             // You can replace this with your own logic to fetch user data from the database
+
             user user = db.users.Find(userId);
 
             // Pass the user data to the view
