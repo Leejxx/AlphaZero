@@ -1052,6 +1052,7 @@
     <Content Include="Views\Login\EditProfile.cshtml" />
     <Content Include="Views\Login\ForgotPassword.cshtml" />
     <Content Include="Views\sysConfigs\Index.cshtml" />
+    <Content Include="Views\Shared\_NotificationsDashboard.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

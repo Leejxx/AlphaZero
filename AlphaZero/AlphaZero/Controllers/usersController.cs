@@ -131,6 +131,7 @@ namespace AlphaZero.Controllers
         {
             // Retrieve user data based on the userId
             // You can replace this with your own logic to fetch user data from the database
+
             user user = db.users.Find(userId);
 
             // Pass the user data to the view
