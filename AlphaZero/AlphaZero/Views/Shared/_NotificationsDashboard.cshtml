@@ -43,7 +43,7 @@
 
                                             @if (item1.tenant != null)
                                             {
-                                                <a class="dropdown-item" href="@Url.Action("SendWhatsAppMessage", "WhatsApp", new { id = item1.reminder_id })">
+                                                <a class="dropdown-item" href="@Url.Action("SendWhatsAppMessage", "WhatsApp", new { id = item1.reminder_id })" onclick="return confirm('WhatsApp Message will be Sent, Confirm this')">
                                                     <i class="fa fa-whatsapp"></i> WhatsApp Message
                                                 </a>
                                             }
