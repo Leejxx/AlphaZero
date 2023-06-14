@@ -1,5 +1,4 @@
-﻿
-@model IEnumerable<AlphaZero.Models.finance>
+﻿@model IEnumerable<AlphaZero.Models.finance>
 
 @{
     ViewBag.Title = "Manage Finance";
@@ -10,30 +9,32 @@
 
 <p>
     @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary" })
+
 </p>
 
 <table class="table">
     <tr>
+
         <th>
-            Flowtype
+            @Html.ActionLink("Flowtype", "Index", new { sortOrder = ViewBag.FlowtypeSortParam })
         </th>
         <th>
-            Inflow
+            @Html.ActionLink("Inflow", "Index", new { sortOrder = ViewBag.InflowSortParam })
         </th>
         <th>
-            Outflow
+            @Html.ActionLink("Outflow", "Index", new { sortOrder = ViewBag.OutflowSortParam })
         </th>
         <th>
-            Notes
+            @Html.ActionLink("Notes", "Index", new { sortOrder = ViewBag.NotesSortParam })
         </th>
         <th>
-            Payment Method
+            @Html.ActionLink("Payment Method", "Index", new { sortOrder = ViewBag.PaymentMethodSortParam })
         </th>
         <th>
-            Payment
+            @Html.ActionLink("Payment", "Index", new { sortOrder = ViewBag.PaymentSortParam })
         </th>
         <th>
-            Date
+            @Html.ActionLink("Date", "Index", new { sortOrder = ViewBag.DateSortParam })
         </th>
         <th>
             Receipt
@@ -47,10 +48,10 @@
             <td>
                 @Html.DisplayFor(modelItem => item.finance_flowtype)
             </td>
-            <td>
+            <td class="@(item.finance_flowtype == "Inflow" ? "text-success" : "")">
                 @Html.DisplayFor(modelItem => item.finance_inflow)
             </td>
-            <td>
+            <td class="@(item.finance_flowtype == "Outflow" ? "text-danger" : "")">
                 @Html.DisplayFor(modelItem => item.finance_outflow)
             </td>
             <td>
@@ -63,7 +64,7 @@
                 @Html.DisplayFor(modelItem => item.finance_type)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.finance_date)
+                @item.finance_date.ToString("dd-MM-yyyy")
             </td>
             <td>
                 @if (!string.IsNullOrEmpty(item.finance_receipt))
@@ -86,3 +87,13 @@
     }
 
 </table>
+
+<style>
+    .text-success {
+        color: green;
+    }
+
+    .text-danger {
+        color: red;
+    }
+</style>

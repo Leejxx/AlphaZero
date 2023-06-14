@@ -24,15 +24,16 @@
         </div>
 
         <div class="form-group">
+            @Html.LabelFor(model => model.finance_flowtype, "Flowtype", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                Amount
-                @Html.EditorFor(model => model.finance_flowtype, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.DropDownListFor(model => model.finance_flowtype, new SelectList(new[] { "Inflow", "Outflow" }), new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.finance_flowtype, "", new { @class = "text-danger" })
             </div>
         </div>
+
         <div class="form-group">
             <div class="col-md-10">
-                Amount
+                Inflow
                 @Html.EditorFor(model => model.finance_inflow, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.finance_inflow, "", new { @class = "text-danger" })
             </div>
@@ -40,7 +41,7 @@
 
         <div class="form-group">
             <div class="col-md-10">
-                Amount
+                Outflow
                 @Html.EditorFor(model => model.finance_outflow, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.finance_outflow, "", new { @class = "text-danger" })
             </div>
@@ -101,6 +102,35 @@
     </div>
 }
 
+@section scripts {
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>$(document).ready(function () {
+            var flowTypeDropdown = $("#finance_flowtype");
+            var inflowField = $("#finance_inflow");
+            var outflowField = $("#finance_outflow");
+
+            // Initially disable both Inflow and Outflow fields
+            inflowField.prop("disabled", false);
+            outflowField.prop("disabled", true);
+
+            // Enable/disable Inflow and Outflow fields based on Flowtype dropdown selection
+            flowTypeDropdown.on("change", function () {
+                var selectedFlowType = $(this).val();
+
+                if (selectedFlowType === "Inflow") {
+                    inflowField.prop("disabled", false);
+                    outflowField.prop("disabled", true);
+                    outflowField.val("");
+                } else if (selectedFlowType === "Outflow") {
+                    inflowField.prop("disabled", true);
+                    inflowField.val("");
+                    outflowField.prop("disabled", false);
+                }
+            });
+        });</script>
+}
+
+
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
@@ -113,7 +143,7 @@
 {
             new SelectListItem { Text = "Cash", Value = "Cash" },
             new SelectListItem { Text = "Credit card/Debit card", Value = "CreditCardDebitCard" },
-            new SelectListItem { Text = "E-wallet", Value = "EWallet" }
+            new SelectListItem { Text = "E-wallet", Value = "E-Wallet" }
         };
 
         return new SelectList(paymentMethods, "Value", "Text");

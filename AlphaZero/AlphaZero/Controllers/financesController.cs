@@ -13,14 +13,77 @@ namespace AlphaZero.Controllers
 {
     public class financesController : Controller
     {
+
+  
         private db_roomrentalEntities db = new db_roomrentalEntities();
 
         // GET: finances
-        public ActionResult Index()
+
+
+        public ActionResult Index(string sortOrder)
         {
+            ViewBag.FlowtypeSortParam = String.IsNullOrEmpty(sortOrder) ? "flowtype_desc" : "";
+            ViewBag.InflowSortParam = sortOrder == "inflow" ? "inflow_desc" : "inflow";
+            ViewBag.OutflowSortParam = sortOrder == "outflow" ? "outflow_desc" : "outflow";
+            ViewBag.NotesSortParam = sortOrder == "notes" ? "notes_desc" : "notes";
+            ViewBag.PaymentMethodSortParam = sortOrder == "paymentmethod" ? "paymentmethod_desc" : "paymentmethod";
+            ViewBag.PaymentSortParam = sortOrder == "payment" ? "payment_desc" : "payment";
+            ViewBag.DateSortParam = sortOrder == "date" ? "date_desc" : "date";
+
             var finances = db.finances.Include(f => f.floor).Include(f => f.user);
+
+            switch (sortOrder)
+            {
+                case "flowtype_desc":
+                    finances = finances.OrderByDescending(f => f.finance_flowtype);
+                    break;
+                case "inflow":
+                    finances = finances.OrderBy(f => f.finance_inflow);
+                    break;
+                case "inflow_desc":
+                    finances = finances.OrderByDescending(f => f.finance_inflow);
+                    break;
+                case "outflow":
+                    finances = finances.OrderBy(f => f.finance_outflow);
+                    break;
+                case "outflow_desc":
+                    finances = finances.OrderByDescending(f => f.finance_outflow);
+                    break;
+                case "notes":
+                    finances = finances.OrderBy(f => f.finance_desc);
+                    break;
+                case "notes_desc":
+                    finances = finances.OrderByDescending(f => f.finance_desc);
+                    break;
+                case "paymentmethod":
+                    finances = finances.OrderBy(f => f.finance_pMethod);
+                    break;
+                case "paymentmethod_desc":
+                    finances = finances.OrderByDescending(f => f.finance_pMethod);
+                    break;
+                case "payment":
+                    finances = finances.OrderBy(f => f.finance_type);
+                    break;
+                case "payment_desc":
+                    finances = finances.OrderByDescending(f => f.finance_type);
+                    break;
+                case "date":
+                    finances = finances.OrderBy(f => f.finance_date);
+                    break;
+                case "date_desc":
+                    finances = finances.OrderByDescending(f => f.finance_date);
+                    break;
+                default:
+                    finances = finances.OrderBy(f => f.finance_flowtype);
+                    break;
+            }
+
+
             return View(finances.ToList());
         }
+
+
+
 
         // GET: finances/Details/5
         public ActionResult Details(int? id)

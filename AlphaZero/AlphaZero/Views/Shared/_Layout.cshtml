@@ -1,15 +1,27 @@
 ﻿<!DOCTYPE html>
+
 <html>
 <head>
+    <style>
+        .footer-wrap {
+            background-color: #f0f0f0;
+            padding: 20px;
+            margin-top: 20px;
+            text-align: center;
+            font-size: 14px;
+            color: #888;
+        }
+
+    </style>
     <!-- Basic Page Info -->
     <meta charset="utf-8">
     <title>@ViewData["Title"] - WBL_AlphaZero_RRMS</title>
 
 
     <!-- Site favicon -->
-    <link rel="apple-touch-icon" sizes="180x180" href="~/Content/assets/vendors/images/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="~/Content/assets/vendors/images/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="~/Content/assets/vendors/images/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="~/Content/assets/vendors/images/Akmal-logo.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="~/Content/assets/vendors/images/Akmal-logo.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="~/Content/assets/vendors/images/Akmal-logo.png">
 
     <!-- Mobile Specific Metas -->
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -108,8 +120,8 @@
                         <span class="user-name">Admin</span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                        <a class="dropdown-item" href="profile.html"><i class="dw dw-user1"></i> Profile</a>
-                        <a class="dropdown-item" href="profile.html"><i class="dw dw-settings2"></i> Setting</a>
+                        <a class="dropdown-item" href="@Url.Action("Index", "Notification")"><i class="dw dw-bell1"></i> Notifications</a>
+                        <a class="dropdown-item" href="@Url.Action("Index", "sysConfigs")"> <i class="dw dw-settings2"></i>Bank Setting</a>
                         <a class="dropdown-item" href="faq.html"><i class="dw dw-help"></i> Help</a>
                         <a class="dropdown-item" href="@Url.Action("Logout", "Login")">
                             <i class="dw dw-logout"></i> Log Out
@@ -249,15 +261,24 @@
                         </a>
                     </li>
                     <li class="dropdown">
-                        <a href="@Url.Action("Index", "users")" class="dropdown-toggle no-arrow">
-                            <span class="micon icon-copy fa fa-group"></span><span class="mtext">Manage User</span>
+                        <a href="javascript:;" class="dropdown-toggle">
+                            <span class="micon icon-copy fa fa-group"></span><span class="mtext">User</span>
                         </a>
+                        <ul class="submenu">
+                            <li class="dropdown">
+                                <a href="@Url.Action("Index", "users")" class="dropdown-toggle no-arrow">
+                                    <span class="micon icon-copy fi-torso-business"></span><span class="mtext">Manage Admin</span>
+                                </a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="@Url.Action("Index", "Investor")" class="dropdown-toggle no-arrow">
+                                    <span  class="micon icon-copy fi-torsos"></span><span class="mtext">Manage Investor</span>
+                                </a>
+                            </li>
+                        </ul>
                     </li>
-                    <li class="dropdown">
-                        <a href="@Url.Action("Index", "Investor")" class="dropdown-toggle no-arrow">
-                            <span class="micon icon-copy fa fa-group"></span><span class="mtext">Manage Investor</span>
-                        </a>
-                    </li>
+
+                
                     <li class="dropdown">
                         <a href="@Url.Action("Index", "finances")" class="dropdown-toggle no-arrow">
                             <span class="micon icon-copy fa fa-bank"></span><span class="mtext">Manage Finance</span>
@@ -291,7 +312,15 @@
                     </div>
                 </div>
             </div>
+            <div class="footer-wrap">
+                <p>
+                   
+                    &copy; Developed by AlphaZero | SECP3106 Application Development (WBL) |Bachelor of Computer Science (Data Engineering) | Universiti Teknologi Malaysia.
+                </p>
+            </div>
+
         </div>
+
     </div>
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")

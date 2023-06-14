@@ -52,7 +52,7 @@ namespace AlphaZero.Controllers
             if (ModelState.IsValid)
             {
 				// Set the default user_type
-				user.user_type = "2";
+				user.user_type = "1";
 
 
 				db.users.Add(user);

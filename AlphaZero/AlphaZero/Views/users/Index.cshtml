@@ -12,11 +12,12 @@
 </p>
 <table class="table">
     <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.user_password)
-        </th>
+
         <th>
             @Html.DisplayNameFor(model => model.user_name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.user_password)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.user_email)
@@ -32,11 +33,12 @@
         if(item.user_type == "1")
                 {
                     <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.user_password)
-                        </td>
+
                         <td>
                             @Html.DisplayFor(modelItem => item.user_name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.user_password)
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.user_email)
