@@ -7,9 +7,9 @@
 
 
     <!-- Site favicon -->
-    <link rel="apple-touch-icon" sizes="180x180" href="~/Content/assets/vendors/images/Akmal-logo.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="~/Content/assets/vendors/images/Akmal-logo.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="~/Content/assets/vendors/images/Akmal-logo.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="~/Content/assets/vendors/images/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="~/Content/assets/vendors/images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="~/Content/assets/vendors/images/favicon-16x16.png">
 
     <!-- Mobile Specific Metas -->
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -216,78 +216,62 @@
             <div class="sidebar-menu">
                 <ul id="accordion-menu">
                     <li class="dropdown">
-                        <a href="javascript:;" class="dropdown-toggle">
-                            <span class="micon dw dw-house-1"></span><span class="mtext">Dashboard</span>
+                        <a href="@Url.Action("Index", "Home")" class="dropdown-toggle no-arrow">
+                            <span class="micon icon-copy fa fa-dashboard"></span><span class="mtext">Dashboard</span>
                         </a>
-                        <ul class="submenu">
-                            <li><a href="index.html">Dashboard style 1</a></li>
-                            <li><a href="index2.html">Dashboard style 2</a></li>
-                        </ul>
                     </li>
                     <li class="dropdown">
                         <a href="javascript:;" class="dropdown-toggle">
-                            <span class="micon dw dw-edit2"></span><span class="mtext">Floor</span>
+                            <span class="micon icon-copy fa fa-sitemap"></span><span class="mtext">Floor</span>
                         </a>
                         <ul class="submenu">
                             <li><a href="@Url.Action("Index", "Floor")">Floor</a></li>
                             <li><a href="@Url.Action("Index", "Room")">Room</a></li>
                             <li><a href="@Url.Action("Index", "Inventories")">Inventory</a></li>
-
                         </ul>
                     </li>
 
                     <li>
                         <a href="@Url.Action("Index", "Tenant")" class="dropdown-toggle no-arrow">
-                            <span class="micon dw dw-calendar1"></span><span class="mtext">Tenant</span>
+                            <span class="micon icon-copy fa fa-hotel"></span><span class="mtext">Tenant</span>
                         </a>
                     </li>
 
                     <li>
                         <a href="@Url.Action("Index", "landlords")" class="dropdown-toggle no-arrow">
-                            <span class="micon dw dw-calendar1"></span><span class="mtext">Landlord</span>
+                            <span class="micon icon-copy fa fa-building"></span><span class="mtext">Landlord</span>
                         </a>
                     </li>
 
                     <li>
                         <a href="@Url.Action("Index", "cleanerAtts")" class="dropdown-toggle no-arrow">
-                            <span class="micon dw dw-calendar1"></span><span class="mtext">Cleaner Attendance</span>
+                            <span class="micon icon-copy fa fa-calendar"></span><span class="mtext">Cleaner Attendance</span>
                         </a>
                     </li>
                     <li class="dropdown">
                         <a href="@Url.Action("Index", "users")" class="dropdown-toggle no-arrow">
-                            <span class="micon dw dw-calendar1"></span>
-                            <span class="mtext">Manage User</span>
+                            <span class="micon icon-copy fa fa-group"></span><span class="mtext">Manage User</span>
                         </a>
                     </li>
                     <li class="dropdown">
-                        <a href="javascript:;" class="dropdown-toggle">
-                            <span class="micon dw dw-analytics-21"></span><span class="mtext">Manage Finance</span>
-                        </a>
-                        <ul class="submenu">
-                            <li><a href="highchart.html">Highchart</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="invoice.html" class="dropdown-toggle no-arrow">
-                            <span class="micon dw dw-invoice"></span><span class="mtext">Invoice</span>
+                        <a href="@Url.Action("Index", "Investor")" class="dropdown-toggle no-arrow">
+                            <span class="micon icon-copy fa fa-group"></span><span class="mtext">Manage Investor</span>
                         </a>
                     </li>
-                    <li>
-                        <div class="dropdown-divider"></div>
-                    </li>
-                    <li>
-                        <div class="sidebar-small-cap">Extra</div>
-                    </li>
-                    <li>
-                        <a href="javascript:;" class="dropdown-toggle">
-                            <span class="micon dw dw-edit-2"></span><span class="mtext">Documentation</span>
+                    <li class="dropdown">
+                        <a href="@Url.Action("Index", "finances")" class="dropdown-toggle no-arrow">
+                            <span class="micon icon-copy fa fa-bank"></span><span class="mtext">Manage Finance</span>
                         </a>
-                        <ul class="submenu">
-                            <li><a href="introduction.html">Introduction</a></li>
-                            <li><a href="getting-started.html">Getting Started</a></li>
-                            <li><a href="color-settings.html">Color Settings</a></li>
-                            <li><a href="third-party-plugins.html">Third Party Plugins</a></li>
-                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="@Url.Action("Index", "profits")" class="dropdown-toggle no-arrow">
+                            <span class="micon icon-copy ion-cash"></span><span class="mtext">Profit</span>
+                        </a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="@Url.Action("Index", "Notification")" class="dropdown-toggle no-arrow">
+                            <span class="micon icon-copy fa fa-bullhorn" aria-hidden="true"></span><span class="mtext">Manage Notification</span>
+                        </a>
                     </li>
                 </ul>
             </div>
@@ -329,7 +313,7 @@
     <script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
 
     <!-- Simple Datatable End -->
-  
+
     <script src="~/Content/assets/src/plugins/datatables/js/jquery.dataTables.min.js"></script>
     <script src="~/Content/assets/src/plugins/datatables/js/dataTables.bootstrap4.min.js"></script>
     <script src="~/Content/assets/src/plugins/datatables/js/dataTables.responsive.min.js"></script>

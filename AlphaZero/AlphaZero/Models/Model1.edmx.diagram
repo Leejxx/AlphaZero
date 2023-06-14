@@ -26,7 +26,7 @@
         <AssociationConnector Association="db_roomrentalModel.FK_profit_Investor" ManuallyRouted="false" />
         <AssociationConnector Association="db_roomrentalModel.FK_tenant_room" ManuallyRouted="false" />
         <EntityTypeShape EntityType="db_roomrentalModel.reminds" Width="1.5" PointX="10.125" PointY="11.375" />
-        <EntityTypeShape EntityType="db_roomrentalModel.sysConfig" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="db_roomrentalModel.sysConfig" Width="1.5" PointX="2.75" PointY="1.75" />
         <AssociationConnector Association="db_roomrentalModel.FK_reminds_landlord" />
         <AssociationConnector Association="db_roomrentalModel.FK_reminds_tenant" />
       </Diagram>
