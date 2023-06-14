@@ -22,6 +22,14 @@ namespace AlphaZero.Controllers
             return PartialView("_Notifications", reminders);
         }
 
+        // GET: Notification
+        [ChildActionOnly]
+        public ActionResult GetRemindersDashboard()
+        {
+            var reminders = db.reminds.ToList();
+            return PartialView("_NotificationsDashboard", reminders);
+        }
+
         // GET: User
         public ActionResult Index()
         {
