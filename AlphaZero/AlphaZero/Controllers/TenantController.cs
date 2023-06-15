@@ -298,18 +298,22 @@ namespace AlphaZero.Controllers
             db.finances.Add(financeTransaction);
             db.SaveChanges();
 
-           
 
+            tenant.tenant_outstanding -= amount;
             // Update the outstanding amount based on the payment amount
-            if (tenant.tenant_outstanding != amount && amount != 0)
+            if (tenant.tenant_outstanding > 0)
             {
                 tenant.tenant_paymentStatus = "Partially Paid";
             }
-            else if (tenant.tenant_outstanding == amount)
+            else if (tenant.tenant_outstanding == 0)
             {
                 tenant.tenant_paymentStatus = "Fully Paid";
             }
-            tenant.tenant_outstanding -= amount;
+            else if (tenant.tenant_outstanding < 0)
+            {
+                tenant.tenant_paymentStatus = "OverPaid";
+            }
+            
 
             // Save the changes to the database
             db.Entry(tenant).State = EntityState.Modified;

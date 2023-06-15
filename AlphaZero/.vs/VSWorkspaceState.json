@@ -11,6 +11,6 @@
     "\\AlphaZero\\Views\\Shared",
     "\\AlphaZero\\Views\\Tenant"
   ],
-  "SelectedNode": "\\AlphaZero\\Views\\Investor\\Index.cshtml",
+  "SelectedNode": "\\AlphaZero\\Models\\user.cs",
   "PreviewInSolutionExplorer": false
 }

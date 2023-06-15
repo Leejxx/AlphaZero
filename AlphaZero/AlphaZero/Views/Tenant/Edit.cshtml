@@ -116,160 +116,179 @@
 {
     @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
-        <h4>tenant</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.tenant_id)
+<div class="form-horizontal">
+    <h4>tenant</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.tenant_id)
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.tenant_ic, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.tenant_ic, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.tenant_ic, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-
-
-        <div class="form-group row">
-            @Html.LabelFor(model => model.tenant_uploadIC, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-sm-12 col-md-10">
-                @if (!string.IsNullOrEmpty(Model.tenant_uploadIC))
-                {
-                    <img src="@Url.Action("GetFile", "Floor", new { floorLayoutFileName = Model.tenant_uploadIC })" alt="CCTV QR" style="max-height: 200px; margin-bottom: 10px;" />
-                }
-                <div> <input type="file" name="tenantIC" id="tenantIC" /></div>
-
-                @Html.ValidationMessageFor(model => model.tenant_uploadIC, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.tenant_name, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.tenant_name, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.tenant_name, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group row">
-            @Html.LabelFor(model => model.tenant_contract, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-sm-12 col-md-10">
-                @if (!string.IsNullOrEmpty(Model.tenant_contract))
-                {
-                    <img src="@Url.Action("GetFile", "Floor", new { floorLayoutFileName = Model.tenant_contract })" alt="Contract" style="max-height: 200px; margin-bottom: 10px;" />
-                }
-                <div> <input type="file" name="tenantContract" id="tenantContract" /></div>
-
-                @Html.ValidationMessageFor(model => model.tenant_contract, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.tenant_phoneNo, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.tenant_phoneNo, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.tenant_phoneNo, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.tenant_emergencyNo, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.tenant_emergencyNo, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.tenant_emergencyNo, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.tenant_noSiri, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.tenant_noSiri, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.tenant_noSiri, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.tenant_inDate, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.tenant_inDate, new { htmlAttributes = new { @class = "form-control", type = "date", Value = Model.tenant_inDate.ToString("yyyy-MM-dd") } })
-                @Html.ValidationMessageFor(model => model.tenant_inDate, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.tenant_outDate, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.tenant_outDate, new { htmlAttributes = new { @class = "form-control", type = "date", Value = Model.tenant_outDate.ToString("yyyy-MM-dd") } })
-                @Html.ValidationMessageFor(model => model.tenant_outDate, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.tenant_outSession, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("tenant_outSession", new List<SelectListItem>
-                 {
-                     new SelectListItem { Text = "-- Session --", Selected = true, Disabled = true },
-                     new SelectListItem { Text = "Morning", Value = "Morning" },
-                     new SelectListItem { Text = "Afternoon", Value = "Afternoon" },
-                     new SelectListItem { Text = "Night", Value = "Night" },
-                     new SelectListItem { Text = "Unknown", Value = "Unknown" }
-                 }, new { @class = "form-control", @required = true })
-                @Html.ValidationMessageFor(model => model.tenant_outSession, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.tenant_outstanding, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DisplayFor(model => model.tenant_outstanding, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.tenant_outstanding, "", new { @class = "text-danger" })
-            </div>
-            <div class="col-md-2">
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#outstandingModal">Make Payment</button>
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.tenant_paymentStatus, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("tenant_paymentStatus", new List<SelectListItem>
-                  {
-                      new SelectListItem { Text = "-- Payment Status --", Selected = true, Disabled = true },
-                      new SelectListItem { Text = "Fully Paid", Value = "Fully Paid" },
-                      new SelectListItem { Text = "Partially Paid", Value = "Partially Paid" },
-                      new SelectListItem { Text = "Unpaid ", Value = "Unpaid" }
-                  }, new { @class = "form-control", @required = true })
-                @Html.ValidationMessageFor(model => model.tenant_paymentStatus, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        @Html.HiddenFor(model => model.room_id)
-
-        <div class="form-group">
-            Room
-            <div class="col-md-10">
-                @Html.DisplayFor(model => model.room.floor_id)
-                No @Html.DisplayFor(model => model.room.room_number)
-
-                <!-- Button to trigger the modal -->
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Change Room</button>
-
-            </div>
-        </div>
-
-
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-warning" />
-                @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-secondary" })
-            </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.tenant_ic, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.tenant_ic, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.tenant_ic, "", new { @class = "text-danger" })
         </div>
     </div>
+
+
+
+    <div class="form-group row">
+        @Html.LabelFor(model => model.tenant_uploadIC, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-sm-12 col-md-10">
+            @if (!string.IsNullOrEmpty(Model.tenant_uploadIC))
+            {
+                <img src="@Url.Action("GetFile", "Floor", new { floorLayoutFileName = Model.tenant_uploadIC })" alt="CCTV QR" style="max-height: 200px; margin-bottom: 10px;" />
+            }
+            <div> <input type="file" name="tenantIC" id="tenantIC" /></div>
+
+            @Html.ValidationMessageFor(model => model.tenant_uploadIC, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.tenant_name, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.tenant_name, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.tenant_name, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group row">
+        @Html.LabelFor(model => model.tenant_contract, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-sm-12 col-md-10">
+            @if (!string.IsNullOrEmpty(Model.tenant_contract))
+            {
+                <img src="@Url.Action("GetFile", "Floor", new { floorLayoutFileName = Model.tenant_contract })" alt="Contract" style="max-height: 200px; margin-bottom: 10px;" />
+            }
+            <div> <input type="file" name="tenantContract" id="tenantContract" /></div>
+
+            @Html.ValidationMessageFor(model => model.tenant_contract, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.tenant_phoneNo, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.tenant_phoneNo, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.tenant_phoneNo, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.tenant_emergencyNo, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.tenant_emergencyNo, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.tenant_emergencyNo, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.tenant_noSiri, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.tenant_noSiri, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.tenant_noSiri, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.tenant_inDate, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.tenant_inDate, new { htmlAttributes = new { @class = "form-control", type = "date", Value = Model.tenant_inDate.ToString("yyyy-MM-dd") } })
+            @Html.ValidationMessageFor(model => model.tenant_inDate, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.tenant_outDate, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.tenant_outDate, new { htmlAttributes = new { @class = "form-control", type = "date", Value = Model.tenant_outDate.ToString("yyyy-MM-dd") } })
+            @Html.ValidationMessageFor(model => model.tenant_outDate, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.tenant_outSession, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("tenant_outSession", new List<SelectListItem>
+             {
+                 new SelectListItem { Text = "-- Session --", Selected = true, Disabled = true },
+                 new SelectListItem { Text = "Morning", Value = "Morning" },
+                 new SelectListItem { Text = "Afternoon", Value = "Afternoon" },
+                 new SelectListItem { Text = "Night", Value = "Night" },
+                 new SelectListItem { Text = "Unknown", Value = "Unknown" }
+             }, new { @class = "form-control", @required = true })
+            @Html.ValidationMessageFor(model => model.tenant_outSession, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.tenant_outstanding, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DisplayFor(model => model.tenant_outstanding, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.tenant_outstanding, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-md-2">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#outstandingModal">Make Payment</button>
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.tenant_paymentStatus, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @{
+                string paymentStatusColor = "";
+                switch (Model.tenant_paymentStatus)
+                {
+                    case "Fully Paid":
+                        paymentStatusColor = "green";
+                        break;
+                    case "Partially Paid":
+                        paymentStatusColor = "orange";
+                        break;
+                    case "Unpaid":
+                        paymentStatusColor = "red";
+                        break;
+                    case "OverPaid":
+                        paymentStatusColor = "blue";
+                        break;
+                    default:
+                        paymentStatusColor = "black";
+                        break;
+                }
+            }
+
+            <span style="color: @paymentStatusColor">
+                @Html.DisplayFor(modelItem => Model.tenant_paymentStatus)
+            </span>
+        </div>
+    </div>
+
+    @Html.HiddenFor(model => model.room_id)
+
+    @Html.HiddenFor(model => model.tenant_paymentStatus)
+
+    <div class="form-group">
+        Room
+        <div class="col-md-10">
+            @Html.DisplayFor(model => model.room.floor_id)
+            No @Html.DisplayFor(model => model.room.room_number)
+
+            <!-- Button to trigger the modal -->
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Change Room</button>
+
+        </div>
+    </div>
+
+
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Save" class="btn btn-warning" />
+            @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-secondary" })
+        </div>
+    </div>
+</div>
 }
 
 @section Scripts {
@@ -326,10 +345,10 @@
                 {
                     @Html.AntiForgeryToken()
 
-               
+
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-                    <input type="number" id="id" name="id" value="@Model.tenant_id" hidden/>
+                    <input type="number" id="id" name="id" value="@Model.tenant_id" hidden />
 
                     <div class="form-group">
                         <label>Amount:</label>
@@ -350,24 +369,22 @@
                         <label>DatePayment:</label>
                         <input type="date" class="form-control" id="date" name="date" required>
                     </div>
-               
+
                     <div class="form-group">
                         @Html.Label("Receipt")
                         <input type="file" name="ReceiptFile" id="ReceiptFile" />
                     </div>
 
-                   
 
-                    <div class="form-group">
-                        <input type="submit" value="Create" class="btn btn-primary" />
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <input type="submit" value="Make Payment" class="btn btn-primary" />
                     </div>
+
                 }
 
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save Changes</button>
-            </div>
+         
         </div>
     </div>
 </div>
