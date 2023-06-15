@@ -82,6 +82,7 @@ namespace AlphaZero.Controllers
 
                 db.floors.Add(floor);
                 db.SaveChanges();
+                TempData["successCreate"] = "Floor created successfully!!";
                 return RedirectToAction("Index");
             }
 
@@ -149,6 +150,7 @@ namespace AlphaZero.Controllers
 
                 db.Entry(floor).State = EntityState.Modified;
                 db.SaveChanges();
+                TempData["successEdit"] = "Floor Edited successfully!!";
                 return RedirectToAction("Index");
             }
 
@@ -188,6 +190,7 @@ namespace AlphaZero.Controllers
 
             db.floors.Remove(floor);
             db.SaveChanges();
+            TempData["successDelete"] = "Floor Deleted successfully!!";
             return RedirectToAction("Index");
         }
 

@@ -101,6 +101,7 @@ namespace AlphaZero.Controllers
                 {
                     room.room_status = "Booked";
                     db.SaveChanges();
+                    TempData["successCreate"] = "Tenant created successfully!!";
                 }
 
                 return RedirectToAction("Index");
@@ -240,6 +241,7 @@ namespace AlphaZero.Controllers
 
             db.tenants.Remove(tenant);
             db.SaveChanges();
+            TempData["successDelete"] = "Tenant deleted successfully!!";
             return RedirectToAction("Index");
         }
 
@@ -320,10 +322,10 @@ namespace AlphaZero.Controllers
             db.SaveChanges();
 
             // Set a success message to be displayed on the index page
-            TempData["success"] = "Payment processed successfully!";
+            TempData["successPay"] = "Payment processed successfully!";
 
             // Redirect back to the index page
-            return RedirectToAction("Index");
+            return RedirectToAction("Edit" ,new { id=id});
         }
 
 

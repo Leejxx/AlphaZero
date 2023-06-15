@@ -20,9 +20,10 @@
         <th>
             No.
         </th>
-        <th>
-            @using (Html.BeginForm("Index", "cleanerAtts", FormMethod.Get))
-            {
+        @using (Html.BeginForm("Index", "cleanerAtts", FormMethod.Get))
+        {
+            <th>
+
                 <div class="form-inline">
                     <label class="mr-2">Floor Level:</label>
                     @{
@@ -31,21 +32,24 @@
                     }
                     @Html.DropDownList("floorLevel", floorLevels, new { @class = "form-control", onchange = "this.form.submit()" })
                 </div>
-            }
-        </th>
-        <th>
-            @using (Html.BeginForm("Index", "cleanerAtts", FormMethod.Get))
-            {
-                <div class="form-inline">
-                    <label class="ml-4 mr-2">Month:</label>
-                    @Html.DropDownList("selectedMonth", ViewBag.Months as SelectList, "All", new { @class = "form-control", onchange = "this.form.submit()" })
-                </div>
-            }
-        </th>
-        <th>
-            Salary
-        </th>
-    </tr>
+                
+            </th>
+            <th>
+                
+                    <div class="form-inline">
+                        <label class="ml-4 mr-2">Month:</label>
+                        @Html.DropDownList("selectedMonth", ViewBag.Months as SelectList, "All", new { @class = "form-control", onchange = "this.form.submit()" })
+                    </div>
+                
+            </th>
+         }
+            <th>
+                Salary
+            </th>
+            <th>
+
+            </th>
+        </tr>
 
     @foreach (var item in Model)
     {

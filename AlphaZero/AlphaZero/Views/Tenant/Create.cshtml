@@ -30,7 +30,7 @@
     <div class="form-group row">
         @Html.LabelFor(model => model.tenant_uploadIC, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-sm-12 col-md-10">
-            <input type="file" name="tenantIC" id="tenantIC" />
+            <input type="file" name="tenantIC" id="tenantIC" required />
             @Html.ValidationMessageFor(model => model.tenant_uploadIC, "", new { @class = "text-danger" })
         </div>
     </div>

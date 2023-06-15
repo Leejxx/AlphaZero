@@ -25,8 +25,35 @@
     @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary" })
 </p>
 
+@{
+    if (TempData["successCreate"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="bi bi-check-circle me-1"></i>
+            <strong>Success!</strong> @TempData["successCreate"]
+
+        </div>
+    }
+
+    if (TempData["successEdit"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="bi bi-check-circle me-1"></i>
+            <strong>Success!</strong> @TempData["successEdit"]
+
+        </div>
+    }
+    if (TempData["successDelete"] != null)
+    {
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <i class="bi bi-exclamation-triangle me-1"></i>
+            <strong>Success!</strong> @TempData["successDelete"]
+        </div>
+    }
+}
+
 <div class="pb-20">
-    <table class="data-table table stripe hover nowrap" >
+    <table class="data-table table stripe hover nowrap">
         <thead>
             <tr>
                 <th>No.</th>
@@ -65,7 +92,7 @@
                         @Html.DisplayFor(modelItem => item.room_id)
                     </td>
                     <td>
-                       No @Html.DisplayFor(modelItem => item.room_number)
+                        No @Html.DisplayFor(modelItem => item.room_number)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.room_price)
