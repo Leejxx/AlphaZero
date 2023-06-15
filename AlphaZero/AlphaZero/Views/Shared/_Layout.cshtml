@@ -19,9 +19,9 @@
 
 
     <!-- Site favicon -->
-    <link rel="apple-touch-icon" sizes="180x180" href="~/Content/assets/vendors/images/Akmal-logo.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="~/Content/assets/vendors/images/Akmal-logo.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="~/Content/assets/vendors/images/Akmal-logo.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="~/Content/assets/vendors/images/LoginLogo3.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="~/Content/assets/vendors/images/LoginLogo3.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="~/Content/assets/vendors/images/LoginLogo3.png">
 
     <!-- Mobile Specific Metas -->
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -115,13 +115,23 @@
                 <div class="dropdown">
                     <a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown">
                         <span class="user-icon">
-                            <img src="~/Content/assets/vendors/images/photo1.jpg" alt="">
+                            <img src="~/Content/assets/vendors/images/LoginLogo2.png" alt="">
                         </span>
-                        <span class="user-name">Admin</span>
+                        
+                        @if (Session["UserType"].ToString() == "1")
+                        {
+                            <span class="user-name">Admin - @Session["UserName"]</span>
+                        }
+                        else
+                        {
+                            <span class="user-name">Investor - @Session["UserName"]</span>
+                        }
+
+                        
                     </a>
                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
                         <a class="dropdown-item" href="@Url.Action("Index", "Notification")"><i class="dw dw-bell1"></i> Notifications</a>
-                        <a class="dropdown-item" href="@Url.Action("Index", "sysConfigs")"> <i class="dw dw-settings2"></i>Bank Setting</a>
+                        <a class="dropdown-item" href="@Url.Action("Index", "sysConfigs")"> <i class="dw dw-settings2"></i>System Configuration</a>
                         <a class="dropdown-item" href="faq.html"><i class="dw dw-help"></i> Help</a>
                         <a class="dropdown-item" href="@Url.Action("Logout", "Login")">
                             <i class="dw dw-logout"></i> Log Out
@@ -212,12 +222,11 @@
 
     <div class="left-side-bar">
         <div class="brand-logo">
-            <a href="index.html">
+            <a href="@Url.Action("Index", "Home")" style="display: flex; align-items: center;">
 
-                <img src="~/Content/assets/vendors/images/Akmal-logo.png" alt="" style="width: 130px; height: 110px;">
-
-
-                <p class="text-center text-orange-50 d-inline">AkmalRental</p>
+                <img src="~/Content/assets/vendors/images/LoginLogo3.png" alt="" style="width: 15%;">
+                &nbsp;
+                <p class="text-center text-orange-50 d-inline" style="vertical-align: middle; margin-bottom: 0;">Akmal Rentals</p>
 
             </a>
             <div class="close-sidebar" data-toggle="left-sidebar-close">

@@ -30,13 +30,13 @@ namespace AlphaZero.Models
         public string tenant_noSiri { get; set; }
         public System.DateTime tenant_inDate { get; set; }
         public System.DateTime tenant_outDate { get; set; }
+        public string tenant_outSession { get; set; }
         public double tenant_outstanding { get; set; }
         public string tenant_paymentStatus { get; set; }
         public int room_id { get; set; }
-        public string tenant_outSession { get; set; }
     
-        public virtual room room { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<reminds> reminds { get; set; }
+        public virtual room room { get; set; }
     }
 }

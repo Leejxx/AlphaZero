@@ -27,8 +27,8 @@ namespace AlphaZero.Models
         public string floor_modemIP { get; set; }
         public string floor_cctvQr { get; set; }
         public string floor_layout { get; set; }
-        public int landlord_id { get; set; }
         public string floor_description { get; set; }
+        public int landlord_id { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<cleanerAtt> cleanerAtts { get; set; }

@@ -11,7 +11,7 @@ namespace AlphaZero.Models
 {
     using System;
     using System.Collections.Generic;
-
+    
     public partial class reminds
     {
         public int reminder_id { get; set; }

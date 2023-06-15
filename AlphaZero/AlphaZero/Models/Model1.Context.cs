@@ -32,11 +32,10 @@ namespace AlphaZero.Models
         public virtual DbSet<Investor> Investors { get; set; }
         public virtual DbSet<landlord> landlords { get; set; }
         public virtual DbSet<profit> profits { get; set; }
+        public virtual DbSet<reminds> reminds { get; set; }
         public virtual DbSet<room> rooms { get; set; }
-        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
+        public virtual DbSet<sysConfig> sysConfigs { get; set; }
         public virtual DbSet<tenant> tenants { get; set; }
         public virtual DbSet<user> users { get; set; }
-        public virtual DbSet<reminds> reminds { get; set; }
-        public virtual DbSet<sysConfig> sysConfigs { get; set; }
     }
 }
