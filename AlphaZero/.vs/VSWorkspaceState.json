@@ -7,9 +7,10 @@
     "\\AlphaZero\\Views",
     "\\AlphaZero\\Views\\Floor",
     "\\AlphaZero\\Views\\Home",
+    "\\AlphaZero\\Views\\Investor",
     "\\AlphaZero\\Views\\Shared",
     "\\AlphaZero\\Views\\Tenant"
   ],
-  "SelectedNode": "\\AlphaZero\\Views\\Shared\\_Layout.cshtml",
+  "SelectedNode": "\\AlphaZero\\Views\\Investor\\Index.cshtml",
   "PreviewInSolutionExplorer": false
 }

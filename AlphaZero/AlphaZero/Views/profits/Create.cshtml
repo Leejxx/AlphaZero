@@ -25,7 +25,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.profit_month, "Profit Per Month", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.profit_month, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.DropDownListFor(model => model.profit_month, GetMonthList(), htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.profit_month, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -49,3 +49,21 @@
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
+
+@functions {
+    public List<SelectListItem> GetMonthList()
+    {
+        List<SelectListItem> months = new List<SelectListItem>();
+
+        for (int year = DateTime.Now.Year; year >= 2000; year--)
+        {
+            for (int month = 12; month >= 1; month--)
+            {
+                var date = new DateTime(year, month, 1);
+                months.Add(new SelectListItem { Text = date.ToString("MM-yyyy"), Value = date.ToString("MM-yyyy") });
+            }
+        }
+
+        return months;
+    }
+}

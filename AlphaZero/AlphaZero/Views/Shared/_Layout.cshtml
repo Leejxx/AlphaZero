@@ -1,6 +1,18 @@
 ﻿<!DOCTYPE html>
+
 <html>
 <head>
+    <style>
+        .footer-wrap {
+            background-color: #f0f0f0;
+            padding: 20px;
+            margin-top: 20px;
+            text-align: center;
+            font-size: 14px;
+            color: #888;
+        }
+
+    </style>
     <!-- Basic Page Info -->
     <meta charset="utf-8">
     <title>@ViewData["Title"] - WBL_AlphaZero_RRMS</title>
@@ -108,15 +120,9 @@
                         <span class="user-name">Admin</span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                        <a class="dropdown-item" href="@Url.Action("Index", "Notification")">
-                            <i class="dw dw-bell1"></i> Notifications
-                        </a>
-                        <a class="dropdown-item" href="@Url.Action("Index", "sysConfigs")">
-                            <i class="dw dw-settings1"></i> System Configurations
-                        </a>
-                        <a class="dropdown-item" href="@Url.Action("ViewProfile", "users")">
-                            <i class="dw dw-user1"></i> Profile
-                        </a>
+                        <a class="dropdown-item" href="@Url.Action("Index", "Notification")"><i class="dw dw-bell1"></i> Notifications</a>
+                        <a class="dropdown-item" href="@Url.Action("Index", "sysConfigs")"> <i class="dw dw-settings2"></i>Bank Setting</a>
+                        <a class="dropdown-item" href="faq.html"><i class="dw dw-help"></i> Help</a>
                         <a class="dropdown-item" href="@Url.Action("Logout", "Login")">
                             <i class="dw dw-logout"></i> Log Out
                         </a>
@@ -206,9 +212,9 @@
 
     <div class="left-side-bar">
         <div class="brand-logo">
-            <a href="@Url.Action("Index", "Home")">
+            <a href="index.html">
 
-                <img src="~/Content/assets/vendors/images/Akmal-logo.png" alt="" style="width: 100px; height: 100px;">
+                <img src="~/Content/assets/vendors/images/Akmal-logo.png" alt="" style="width: 130px; height: 110px;">
 
 
                 <p class="text-center text-orange-50 d-inline">AkmalRental</p>
@@ -221,66 +227,73 @@
         <div class="menu-block customscroll">
             <div class="sidebar-menu">
                 <ul id="accordion-menu">
-
-                    <li>
+                    <li class="dropdown">
                         <a href="@Url.Action("Index", "Home")" class="dropdown-toggle no-arrow">
-                            <span class="micon dw dw-house1"></span><span class="mtext">Dashboard</span>
+                            <span class="micon icon-copy fa fa-dashboard"></span><span class="mtext">Dashboard</span>
                         </a>
                     </li>
-
                     <li class="dropdown">
                         <a href="javascript:;" class="dropdown-toggle">
-                            <span class="micon dw dw-edit2"></span><span class="mtext">Floor</span>
+                            <span class="micon icon-copy fa fa-sitemap"></span><span class="mtext">Floor</span>
                         </a>
                         <ul class="submenu">
                             <li><a href="@Url.Action("Index", "Floor")">Floor</a></li>
                             <li><a href="@Url.Action("Index", "Room")">Room</a></li>
                             <li><a href="@Url.Action("Index", "Inventories")">Inventory</a></li>
-
                         </ul>
                     </li>
 
                     <li>
                         <a href="@Url.Action("Index", "Tenant")" class="dropdown-toggle no-arrow">
-                            <span class="micon dw dw-calendar1"></span><span class="mtext">Tenant</span>
+                            <span class="micon icon-copy fa fa-hotel"></span><span class="mtext">Tenant</span>
                         </a>
                     </li>
 
                     <li>
                         <a href="@Url.Action("Index", "landlords")" class="dropdown-toggle no-arrow">
-                            <span class="micon dw dw-calendar1"></span><span class="mtext">Landlord</span>
+                            <span class="micon icon-copy fa fa-building"></span><span class="mtext">Landlord</span>
                         </a>
                     </li>
 
                     <li>
                         <a href="@Url.Action("Index", "cleanerAtts")" class="dropdown-toggle no-arrow">
-                            <span class="micon dw dw-calendar1"></span><span class="mtext">Cleaner Attendance</span>
+                            <span class="micon icon-copy fa fa-calendar"></span><span class="mtext">Cleaner Attendance</span>
                         </a>
                     </li>
                     <li class="dropdown">
                         <a href="javascript:;" class="dropdown-toggle">
-                            <span class="micon icon-copy fa fa-user-o"></span><span class="mtext">Manage Users</span>
+                            <span class="micon icon-copy fa fa-group"></span><span class="mtext">User</span>
                         </a>
                         <ul class="submenu">
-                            <li>@Html.ActionLink("User", "Index", "users")</li>
-                            <li>@Html.ActionLink("Investor", "Index", "Investor")</li>
+                            <li class="dropdown">
+                                <a href="@Url.Action("Index", "users")" class="dropdown-toggle no-arrow">
+                                    <span class="micon icon-copy fi-torso-business"></span><span class="mtext">Manage Admin</span>
+                                </a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="@Url.Action("Index", "Investor")" class="dropdown-toggle no-arrow">
+                                    <span  class="micon icon-copy fi-torsos"></span><span class="mtext">Manage Investor</span>
+                                </a>
+                            </li>
                         </ul>
+                    </li>
+
+                
+                    <li class="dropdown">
+                        <a href="@Url.Action("Index", "finances")" class="dropdown-toggle no-arrow">
+                            <span class="micon icon-copy fa fa-bank"></span><span class="mtext">Manage Finance</span>
+                        </a>
                     </li>
                     <li class="dropdown">
-                        <a href="javascript:;" class="dropdown-toggle">
-                            <span class="micon dw dw-analytics-21"></span><span class="mtext">Manage Finance</span>
+                        <a href="@Url.Action("Index", "profits")" class="dropdown-toggle no-arrow">
+                            <span class="micon icon-copy ion-cash"></span><span class="mtext">Profit</span>
                         </a>
-                        <ul class="submenu">
-                            <li><a href="highchart.html">Highchart</a></li>
-                        </ul>
                     </li>
-                    <!--
-                        <li>
-                            <div class="dropdown-divider"></div>
-                        </li>
-                        <li>
-                            <div class="sidebar-small-cap">Extra</div>
-                        </li>-->
+                    <li class="dropdown">
+                        <a href="@Url.Action("Index", "Notification")" class="dropdown-toggle no-arrow">
+                            <span class="micon icon-copy fa fa-bullhorn" aria-hidden="true"></span><span class="mtext">Manage Notification</span>
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -299,7 +312,15 @@
                     </div>
                 </div>
             </div>
+            <div class="footer-wrap">
+                <p>
+                   
+                    &copy; Developed by AlphaZero | SECP3106 Application Development (WBL) |Bachelor of Computer Science (Data Engineering) | Universiti Teknologi Malaysia.
+                </p>
+            </div>
+
         </div>
+
     </div>
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
@@ -334,7 +355,6 @@
     <script src="~/Content/assets/src/plugins/datatables/js/buttons.flash.min.js"></script>
     <script src="~/Content/assets/src/plugins/datatables/js/pdfmake.min.js"></script>
     <script src="~/Content/assets/src/plugins/datatables/js/vfs_fonts.js"></script>
-    <script src="~/Content/assets/vendors/scripts/dashboard2.js"></script>
     <!-- Datatable Setting js -->
     <script src="~/Content/assets/vendors/scripts/datatable-setting.js"></script>
 
