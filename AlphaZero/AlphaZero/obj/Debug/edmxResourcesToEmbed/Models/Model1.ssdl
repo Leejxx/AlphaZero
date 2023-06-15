@@ -105,16 +105,6 @@
     <Property Name="category" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="value" Type="varchar" MaxLength="50" />
   </EntityType>
-  <EntityType Name="sysdiagrams">
-    <Key>
-      <PropertyRef Name="diagram_id" />
-    </Key>
-    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-    <Property Name="principal_id" Type="int" Nullable="false" />
-    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="version" Type="int" />
-    <Property Name="definition" Type="varbinary(max)" />
-  </EntityType>
   <EntityType Name="tenant">
     <Key>
       <PropertyRef Name="tenant_id" />
@@ -143,6 +133,7 @@
     <Property Name="user_name" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="user_email" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="user_type" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="u_forgotpwdCode" Type="nvarchar(max)" />
   </EntityType>
   <Association Name="FK_cleanerAtt_floor">
     <End Role="floor" Type="Self.floor" Multiplicity="1" />
@@ -287,7 +278,6 @@
     <EntitySet Name="reminds" EntityType="Self.reminds" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="room" EntityType="Self.room" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="sysConfig" EntityType="Self.sysConfig" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tenant" EntityType="Self.tenant" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="user" EntityType="Self.user" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK_cleanerAtt_floor" Association="Self.FK_cleanerAtt_floor">

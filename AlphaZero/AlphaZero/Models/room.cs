@@ -21,10 +21,10 @@ namespace AlphaZero.Models
         }
     
         public int room_id { get; set; }
+        public int room_number { get; set; }
         public string floor_id { get; set; }
         public double room_price { get; set; }
         public string room_status { get; set; }
-        public int room_number { get; set; }
         public string room_coordinate { get; set; }
     
         public virtual floor floor { get; set; }
