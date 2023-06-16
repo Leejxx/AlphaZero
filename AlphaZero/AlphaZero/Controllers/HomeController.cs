@@ -24,7 +24,11 @@ namespace AlphaZero.Controllers
             ViewBag.availableRoom = db.rooms.Count(r => r.room_status == "Available");
             ViewBag.bookedRoom = db.rooms.Count(r => r.room_status == "Booked");
 
-            return View();
+
+            var availableRooms = db.rooms.Where(r => r.room_status == "Available").ToList();
+
+            // Pass the available rooms to the view
+            return View(availableRooms);
         }
 
         public ActionResult About()

@@ -35,6 +35,7 @@ namespace AlphaZero.Controllers
             {
                 return HttpNotFound();
             }
+
             return View(floor);
         }
 

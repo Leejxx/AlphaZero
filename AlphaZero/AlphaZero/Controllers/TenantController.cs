@@ -68,6 +68,8 @@ namespace AlphaZero.Controllers
 
         }
 
+
+
         // POST: Tenant/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
@@ -326,6 +328,22 @@ namespace AlphaZero.Controllers
 
             // Redirect back to the index page
             return RedirectToAction("Edit" ,new { id=id});
+        }
+
+      
+
+        public ActionResult GetTenantByRoomNumber(int roomNumber)
+        {
+            // Retrieve the tenant details based on the room number
+            var tenant = db.tenants.FirstOrDefault(t => t.room_id == roomNumber);
+
+            if (tenant != null)
+            {
+                // Render the partial view with the tenant details
+                return PartialView("_TenantDetails", tenant);
+            }
+
+            return Content("Tenant not found");
         }
 
 

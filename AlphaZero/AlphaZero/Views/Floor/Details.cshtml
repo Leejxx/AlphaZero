@@ -8,6 +8,8 @@
 <script src="https://cdn.jsdelivr.net/npm/interactjs@1.10.11/dist/interact.min.js"></script>
 <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 
+
+
 <style>
     .status-available {
         color: green;
@@ -39,9 +41,31 @@
         position: absolute;
         border: 2px solid black;
         opacity: 0.5;
-        
     }
 </style>
+
+<style>
+    #snippedAreaContainer {
+        position: relative;
+    }
+
+    #logoImg {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        width: 100px; /* Adjust the logo width as needed */
+    }
+
+    #floorId {
+        position: absolute;
+        top: 110px;
+        left: 10px;
+        font-size: 24px; /* Adjust the font size of the floor ID as needed */
+        font-weight: bold; /* Add font weight if desired */
+    }
+
+</style>
+
 
 
 <h2>Details</h2>
@@ -107,7 +131,7 @@
                                     index++;
                                 }
                                 <td>No @Html.DisplayFor(modelItem => room.room_number)</td>
-                             
+
                                 <td>@Html.DisplayFor(modelItem => room.room_price)</td>
                                 <td>
                                     @{
@@ -145,6 +169,8 @@
                 <dl class="row">
                     <dt class="col-sm-5">
                         Floor Layout
+                        <br />
+                        <button onclick="captureScreenshot()">Capture Screenshot</button>
                     </dt>
                     <dd class="col-sm-20">
                         <div id="snippedAreaContainer" style="position: relative;">
@@ -155,17 +181,14 @@
                             }
                             @if (!string.IsNullOrEmpty(floorLayoutFileName))
                             {
-
                                 <img id="floorLayoutImage" src="@floorLayoutFilePath" alt="Floor Layout" style="max-height: 8000px; margin-bottom: 10px;" />
                             }
-                            </div>
-                            <br />
-
+                        </div>
+                        <br />
                     </dd>
 
                     <dd class="col-sm-12">
                         <pre>@Html.DisplayFor(model => model.floor_description)</pre>
-
                     </dd>
                     <dt class="col-sm-5">
                         @Html.DisplayNameFor(model => model.floor_cctvQr)
@@ -184,9 +207,68 @@
                     </dd>
                 </dl>
             </div>
-
         </div>
+       
     </div>
+
+    <script>
+   function captureScreenshot() {
+    // Select the target div element
+    const targetDiv = document.getElementById("snippedAreaContainer");
+
+    // Use html2canvas library to capture the div as an image
+    html2canvas(targetDiv).then(function (canvas) {
+        // Convert the canvas to a base64 encoded URL
+        const screenshotData = canvas.toDataURL();
+
+        // Create an image element to hold the captured screenshot
+        const screenshotImg = document.createElement("img");
+        screenshotImg.src = screenshotData;
+
+        // Create a logo image element
+        const logoImg = document.createElement("img");
+        logoImg.src = "~/Content/assets/vendors/images/Akmal-logo.png"; // Replace "logo.png" with the path to your logo image
+        logoImg.id = "logoImg";
+
+        // Create a floor ID element
+        const floorId = document.createElement("p");
+        floorId.innerText = "Floor: " + "@Model.floor_id"; // Replace "@Model.floor_id" with the code to fetch the floor ID
+        floorId.id = "floorId";
+
+        // Create a container div to hold the logo image and floor ID
+        const containerDiv = document.createElement("div");
+        containerDiv.appendChild(logoImg);
+        containerDiv.appendChild(floorId);
+
+        // Create a new canvas to composite the logo, floor ID, and screenshot
+        const compositeCanvas = document.createElement("canvas");
+        const ctx = compositeCanvas.getContext("2d");
+        compositeCanvas.width = canvas.width;
+        compositeCanvas.height = canvas.height + 100; // Increase the height to accommodate the logo and floor ID
+
+        // Draw the logo, floor ID, and screenshot on the composite canvas
+        ctx.drawImage(logoImg, 10, 10); // Adjust the position of the logo as needed
+        ctx.font = "bold 24px Arial"; // Adjust the font size and style of the floor ID as needed
+        ctx.fillText(floorId.innerText, 10, 90); // Adjust the position of the floor ID as needed
+        ctx.drawImage(canvas, 0, 100); // Adjust the y-coordinate to make space for the logo and floor ID
+
+        // Convert the composite canvas to a base64 encoded URL
+        const compositeData = compositeCanvas.toDataURL();
+
+        // Create an image element to hold the composite screenshot
+        const compositeImg = document.createElement("img");
+        compositeImg.src = compositeData;
+
+        // Open the image in a new window for printing or save it as needed
+        const screenshotWindow = window.open("", "_blank");
+        screenshotWindow.document.write(compositeImg.outerHTML);
+        screenshotWindow.document.close();
+    });
+}
+
+    </script>
+
+
 
 </div>
 <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
@@ -197,7 +279,7 @@
 
         // Iterate over each room and draw the colored box
         var rooms = @Html.Raw(Json.Encode(Model.rooms.Select(r => new { r.room_number, r.room_price, r.room_status, r.room_coordinate })));
-     
+
         for (var i = 0; i < rooms.length; i++) {
             var room = rooms[i];
             var roomCoordinate = room.room_coordinate;

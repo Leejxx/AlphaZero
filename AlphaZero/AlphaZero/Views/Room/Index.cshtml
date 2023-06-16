@@ -16,6 +16,20 @@
     .status-maintenance {
         color: orange;
     }
+    .btn-green {
+        background-color: green;
+        /* Add any other desired styles */
+    }
+    .btn-disabled {
+        background-color: #808080;
+        cursor: not-allowed;
+    }
+
+    .btn-warning-message {
+        color: red;
+        font-style: italic;
+        margin-left: 5px;
+    }
 </style>
 
 
@@ -127,6 +141,15 @@
                         @Html.ActionLink("Edit", "Edit", new { id = item.room_id }, new { @class = "btn btn-warning" }) |
                         @Html.ActionLink("Details", "Details", new { id = item.room_id }, new { @class = "btn btn-info" }) |
                         @Html.ActionLink("Delete", "Delete", new { id = item.room_id }, new { @class = "btn btn-danger" })
+                        @if (item.room_status == "Available")
+                        {
+                            <a href="@Url.Action("Create", "Tenant", new { floor_id = item.floor_id, room_id = item.room_id, room_number = item.room_number })" class="btn btn-primary btn-green">Add Tenant</a>
+                        }
+                        else
+                        {
+                            <button class="btn btn-primary btn-disabled" disabled>Add Tenant</button>
+                            <span class="btn-warning-message">Room is booked.</span>
+                        }
                     </td>
                 </tr>
 
