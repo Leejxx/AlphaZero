@@ -68,6 +68,8 @@ namespace AlphaZero.Controllers
 
         }
 
+
+
         // POST: Tenant/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
@@ -101,6 +103,7 @@ namespace AlphaZero.Controllers
                 {
                     room.room_status = "Booked";
                     db.SaveChanges();
+                    TempData["successCreate"] = "Tenant created successfully!!";
                 }
 
                 return RedirectToAction("Index");
@@ -240,6 +243,7 @@ namespace AlphaZero.Controllers
 
             db.tenants.Remove(tenant);
             db.SaveChanges();
+            TempData["successDelete"] = "Tenant deleted successfully!!";
             return RedirectToAction("Index");
         }
 
@@ -298,28 +302,48 @@ namespace AlphaZero.Controllers
             db.finances.Add(financeTransaction);
             db.SaveChanges();
 
-           
 
+            tenant.tenant_outstanding -= amount;
             // Update the outstanding amount based on the payment amount
-            if (tenant.tenant_outstanding != amount && amount != 0)
+            if (tenant.tenant_outstanding > 0)
             {
                 tenant.tenant_paymentStatus = "Partially Paid";
             }
-            else if (tenant.tenant_outstanding == amount)
+            else if (tenant.tenant_outstanding == 0)
             {
                 tenant.tenant_paymentStatus = "Fully Paid";
             }
-            tenant.tenant_outstanding -= amount;
+            else if (tenant.tenant_outstanding < 0)
+            {
+                tenant.tenant_paymentStatus = "OverPaid";
+            }
+            
 
             // Save the changes to the database
             db.Entry(tenant).State = EntityState.Modified;
             db.SaveChanges();
 
             // Set a success message to be displayed on the index page
-            TempData["success"] = "Payment processed successfully!";
+            TempData["successPay"] = "Payment processed successfully!";
 
             // Redirect back to the index page
-            return RedirectToAction("Index");
+            return RedirectToAction("Edit" ,new { id=id});
+        }
+
+      
+
+        public ActionResult GetTenantByRoomNumber(int roomNumber)
+        {
+            // Retrieve the tenant details based on the room number
+            var tenant = db.tenants.FirstOrDefault(t => t.room_id == roomNumber);
+
+            if (tenant != null)
+            {
+                // Render the partial view with the tenant details
+                return PartialView("_TenantDetails", tenant);
+            }
+
+            return Content("Tenant not found");
         }
 
 

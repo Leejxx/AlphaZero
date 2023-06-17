@@ -12,6 +12,26 @@
 <p>
     @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary" })
 </p>
+
+@{
+    if (TempData["successCreate"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="bi bi-check-circle me-1"></i>
+            <strong>Success!</strong> @TempData["successCreate"]
+
+        </div>
+    }
+
+ 
+    if (TempData["successDelete"] != null)
+    {
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <i class="bi bi-exclamation-triangle me-1"></i>
+            <strong>Success!</strong> @TempData["successDelete"]
+        </div>
+    }
+}
 <div class="table-responsive">
     <table class="table" id="dataTable">
         <thead>
@@ -125,6 +145,9 @@
                                     break;
                                 case "Unpaid":
                                     paymentStatusColor = "red";
+                                    break;
+                                case "OverPaid":
+                                    paymentStatusColor = "blue";
                                     break;
                                 default:
                                     paymentStatusColor = "black";

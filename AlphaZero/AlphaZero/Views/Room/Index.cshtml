@@ -16,6 +16,20 @@
     .status-maintenance {
         color: orange;
     }
+    .btn-green {
+        background-color: green;
+        /* Add any other desired styles */
+    }
+    .btn-disabled {
+        background-color: #808080;
+        cursor: not-allowed;
+    }
+
+    .btn-warning-message {
+        color: red;
+        font-style: italic;
+        margin-left: 5px;
+    }
 </style>
 
 
@@ -25,8 +39,35 @@
     @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary" })
 </p>
 
+@{
+    if (TempData["successCreate"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="bi bi-check-circle me-1"></i>
+            <strong>Success!</strong> @TempData["successCreate"]
+
+        </div>
+    }
+
+    if (TempData["successEdit"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="bi bi-check-circle me-1"></i>
+            <strong>Success!</strong> @TempData["successEdit"]
+
+        </div>
+    }
+    if (TempData["successDelete"] != null)
+    {
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <i class="bi bi-exclamation-triangle me-1"></i>
+            <strong>Success!</strong> @TempData["successDelete"]
+        </div>
+    }
+}
+
 <div class="pb-20">
-    <table class="data-table table stripe hover nowrap" >
+    <table class="data-table table stripe hover nowrap">
         <thead>
             <tr>
                 <th>No.</th>
@@ -65,7 +106,7 @@
                         @Html.DisplayFor(modelItem => item.room_id)
                     </td>
                     <td>
-                       No @Html.DisplayFor(modelItem => item.room_number)
+                        No @Html.DisplayFor(modelItem => item.room_number)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.room_price)
@@ -100,6 +141,15 @@
                         @Html.ActionLink("Edit", "Edit", new { id = item.room_id }, new { @class = "btn btn-warning" }) |
                         @Html.ActionLink("Details", "Details", new { id = item.room_id }, new { @class = "btn btn-info" }) |
                         @Html.ActionLink("Delete", "Delete", new { id = item.room_id }, new { @class = "btn btn-danger" })
+                        @if (item.room_status == "Available")
+                        {
+                            <a href="@Url.Action("Create", "Tenant", new { floor_id = item.floor_id, room_id = item.room_id, room_number = item.room_number })" class="btn btn-primary btn-green">Add Tenant</a>
+                        }
+                        else
+                        {
+                            <button class="btn btn-primary btn-disabled" disabled>Add Tenant</button>
+                            <span class="btn-warning-message">Room is booked.</span>
+                        }
                     </td>
                 </tr>
 

@@ -14,6 +14,33 @@
 </p>
 
 
+@{
+    if (TempData["successCreate"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="bi bi-check-circle me-1"></i>
+            <strong>Success!</strong> @TempData["successCreate"]
+
+        </div>
+    }
+
+    if (TempData["successEdit"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="bi bi-check-circle me-1"></i>
+            <strong>Success!</strong> @TempData["successEdit"]
+
+        </div>
+    }
+    if (TempData["successDelete"] != null)
+    {
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <i class="bi bi-exclamation-triangle me-1"></i>
+            <strong>Success!</strong> @TempData["successDelete"]
+        </div>
+    }
+}
+
 <div class="pb-20">
     <table class="data-table table stripe hover nowrap">
         <thead>
@@ -52,13 +79,13 @@
                     </td>
                     <td>
                         <a href="@Url.Action("GetFile", "Floor", new { floorLayoutFileName = item.Value.floor_cctvQr })" target="_blank" style="color: blue; font-weight: bold;">
-                            @item.Value.floor_cctvQr 
+                            @item.Value.floor_cctvQr
                         </a>
 
                     </td>
                     <td>
                         <a href="@Url.Action("GetFile", "Floor", new { floorLayoutFileName = item.Value.floor_layout })" target="_blank" style="color: blue; font-weight: bold;">
-                            @item.Value.floor_layout 
+                            @item.Value.floor_layout
                         </a>
 
 

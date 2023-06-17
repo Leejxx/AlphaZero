@@ -61,6 +61,7 @@ namespace AlphaZero.Controllers
                 room.room_coordinate = Request.Form["room_coordinate"];
                 db.rooms.Add(room);
                 db.SaveChanges();
+                TempData["successCreate"] = "Room created successfully!!";
                 return RedirectToAction("Index");
             }
 
@@ -102,6 +103,7 @@ namespace AlphaZero.Controllers
          
                 db.Entry(room).State = EntityState.Modified;
                 db.SaveChanges();
+                TempData["successEdit"] = "Room edited successfully!!";
                 return RedirectToAction("Index");
             }
             ViewBag.floor_id = new SelectList(db.floors, "floor_id", "floor_id", room.floor_id);
@@ -131,6 +133,7 @@ namespace AlphaZero.Controllers
             room room = db.rooms.Find(id);
             db.rooms.Remove(room);
             db.SaveChanges();
+            TempData["successDelete"] = "Room deleted successfully!!";
             return RedirectToAction("Index");
         }
 
@@ -158,6 +161,8 @@ namespace AlphaZero.Controllers
 
             return null; // Return null if no floor layout image found
         }
+
+
 
 
         protected override void Dispose(bool disposing)

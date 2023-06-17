@@ -48,6 +48,41 @@
 }
 
 
+@if (TempData["SuccessPay"] != null)
+{
+
+    <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">Success</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <p>@TempData["SuccessPay"]</p>
+                </div>
+
+            </div>
+            <div class="modal-footer custom-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#successModal').modal('show');
+        });
+
+        $('#successModal').on('hidden.bs.modal', function (e) {
+            $(this).remove();
+        });
+    </script>
+}
+
+
 
 
 <!-- Modal -->
@@ -236,18 +271,37 @@
         <div class="form-group">
             @Html.LabelFor(model => model.tenant_paymentStatus, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("tenant_paymentStatus", new List<SelectListItem>
-                  {
-                      new SelectListItem { Text = "-- Payment Status --", Selected = true, Disabled = true },
-                      new SelectListItem { Text = "Fully Paid", Value = "Fully Paid" },
-                      new SelectListItem { Text = "Partially Paid", Value = "Partially Paid" },
-                      new SelectListItem { Text = "Unpaid ", Value = "Unpaid" }
-                  }, new { @class = "form-control", @required = true })
-                @Html.ValidationMessageFor(model => model.tenant_paymentStatus, "", new { @class = "text-danger" })
+                @{
+                    string paymentStatusColor = "";
+                    switch (Model.tenant_paymentStatus)
+                    {
+                        case "Fully Paid":
+                            paymentStatusColor = "green";
+                            break;
+                        case "Partially Paid":
+                            paymentStatusColor = "orange";
+                            break;
+                        case "Unpaid":
+                            paymentStatusColor = "red";
+                            break;
+                        case "OverPaid":
+                            paymentStatusColor = "blue";
+                            break;
+                        default:
+                            paymentStatusColor = "black";
+                            break;
+                    }
+                }
+
+                <span style="color: @paymentStatusColor">
+                    @Html.DisplayFor(modelItem => Model.tenant_paymentStatus)
+                </span>
             </div>
         </div>
 
         @Html.HiddenFor(model => model.room_id)
+
+        @Html.HiddenFor(model => model.tenant_paymentStatus)
 
         <div class="form-group">
             Room
@@ -326,10 +380,10 @@
                 {
                     @Html.AntiForgeryToken()
 
-               
+
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-                    <input type="number" id="id" name="id" value="@Model.tenant_id" hidden/>
+                    <input type="number" id="id" name="id" value="@Model.tenant_id" hidden />
 
                     <div class="form-group">
                         <label>Amount:</label>
@@ -350,24 +404,22 @@
                         <label>DatePayment:</label>
                         <input type="date" class="form-control" id="date" name="date" required>
                     </div>
-               
+
                     <div class="form-group">
                         @Html.Label("Receipt")
                         <input type="file" name="ReceiptFile" id="ReceiptFile" />
                     </div>
 
-                   
 
-                    <div class="form-group">
-                        <input type="submit" value="Create" class="btn btn-primary" />
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <input type="submit" value="Make Payment" class="btn btn-primary" />
                     </div>
+
                 }
 
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save Changes</button>
-            </div>
+
         </div>
     </div>
 </div>
