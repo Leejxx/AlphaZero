@@ -17,23 +17,29 @@
         <div class="form-group">
             @Html.LabelFor(model => model.floor_id, "Floor ID", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-
                 @Html.DropDownList("floor_id", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.floor_id, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-10">
+                Date
+                @Html.EditorFor(model => model.finance_date, "Date", new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.finance_date, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.finance_flowtype, "Flowtype", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.finance_flowtype, new SelectList(new[] { "Inflow", "Outflow" }), new { @class = "form-control" })
+                @Html.DropDownListFor(model => model.finance_flowtype, new SelectList(new[] { "Masuk", "Keluar" }), new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.finance_flowtype, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
             <div class="col-md-10">
-                Inflow
+                Masuk
                 @Html.EditorFor(model => model.finance_inflow, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.finance_inflow, "", new { @class = "text-danger" })
             </div>
@@ -41,7 +47,7 @@
 
         <div class="form-group">
             <div class="col-md-10">
-                Outflow
+                Keluar
                 @Html.EditorFor(model => model.finance_outflow, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.finance_outflow, "", new { @class = "text-danger" })
             </div>
@@ -64,25 +70,19 @@
         </div>
 
         <div class="form-group">
+            @Html.Label("Receipt", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input type="file" name="ReceiptFile" id="ReceiptFile" onchange="previewReceipt(this)" accept="image/*" />
+                <br />
+                <img id="receiptPreview" src="#" alt="Receipt Preview" style="max-height: 200px; display: none;" />
+            </div>
+        </div>
+
+        <div class="form-group">
             @Html.LabelFor(model => model.finance_type, "Payment", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownListFor(model => model.finance_type, GetPaymentOptions(), new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.finance_type, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-10">
-                Date
-                @Html.EditorFor(model => model.finance_date, "Date", new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.finance_date, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.Label("Receipt", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <input type="file" name="ReceiptFile" id="ReceiptFile" />
             </div>
         </div>
 
@@ -104,7 +104,22 @@
 
 @section scripts {
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script>$(document).ready(function () {
+    <script>
+        function previewReceipt(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $('#receiptPreview').attr('src', e.target.result);
+                    $('#receiptPreview').show();
+                };
+                reader.readAsDataURL(input.files[0]);
+            } else {
+                $('#receiptPreview').attr('src', '#');
+                $('#receiptPreview').hide();
+            }
+        }
+
+        $(document).ready(function () {
             var flowTypeDropdown = $("#finance_flowtype");
             var inflowField = $("#finance_inflow");
             var outflowField = $("#finance_outflow");
@@ -117,24 +132,23 @@
             flowTypeDropdown.on("change", function () {
                 var selectedFlowType = $(this).val();
 
-                if (selectedFlowType === "Inflow") {
+                if (selectedFlowType === "Masuk") {
                     inflowField.prop("disabled", false);
                     outflowField.prop("disabled", true);
                     outflowField.val("");
-                } else if (selectedFlowType === "Outflow") {
+                } else if (selectedFlowType === "Keluar") {
                     inflowField.prop("disabled", true);
                     inflowField.val("");
                     outflowField.prop("disabled", false);
                 }
             });
-        });</script>
+        });
+    </script>
 }
-
 
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
-
 
 @functions {
     private SelectList GetPaymentMethodOptions()
@@ -142,8 +156,7 @@
         var paymentMethods = new List<SelectListItem>
 {
             new SelectListItem { Text = "Cash", Value = "Cash" },
-            new SelectListItem { Text = "Credit card/Debit card", Value = "CreditCardDebitCard" },
-            new SelectListItem { Text = "E-wallet", Value = "E-Wallet" }
+            new SelectListItem { Text = "Bank", Value = "Bank" }
         };
 
         return new SelectList(paymentMethods, "Value", "Text");

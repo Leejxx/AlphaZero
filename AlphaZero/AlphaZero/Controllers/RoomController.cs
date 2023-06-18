@@ -48,7 +48,7 @@ namespace AlphaZero.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "room_id,floor_id,room_number,room_coordinate,room_price,room_status")] room room)
+        public ActionResult Create([Bind(Include = "room_id,floor_id,room_number,room_coordinate,room_price,room_noSiri,room_status")] room room)
         {
             if (ModelState.IsValid)
             {
@@ -90,7 +90,7 @@ namespace AlphaZero.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "room_id,floor_id,room_number,room_coordinate, room_price,room_status")] room room)
+        public ActionResult Edit([Bind(Include = "room_id,floor_id,room_number,room_coordinate, room_price,room_noSiri,room_status")] room room)
         {
             if (ModelState.IsValid)
             {
@@ -161,6 +161,8 @@ namespace AlphaZero.Controllers
 
             return null; // Return null if no floor layout image found
         }
+
+
 
 
 

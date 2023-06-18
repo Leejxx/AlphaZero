@@ -281,13 +281,22 @@
                             </li>
                             <li class="dropdown">
                                 <a href="@Url.Action("Index", "Investor")" class="dropdown-toggle no-arrow">
-                                    <span  class="micon icon-copy fi-torsos"></span><span class="mtext">Manage Investor</span>
+                                    <span class="micon icon-copy fi-torsos"></span><span class="mtext">Manage Investor</span>
                                 </a>
                             </li>
                         </ul>
                     </li>
 
-                
+                    <li class="dropdown">
+                        <a href="javascript:;" class="dropdown-toggle">
+                            <span class="micon icon-copy fa fa-bank"></span><span class="mtext">Finances</span>
+                        </a>
+                        <ul class="submenu">
+                            <li><a href="@Url.Action("Index", "finances")">Expenditure</a></li>
+                            <li><a href="@Url.Action("Summary", "finances")">Finance Summary</a></li>
+                            <li><a href="@Url.Action("Index", "profits")">Profit</a></li>
+                        </ul>
+                    </li>
                     <li class="dropdown">
                         <a href="@Url.Action("Index", "finances")" class="dropdown-toggle no-arrow">
                             <span class="micon icon-copy fa fa-bank"></span><span class="mtext">Manage Finance</span>

@@ -86,7 +86,7 @@
     <Property Name="profit_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Investor_id" Type="Int32" Nullable="false" />
     <Property Name="profit_month" Type="DateTime" Nullable="false" Precision="0" />
-    <Property Name="profit_value" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="profit_value" Type="Double" Nullable="false" />
     <NavigationProperty Name="Investor" Relationship="Self.FK_profit_Investor" FromRole="profit" ToRole="Investor" />
   </EntityType>
   <EntityType Name="reminds">
@@ -115,6 +115,7 @@
     <Property Name="room_coordinate" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="floor" Relationship="Self.FK_room_floor" FromRole="room" ToRole="floor" />
     <NavigationProperty Name="tenants" Relationship="Self.FK_tenant_room" FromRole="room" ToRole="tenant" />
+    <Property Name="room_noSiri" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityType Name="sysConfig">
     <Key>
@@ -134,7 +135,7 @@
     <Property Name="tenant_contract" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="tenant_phoneNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="tenant_emergencyNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="tenant_noSiri" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="tenant_noSiri" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="tenant_inDate" Type="DateTime" Nullable="false" Precision="0" />
     <Property Name="tenant_outDate" Type="DateTime" Nullable="false" Precision="0" />
     <Property Name="tenant_outSession" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />

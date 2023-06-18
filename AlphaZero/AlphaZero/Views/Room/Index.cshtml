@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "Index";
+
 }
 
 <style>
@@ -75,17 +76,22 @@
                     @Html.DisplayNameFor(model => model.room_id)
                 </th>
                 <th>
+                    @Html.DisplayNameFor(model => model.floor.floor_id)
+                </th>
+                <th>
                     @Html.DisplayNameFor(model => model.room_number)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.room_noSiri)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.room_price)
                 </th>
+
                 <th>
                     @Html.DisplayNameFor(model => model.room_status)
                 </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.floor.floor_id)
-                </th>
+
                 <th class="datatable-nosort">Action</th>
             </tr>
         </thead>
@@ -106,11 +112,18 @@
                         @Html.DisplayFor(modelItem => item.room_id)
                     </td>
                     <td>
+                        @Html.DisplayFor(modelItem => item.floor.floor_id)
+                    </td>
+                    <td>
                         No @Html.DisplayFor(modelItem => item.room_number)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.room_noSiri)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.room_price)
                     </td>
+
                     <td>
                         @{
                             string statusClass = "";
@@ -134,9 +147,7 @@
                             @Html.DisplayFor(modelItem => item.room_status)
                         </span>
                     </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.floor.floor_id)
-                    </td>
+
                     <td>
                         @Html.ActionLink("Edit", "Edit", new { id = item.room_id }, new { @class = "btn btn-warning" }) |
                         @Html.ActionLink("Details", "Details", new { id = item.room_id }, new { @class = "btn btn-info" }) |
@@ -148,7 +159,7 @@
                         else
                         {
                             <button class="btn btn-primary btn-disabled" disabled>Add Tenant</button>
-                            <span class="btn-warning-message">Room is booked.</span>
+                            <span class="btn-warning-message">Room is Unavailable for booking.</span>
                         }
                     </td>
                 </tr>

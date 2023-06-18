@@ -73,7 +73,7 @@
     <Property Name="profit_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Investor_id" Type="int" Nullable="false" />
     <Property Name="profit_month" Type="date" Nullable="false" />
-    <Property Name="profit_value" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="profit_value" Type="float" Nullable="false" />
   </EntityType>
   <EntityType Name="reminds">
     <Key>
@@ -97,6 +97,7 @@
     <Property Name="room_price" Type="float" Nullable="false" />
     <Property Name="room_status" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="room_coordinate" Type="varchar" MaxLength="200" />
+    <Property Name="room_noSiri" Type="varchar" MaxLength="50" />
   </EntityType>
   <EntityType Name="sysConfig">
     <Key>
@@ -116,7 +117,7 @@
     <Property Name="tenant_contract" Type="varchar" MaxLength="50" />
     <Property Name="tenant_phoneNo" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="tenant_emergencyNo" Type="varchar" MaxLength="50" Nullable="false" />
-    <Property Name="tenant_noSiri" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="tenant_noSiri" Type="varchar" MaxLength="50" />
     <Property Name="tenant_inDate" Type="date" Nullable="false" />
     <Property Name="tenant_outDate" Type="date" Nullable="false" />
     <Property Name="tenant_outSession" Type="varchar" MaxLength="50" />

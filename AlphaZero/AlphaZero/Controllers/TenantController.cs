@@ -53,6 +53,18 @@ namespace AlphaZero.Controllers
             return Json(roomNumbers);
         }
 
+        public ActionResult GetRoomPrice(int roomId)
+        {
+            var room = db.rooms.FirstOrDefault(r => r.room_id == roomId);
+            if (room != null)
+            {
+                var roomPrice = room.room_price;
+                return Json(new { roomPrice }, JsonRequestBehavior.AllowGet);
+            }
+            return Json(null);
+        }
+
+
 
         // GET: Tenant/Create
         public ActionResult Create()
@@ -291,11 +303,12 @@ namespace AlphaZero.Controllers
                 finance_date = date, // Set the finance transaction date to current date
                 finance_inflow = amount, // Set the transaction amount as per your requirement
                 finance_flowtype = "Inflow", // Set the transaction type as per your requirement
+                finance_outflow = 0,
                finance_pMethod = method,
               finance_type="Partial",
                user_id= userId,
                 finance_receipt = fileName,
-            finance_desc = "Rent " + tenant.tenant_name + " " + room.room_number
+            finance_desc = "Rent pay by " + tenant.tenant_name + " "+room.floor_id+" " + room.room_number
             };
 
          

@@ -99,6 +99,7 @@
     <EntitySetMapping Name="rooms">
       <EntityTypeMapping TypeName="db_roomrentalModel.room">
         <MappingFragment StoreEntitySet="room">
+          <ScalarProperty Name="room_noSiri" ColumnName="room_noSiri" />
           <ScalarProperty Name="room_id" ColumnName="room_id" />
           <ScalarProperty Name="room_number" ColumnName="room_number" />
           <ScalarProperty Name="floor_id" ColumnName="floor_id" />

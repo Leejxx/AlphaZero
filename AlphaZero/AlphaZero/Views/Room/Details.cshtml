@@ -104,7 +104,12 @@
         <dd>
             @Html.DisplayFor(model => model.room_number)
         </dd>
-
+        <dt>
+            @Html.DisplayNameFor(model => model.room_noSiri)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.room_noSiri)
+        </dd>
         <dt>
             @Html.DisplayNameFor(model => model.room_price)
         </dt>
@@ -242,6 +247,7 @@ else
             document.getElementById("tenantInDate").textContent = tenantInDate;
             document.getElementById("tenantOutDate").textContent = tenantOutDate;
             document.getElementById("tenantOutstanding").textContent = tenantOutstanding;
+            document.getElementById("tenantOutSession").textContent = tenantOutSession;
             document.getElementById("tenantPaymentStatus").textContent = tenantPaymentStatus;
             document.getElementById("tenantPaymentStatus").style.color = getPaymentStatusColor(tenantPaymentStatus); // Set color dynamically
 

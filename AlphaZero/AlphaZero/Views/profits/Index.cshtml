@@ -2,46 +2,207 @@
 
 @{
     ViewBag.Title = "Manage Profit";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+
 }
-<h2>Profit History</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary" })
-</p>
-<table class="table">
-    <tr>
-        <th>
-            Profit Per Month
-        </th>
-        <th>
-            Total Profit
-        </th>
-        <th>
-            Investor Name
-        </th>
-        <th></th>
-    </tr>
 
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.profit_month)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.profit_value)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Investor.investor_name)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.profit_id }, new { @class = "btn btn-warning" }) |
-                @Html.ActionLink("Details", "Details", new { id = item.profit_id }, new { @class = "btn btn-info" }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.profit_id }, new { @class = "btn btn-danger" })
+<style>
 
-            </td>
-        </tr>
+    .dt-buttons {
+        margin-bottom: 10px;
     }
 
-</table>
+        .dt-buttons button:hover {
+            opacity: 0.8;
+        }
+
+        .dt-buttons button {
+            margin-left: 5px;
+            padding: 6px 12px;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .dt-buttons .buttons-csv {
+            background-color: cornflowerblue;
+            color: white;
+        }
+
+        .dt-buttons .buttons-excel {
+            background-color: seagreen;
+            color: white;
+        }
+
+        .dt-buttons .buttons-pdf {
+            background-color: red;
+            color: white;
+        }
+
+        .dt-buttons .buttons-print {
+            background-color: #607d8b;
+            color: white;
+        }
+</style>
+
+<div class="row">
+    <div class="col-md-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                @if (ViewBag.Message == "Profit is successfully edited!")
+                {
+                    <div class="alert alert-success">
+                        <strong>@ViewBag.Message</strong>
+                        <button type="button" class="close" data-dismiss="alert">
+                            <span class="mdi mdi-close"></span>
+                        </button>
+                    </div>
+                }
+
+                <div class="d-flex justify-content-between">
+                    <p class="card-title mb-0" style="font-size: x-large;">Investor Profit Sharing</p>
+
+                </div>
+                <br />
+                @{
+                    var sortedProfit = Model.OrderByDescending(p => int.Parse(p.profit_month.ToString("yyyy").Substring(0, 4)))
+                                            .ThenByDescending(p => int.Parse(p.profit_month.ToString("MM")));
+                }
+
+                <div class="card">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table id="dataTable" class="display expandable-table" style="width:100%">
+                                <thead>
+                                    <tr>
+
+                                        <th>
+                                            Year
+                                        </th>
+                                        <th>
+                                            Month
+                                        </th>
+                                        @if (Session["UserID"] != null && Session["UserType"].Equals("1"))
+                                        {
+
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.Investor_id)
+                                            </th>
+                                        }
+                                        <th>
+                                            Profit Earned (RM)
+                                        </th>
+                                        @if (Session["UserID"] != null && Session["UserType"].Equals("1"))
+                                        {
+                                            <th>
+
+                                            </th>
+                                        }
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in sortedProfit)
+                                    {
+                                        var year = int.Parse(item.profit_month.ToString("yyyy").Substring(0, 4));
+                                        var month = int.Parse(item.profit_month.ToString("MM"));
+                                        var currentDate = DateTime.Now;
+                                        var isCurrentMonth = year == currentDate.Year && month == currentDate.Month;
+
+                                        <tr>
+
+                                            <td>
+                                                @year
+                                            </td>
+                                            <td>
+                                                @month
+                                            </td>
+                                            @if (Session["UserID"] != null && Session["UserType"].Equals("1"))
+                                            {
+
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.InvestorUsername)
+                                                </td>
+                                            }
+                                            <td id="profit">
+                                                @Html.DisplayFor(modelItem => item.profit_value)
+                                            </td>
+                                            @if (Session["UserID"] != null && Session["UserType"].Equals("1"))
+                                            {
+                                                <td>
+                                                    @if (!isCurrentMonth)
+                                                    {
+                                                        <a href="@Url.Action("Edit", new { id = item.profit_id })" class="btn btn-link" title="edit">
+                                                            <i class="fa fa-edit text-primary"></i>
+                                                        </a>
+                                                    }
+
+                                                </td>
+                                            }
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.datatables.net/buttons/2.3.6/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.print.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            var currentDate = new Date().toISOString().slice(0, 10); // Get the current date in YYYY-MM-DD format
+
+            $('#dataTable').DataTable({
+                dom: '<"row"<"col-sm-3"l><"col-sm-6"f><"col-sm-3"B>>tip',
+                buttons: [
+                    {
+                        extend: 'csv',
+                        text: 'CSV',
+                        filename: 'AR_InvestorProfit_' + currentDate,
+                        footer: true
+
+                    },
+                    {
+                        extend: 'excel',
+                        text: 'Excel',
+                        filename: 'AR_InvestorProfit_' + currentDate,
+                        footer: true
+                    },
+                    {
+                        extend: 'pdf',
+                        text: 'PDF',
+                        filename: 'AR_InvestorProfit_' + currentDate,
+                        footer: true
+                    },
+                    {
+                        extend: 'print',
+                        text: 'Print',
+                        footer: true
+                    }
+                ]
+            });
+        });
+
+        var inflowAmounts = document.querySelectorAll("#profit");
+        inflowAmounts.forEach(function (element) {
+            element.textContent = parseFloat(element.textContent).toFixed(2);
+        });
+
+        document.addEventListener("DOMContentLoaded", function () {
+            var allOption = document.querySelector('#f_floor option[value="select"]');
+            allOption.disabled = true;
+        });
+    </script>
+}

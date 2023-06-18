@@ -2,15 +2,15 @@
   "ExpandedNodes": [
     "",
     "\\AlphaZero",
-    "\\AlphaZero\\Controllers",
     "\\AlphaZero\\Models",
     "\\AlphaZero\\Views",
     "\\AlphaZero\\Views\\Floor",
     "\\AlphaZero\\Views\\Home",
     "\\AlphaZero\\Views\\Investor",
+    "\\AlphaZero\\Views\\profits",
     "\\AlphaZero\\Views\\Shared",
     "\\AlphaZero\\Views\\Tenant"
   ],
-  "SelectedNode": "\\AlphaZero\\Views\\Floor\\Details.cshtml",
+  "SelectedNode": "\\AlphaZero\\Views\\profits\\Index.cshtml",
   "PreviewInSolutionExplorer": false
 }

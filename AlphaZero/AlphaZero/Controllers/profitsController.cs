@@ -17,8 +17,67 @@ namespace AlphaZero.Controllers
         // GET: profits
         public ActionResult Index()
         {
-            var profits = db.profits.Include(p => p.Investor);
-            return View(profits.ToList());
+        
+
+            if (Session["UserType"] != null && Session["UserType"].Equals("2"))
+            {
+                var userId = Convert.ToInt32(Session["UserID"]);
+                var tb_investor = db.Investors.FirstOrDefault(i => i.user_id == userId);
+
+                if (tb_investor != null)
+                {
+                    int i_id = tb_investor.Investor_id;
+                    var currentMonth = DateTime.Now.Month;
+                    var currentYear = DateTime.Now.Year;
+                    var month = $"{currentYear}-{currentMonth}";
+
+                    var tb_profit = db.profits
+                        .Where(p => p.Investor_id == i_id && !p.profit_month.Equals(month))
+                        .ToList();
+
+                    if (tb_profit != null)
+                    {
+                        foreach (var profitEntry in tb_profit)
+                        {
+                            // Retrieve investor name from tb_user
+                            var investor = db.users.FirstOrDefault(u => u.user_id == tb_investor.user_id);
+                            if (investor != null)
+                                profitEntry.InvestorUsername = investor.user_name;
+                        }
+
+                        tb_profit = tb_profit
+                            .OrderByDescending(p => p.profit_month) // Order by year
+                           
+                            .ToList();
+
+                        return View(tb_profit);
+                    }
+                    else
+                    {
+                        return View();
+                    }
+                }
+            }
+
+            var profit = db.profits
+                .Include(t => t.Investor)
+                .ToList()
+                .Select(p => new profit
+                {
+                    profit_id = p.profit_id,
+                    Investor_id = p.Investor_id,
+                    profit_month = p.profit_month,
+                    profit_value = p.profit_value,
+                    p_lot = p.Investor.investor_lotNo,
+                    InvestorUsername = db.users.FirstOrDefault(u => u.user_id == p.Investor.user_id)?.user_name
+                })
+                     .OrderByDescending(p => p.profit_month) // Order by year
+
+                .ToList();
+
+
+            return View(profit);
+
         }
 
         // GET: profits/Details/5

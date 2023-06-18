@@ -17,8 +17,13 @@ namespace AlphaZero.Models
         public int profit_id { get; set; }
         public int Investor_id { get; set; }
         public System.DateTime profit_month { get; set; }
-        public string profit_value { get; set; }
+        public double profit_value { get; set; }
     
         public virtual Investor Investor { get; set; }
+
+        public string InvestorUsername { get; set; }
+
+        public int p_lot { get; set; }
     }
+
 }

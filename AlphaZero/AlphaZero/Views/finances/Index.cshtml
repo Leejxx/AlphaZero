@@ -1,93 +1,12 @@
 ﻿@model IEnumerable<AlphaZero.Models.finance>
 
+@using System.Globalization
 @{
     ViewBag.Title = "Manage Finance";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>Manage Finance</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary" })
-
-</p>
-
-<table class="table">
-    <tr>
-
-        <th>
-            @Html.ActionLink("Flowtype", "Index", new { sortOrder = ViewBag.FlowtypeSortParam })
-        </th>
-        <th>
-            @Html.ActionLink("Inflow", "Index", new { sortOrder = ViewBag.InflowSortParam })
-        </th>
-        <th>
-            @Html.ActionLink("Outflow", "Index", new { sortOrder = ViewBag.OutflowSortParam })
-        </th>
-        <th>
-            @Html.ActionLink("Notes", "Index", new { sortOrder = ViewBag.NotesSortParam })
-        </th>
-        <th>
-            @Html.ActionLink("Payment Method", "Index", new { sortOrder = ViewBag.PaymentMethodSortParam })
-        </th>
-        <th>
-            @Html.ActionLink("Payment", "Index", new { sortOrder = ViewBag.PaymentSortParam })
-        </th>
-        <th>
-            @Html.ActionLink("Date", "Index", new { sortOrder = ViewBag.DateSortParam })
-        </th>
-        <th>
-            Receipt
-        </th>
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.finance_flowtype)
-            </td>
-            <td class="@(item.finance_flowtype == "Inflow" ? "text-success" : "")">
-                @Html.DisplayFor(modelItem => item.finance_inflow)
-            </td>
-            <td class="@(item.finance_flowtype == "Outflow" ? "text-danger" : "")">
-                @Html.DisplayFor(modelItem => item.finance_outflow)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.finance_desc)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.finance_pMethod)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.finance_type)
-            </td>
-            <td>
-                @item.finance_date.ToString("dd-MM-yyyy")
-            </td>
-            <td>
-                @if (!string.IsNullOrEmpty(item.finance_receipt))
-                {
-                    <a href="@Url.Content("~/Content/assets/vendors/images/Receipts/" + item.finance_receipt)" target="_blank">View Receipt</a>
-                }
-                else
-                {
-                    <span>No Receipt</span>
-                }
-            </td>
-
-
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.finance_id }, new { @class = "btn btn-warning" }) |
-                @Html.ActionLink("Details", "Details", new { id = item.finance_id }, new { @class = "btn btn-info" }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.finance_id }, new { @class = "btn btn-danger" })
-            </td>
-        </tr>
-    }
-
-</table>
-
 <style>
     .text-success {
         color: green;
@@ -97,3 +16,185 @@
         color: red;
     }
 </style>
+<p>
+    @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary" })
+    @Html.ActionLink("Export to CSV", "ExportToCSV", null, new { @class = "btn btn-success" })
+</p>
+
+<div class="table-responsive">
+    <table class="table" id="dataTable">
+        <thead>
+            <tr>
+                <th>
+                    @Html.ActionLink("Year", "Index", new { sortOrder = ViewBag.DateSortParam == "date" ? "date_desc" : "date" })
+                </th>
+                <th>
+                    @Html.ActionLink("Month", "Index", new { sortOrder = ViewBag.DateSortParam == "date" ? "date_desc" : "date" })
+                </th>
+                <th>
+                    Day
+                </th>
+                <th>
+                    Floor
+                </th>
+                <th>
+                    Flowtype
+                </th>
+                <th>
+                    Masuk
+                </th>
+                <th>
+                    Keluar
+                </th>
+                <th>
+                    Perkara
+                </th>
+                <th>
+                    Payment Method
+                </th>
+                <th>
+                    Receipt
+                </th>
+                <th>
+                    Actions
+                </th>
+                <th>
+                    Jumlah Masuk
+                </th>
+                <th>
+                    Jumlah Keluar
+                </th>
+                <th>
+                    P/L
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                string previousYear = "";
+                string previousMonth = "";
+                float totalmonthlyInflow = 0;
+                float totalmonthlyOutflow = 0;
+                int rowIndex = 0;
+                float totalProfit = 0;
+            }
+
+            @foreach (var item in Model)
+            {
+                var date = item.finance_date.ToString("dd-MM-yyyy").Split('-');
+                var year = date[2];
+                var month = date[1];
+                var day = date[0];
+
+                <tr>
+                    @if (year != previousYear)
+                    {
+                        <td rowspan="@Model.Count(f => f.finance_date.ToString("yyyy") == year)">
+                            @year
+                        </td>
+                        {
+                            previousYear = year;
+                        }
+                    }
+
+                    @if (month != previousMonth)
+                    {
+                        <td rowspan="@Model.Count(f => f.finance_date.ToString("MM") == month)">
+                            @CultureInfo.CurrentCulture.DateTimeFormat.GetAbbreviatedMonthName(int.Parse(month))
+                        </td>
+                        {
+                            previousMonth = month;
+                        }
+                    }
+
+                    <td>
+                        @day
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.floor_id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.finance_flowtype)
+                    </td>
+                    <td class="@(item.finance_flowtype == "Masuk" ? "text-success" : "")">
+                        @Html.DisplayFor(modelItem => item.finance_inflow)
+                        @{
+                            if (item.finance_flowtype == "Masuk")
+                            {
+                                totalmonthlyInflow += (float)item.finance_inflow;
+                            }
+                        }
+                    </td>
+                    <td class="@(item.finance_flowtype == "Keluar" ? "text-danger" : "")">
+                        @Html.DisplayFor(modelItem => item.finance_outflow)
+                        @{
+                            if (item.finance_flowtype == "Keluar")
+                            {
+                                totalmonthlyOutflow += (float)item.finance_outflow;
+                            }
+                        }
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.finance_desc)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.finance_pMethod)
+                    </td>
+                    <td>
+                        @if (!string.IsNullOrEmpty(item.finance_receipt))
+                        {
+                            <a href="@Url.Content("~/Content/assets/vendors/images/Receipts/" + item.finance_receipt)" target="_blank">
+                                <img src="@Url.Content("~/Content/assets/vendors/images/Receipts/" + item.finance_receipt)" alt="Receipt" style="max-height: 100px;" />
+                            </a>
+                        }
+                        else
+                        {
+                            <span>No Receipt</span>
+                        }
+                    </td>
+                    <td>
+                        <div>
+                            @Html.ActionLink("Edit", "Edit", new { id = item.finance_id }, new { @class = "btn btn-warning btn-block" })
+                        </div>
+                        <div>
+                            @Html.ActionLink("Details", "Details", new { id = item.finance_id }, new { @class = "btn btn-info btn-block" })
+                        </div>
+                        <div>
+                            @Html.ActionLink("Delete", "Delete", new { id = item.finance_id }, new { @class = "btn btn-danger btn-block" })
+                        </div>
+                    </td>
+                    @{
+                        rowIndex++;
+                        if (rowIndex == Model.Count())
+                        {
+                            totalProfit = totalmonthlyInflow - totalmonthlyOutflow;
+                            <td>
+                                <strong>@totalmonthlyInflow</strong>
+                            </td>
+                            <td>
+                                <strong>@totalmonthlyOutflow</strong>
+                            </td>
+                            <td>
+                                <strong>@totalProfit</strong>
+                            </td>
+                            <td></td>
+
+                            totalmonthlyInflow = 0;
+                            totalmonthlyOutflow = 0;
+                        }
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#dataTable').DataTable();
+        });
+    </script>
+}

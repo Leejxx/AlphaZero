@@ -1053,6 +1053,7 @@
     <Content Include="Views\Shared\_NotificationsDashboard.cshtml" />
     <Content Include="Views\Login\loginLayout.cshtml" />
     <Content Include="Views\Login\ResetPassword.cshtml" />
+    <Content Include="Views\finances\Summary.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
