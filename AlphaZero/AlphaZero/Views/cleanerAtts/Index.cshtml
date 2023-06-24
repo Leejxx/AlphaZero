@@ -10,78 +10,120 @@
 <div class="row">
     <div class="col-md-6">
         <p>
-            @Html.ActionLink("Create New", "Create", new { currentMonth = DateTime.Now.Month, currentYear = DateTime.Now.Year }, new { @class = "btn btn-primary" })
+            @Html.ActionLink("Record Today's Attendance", "Create", new { currentMonth = DateTime.Now.Month, currentYear = DateTime.Now.Year }, new { @class = "btn btn-primary" })
+
+            @Html.ActionLink("Create New Record", "RecordTodayAttendance", new { }, new { @class = "btn btn-success ml-2" })
         </p>
     </div>
 </div>
 
-<table class="table">
-    <tr>
-        <th>
-            No.
-        </th>
-        @using (Html.BeginForm("Index", "cleanerAtts", FormMethod.Get))
-        {
+<table id="dataTable" class="table">
+    <thead>
+        <tr>
+            <th>Year</th>
             <th>
-
-                <div class="form-inline">
-                    <label class="mr-2">Floor Level:</label>
-                    @{
-                        var floorLevels = ViewBag.FloorLevels as SelectList;
-                        floorLevels = new SelectList(floorLevels.Items, "Value", "Text", "All");
-                    }
-                    @Html.DropDownList("floorLevel", floorLevels, new { @class = "form-control", onchange = "this.form.submit()" })
-                </div>
-                
-            </th>
-            <th>
-                
+                @using (Html.BeginForm("Index", "cleanerAtts", FormMethod.Get))
+                {
                     <div class="form-inline">
                         <label class="ml-4 mr-2">Month:</label>
                         @Html.DropDownList("selectedMonth", ViewBag.Months as SelectList, "All", new { @class = "form-control", onchange = "this.form.submit()" })
                     </div>
-                
-            </th>
-         }
-            <th>
-                Salary
+                }
             </th>
             <th>
-
+                @using (Html.BeginForm("Index", "cleanerAtts", FormMethod.Get))
+                {
+                    <div class="form-inline">
+                        <label class="mr-2">Floor Level:</label>
+                        @{
+                            var floorLevels = ViewBag.FloorLevels as SelectList;
+                            floorLevels = new SelectList(floorLevels.Items, "Value", "Text", "All");
+                        }
+                        @Html.DropDownList("floorLevel", floorLevels, new { @class = "form-control", onchange = "this.form.submit()" })
+                    </div>
+                }
             </th>
+            <th>Attendance Count</th>
+            <th>Salary (RM)</th>
+            <th></th>
         </tr>
+    </thead>
+    <tbody>
+        @{
+            string previousYear = "";
+            string previousMonth = "";
+            string previousFloorLevel = "";
+        }
 
-    @foreach (var item in Model)
-    {
+        @foreach (var item in Model)
+        {
+            var date = item.cleaner_date.ToString("dd-MM-yyyy").Split('-');
+            var year = date[2];
+            var month = date[1];
+            var day = date[0];
+            var floorLevel = item.floor.floor_id.ToString();
+            <tr>
+                @if (year != previousYear)
+                {
+                    <td rowspan="@Model.Count(f => f.cleaner_date.ToString("yyyy") == year)">
+                        @year
+                    </td>
+                    {
+                        previousYear = year;
+                    }
+                }
 
+                @if (month != previousMonth)
+                {
+                    <td rowspan="@Model.Count(f => f.cleaner_date.ToString("MM") == month)">
+                        @month
+                    </td>
+                    {
+                        previousMonth = month;
+                    }
+                }
+
+                @if (floorLevel != previousFloorLevel)
+                {
+                    <td rowspan="@Model.Count(f => f.floor.floor_id.ToString() == floorLevel)">
+                        @floorLevel
+                    </td>
+                    {
+                        previousFloorLevel = floorLevel;
+                    }
+                }
+                <td>@Html.DisplayFor(modelItem => item.cleanerAtt_count)</td>
+                <td>
+                    @if (item.cleanerAtt_count > 3)
+                    {
+                        <span style="color:red">@Html.DisplayFor(modelItem => item.cleaner_salary)</span>
+                    }
+                    else
+                    {
+                        @Html.DisplayFor(modelItem => item.cleaner_salary)
+                    }
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.cleanerAtt_id }, new { @class = "btn btn-warning" })
+                    @Html.ActionLink("Details", "Details", new { id = item.cleanerAtt_id }, new { @class = "btn btn-info" })
+                    @Html.ActionLink("Delete", "Delete", new { id = item.cleanerAtt_id }, new { @class = "btn btn-danger" })
+                </td>
+            </tr>
+        }
 
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.cleanerAtt_id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.floor.floor_id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.cleaner_date)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.cleaner_salary)
-            </td>
-
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.cleanerAtt_id }, new { @class = "btn btn-warning" }) |
-                @Html.ActionLink("Details", "Details", new { id = item.cleanerAtt_id }, new { @class = "btn btn-info" }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.cleanerAtt_id }, new { @class = "btn btn-danger" })
-            </td>
+            <td colspan="3"></td>
+            <td>Total Salary:</td>
+            <td>@ViewBag.TotalSalary.ToString("0.00")</td>
         </tr>
-    }
-
-
-    <tr>
-        <td colspan="3"></td>
-        <td>Total Salary:</td>
-        <td>@ViewBag.TotalSalary.ToString("0.00")</td>
-    </tr>
-
+    </tbody>
 </table>
+
+@section Scripts {
+    <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#dataTable').DataTable();
+        });
+    </script>
+}

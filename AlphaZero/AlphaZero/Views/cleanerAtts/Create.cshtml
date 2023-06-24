@@ -34,6 +34,7 @@
             <div class="col-md-10">
                 @Html.EditorFor(model => model.cleaner_salary, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.cleaner_salary, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.cleaner_salary, new { Value = "35" })
             </div>
         </div>
 

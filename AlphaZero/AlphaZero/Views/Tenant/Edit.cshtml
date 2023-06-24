@@ -217,14 +217,7 @@
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.tenant_noSiri, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.tenant_noSiri, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.tenant_noSiri, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
+    
         <div class="form-group">
             @Html.LabelFor(model => model.tenant_inDate, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -372,7 +365,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="outstandingModalLabel">Change Outstanding</h4>
+                <h4 class="modal-title" id="outstandingModalLabel">Making Payment</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
             </div>
             <div class="modal-body">

@@ -14,7 +14,11 @@ namespace AlphaZero.Controllers
         {
             if (Session["UserID"] == null)
             {
-                return RedirectToAction("Index", "Login");
+                return RedirectToAction("Index", "Login"); 
+            }
+
+            if(Session["UserType"].ToString() == "2"){
+                return RedirectToAction("Summary", "finances");
             }
 
             ViewBag.user = db.users.Count();

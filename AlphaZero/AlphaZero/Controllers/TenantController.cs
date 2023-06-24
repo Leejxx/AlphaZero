@@ -14,6 +14,7 @@ namespace AlphaZero.Controllers
 {
     public class TenantController : Controller
     {
+
         private db_roomrentalEntities db = new db_roomrentalEntities();
 
         // GET: Tenant
@@ -277,7 +278,8 @@ namespace AlphaZero.Controllers
         {
             // Retrieve the tenant from the database
             var tenant = db.tenants.Find(id);
-
+            financesController financeController = new financesController();
+      
             if (tenant == null)
             {
                 // Tenant not found, handle the error accordingly
@@ -313,6 +315,7 @@ namespace AlphaZero.Controllers
 
          
             db.finances.Add(financeTransaction);
+          
             db.SaveChanges();
 
 
@@ -335,6 +338,7 @@ namespace AlphaZero.Controllers
             // Save the changes to the database
             db.Entry(tenant).State = EntityState.Modified;
             db.SaveChanges();
+            financeController.CalculateCurrentMonthProfit();
 
             // Set a success message to be displayed on the index page
             TempData["successPay"] = "Payment processed successfully!";

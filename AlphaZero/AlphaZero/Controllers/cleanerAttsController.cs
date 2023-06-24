@@ -90,19 +90,46 @@ namespace AlphaZero.Controllers
         }
 
         // GET: cleanerAtts/Create
-        public ActionResult Create()
+        public ActionResult Create(string floor_id, DateTime? cleaner_date, decimal? cleaner_salary)
         {
-            ViewBag.floor_id = new SelectList(db.floors, "floor_id", "floor_id");
+            ViewBag.floor_id = new SelectList(db.floors, "floor_id", "floor_id", floor_id);
 
-            // Get the current month and year
-            int currentMonth = DateTime.Now.Month;
-            int currentYear = DateTime.Now.Year;
+            // Use the preset values if provided, otherwise use the current month and year
+            int currentMonth = cleaner_date?.Month ?? DateTime.Now.Month;
+            int currentYear = cleaner_date?.Year ?? DateTime.Now.Year;
 
-            // Generate dropdown items for months
             ViewBag.Months = new SelectList(Enumerable.Range(1, 12).Select(i => new { Value = i, Text = DateTimeFormatInfo.CurrentInfo.GetMonthName(i) }), "Value", "Text", currentMonth);
 
-            return View();
+            // Create a new cleanerAtt object and assign the preset values
+            cleanerAtt newCleanerAtt = new cleanerAtt
+            {
+                floor_id = floor_id,
+                cleaner_date = cleaner_date ?? DateTime.Now.Date,
+                cleaner_salary = cleaner_salary != null ? Convert.ToDouble(cleaner_salary) : 35
+            };
+
+            return View(newCleanerAtt);
         }
+
+
+
+        // GET: cleanerAtts/RecordTodayAttendance
+        public ActionResult RecordTodayAttendance()
+        {
+            cleanerAtt newCleanerAtt = new cleanerAtt
+            {
+                cleaner_date = DateTime.Now.Date, // Set today's date (without time component)
+                cleaner_salary = 35
+            };
+
+            ViewBag.floor_id = new SelectList(db.floors, "floor_id", "floor_id");
+            ViewBag.ExceededAttendance = false; // Set default value
+
+            // Pass the preset values as route parameters
+            return RedirectToAction("Create", new { floor_id = newCleanerAtt.floor_id, cleaner_date = newCleanerAtt.cleaner_date, cleaner_salary = newCleanerAtt.cleaner_salary });
+        }
+
+
 
         // POST: cleanerAtts/Create
         [HttpPost]
@@ -115,16 +142,6 @@ namespace AlphaZero.Controllers
                 var existingRecords = db.cleanerAtts
                     .Where(c => c.floor_id == cleanerAtt.floor_id && c.cleaner_date.Month == currentMonth && c.cleaner_date.Year == currentYear)
                     .ToList();
-
-                // Check if the attendance count exceeds 3
-                if (existingRecords.Count >= 3)
-                {
-                    ViewBag.ExceededAttendance = true;
-                    // Add an alert message indicating that the attendance count has exceeded the limit
-                    ModelState.AddModelError("", "The attendance count has exceeded the limit of 3 times for the selected month and floor.");
-                    ViewBag.floor_id = new SelectList(db.floors, "floor_id", "floor_id", cleanerAtt.floor_id);
-                    return View(cleanerAtt);
-                }
 
                 // Set cleanerAtt_count to the next available count
                 cleanerAtt.cleanerAtt_count = existingRecords.Count + 1;

@@ -188,7 +188,9 @@
                     </dd>
 
                     <dd class="col-sm-12">
-                        <pre>@Html.DisplayFor(model => model.floor_description)</pre>
+                        <button onclick="copyText()">Copy Text</button>
+                        <pre id="floor-description">@Html.DisplayFor(model => model.floor_description)</pre>
+
                     </dd>
                     <dt class="col-sm-5">
                         @Html.DisplayNameFor(model => model.floor_cctvQr)
@@ -321,4 +323,25 @@
             }
         }
     });
+</script>
+<script>
+    function copyText() {
+        var floorDescription = document.getElementById("floor-description");
+        var textToCopy = floorDescription.innerText;
+
+        // Create a temporary textarea element
+        var tempTextArea = document.createElement("textarea");
+        tempTextArea.value = textToCopy;
+        document.body.appendChild(tempTextArea);
+
+        // Copy the text from the textarea
+        tempTextArea.select();
+        document.execCommand("copy");
+
+        // Remove the temporary textarea
+        document.body.removeChild(tempTextArea);
+
+        // Optionally, you can provide some visual feedback to indicate the text was copied
+        alert("Text copied!");
+    }
 </script>

@@ -32,8 +32,10 @@ namespace AlphaZero.Controllers
                     var month = $"{currentYear}-{currentMonth}";
 
                     var tb_profit = db.profits
-                        .Where(p => p.Investor_id == i_id && !p.profit_month.Equals(month))
-                        .ToList();
+      .Where(p => p.Investor_id == i_id)
+      .AsEnumerable() // Switch to LINQ to Objects
+      .Where(p => !p.profit_month.ToString("yyyy-MM").Equals(month))
+      .ToList();
 
                     if (tb_profit != null)
                     {

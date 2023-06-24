@@ -37,36 +37,23 @@
         <thead>
             <tr>
                 <th>No.</th>
-                <th>
-                    @Html.DisplayNameFor(model => model.tenant_ic)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.tenant_uploadIC)
-                </th>
+          
                 <th>
                     @Html.DisplayNameFor(model => model.tenant_name)
                 </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.tenant_contract)
-                </th>
+            
                 <th>
                     @Html.DisplayNameFor(model => model.tenant_phoneNo)
                 </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.tenant_emergencyNo)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.tenant_noSiri)
-                </th>
+              
+              
                 <th>
                     @Html.DisplayNameFor(model => model.tenant_inDate)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.tenant_outDate)
                 </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.tenant_outSession)
-                </th>
+              
                 <th>
                     @Html.DisplayNameFor(model => model.tenant_outstanding)
                 </th>
@@ -92,43 +79,24 @@
                     @{
                         index++;
                     }
-                    <td>
-                        @Html.DisplayFor(modelItem => item.tenant_ic)
-                    </td>
-                    <td>
-
-                        <a href="@Url.Action("GetFile", "Floor", new { floorLayoutFileName = item.tenant_uploadIC })" target="_blank" style="color: blue; font-weight: bold;">
-                            @item.tenant_uploadIC (Click to see)
-                        </a>
-
-                    </td>
+                  
+               
                     <td>
                         @Html.DisplayFor(modelItem => item.tenant_name)
                     </td>
-                    <td>
-                        <a href="@Url.Action("GetFile", "Floor", new { floorLayoutFileName = item.tenant_contract })" target="_blank" style="color: blue; font-weight: bold;">
-                            @item.tenant_contract (Click to see)
-                        </a>
-
-                    </td>
+                
                     <td>
                         @Html.DisplayFor(modelItem => item.tenant_phoneNo)
                     </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.tenant_emergencyNo)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.tenant_noSiri)
-                    </td>
+                   
+                  
                     <td>
                         @Html.DisplayFor(modelItem => item.tenant_inDate)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.tenant_outDate)
                     </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.tenant_outSession)
-                    </td>
+                 
                     <td>
                         @Html.DisplayFor(modelItem => item.tenant_outstanding)
                     </td>

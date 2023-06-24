@@ -11,7 +11,7 @@ namespace AlphaZero.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
     public partial class floor
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -22,14 +22,24 @@ namespace AlphaZero.Models
             this.inventories = new HashSet<inventory>();
             this.rooms = new HashSet<room>();
         }
-    
+
+        [Required]
         public string floor_id { get; set; }
+
         public string floor_modemIP { get; set; }
+
+
         public string floor_cctvQr { get; set; }
+
+     
         public string floor_layout { get; set; }
+
+        [Required]
         public string floor_description { get; set; }
+
+        [Required]
         public int landlord_id { get; set; }
-    
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<cleanerAtt> cleanerAtts { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
